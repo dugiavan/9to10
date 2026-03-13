@@ -1,0 +1,4335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Entrance Test – Grade 9 to Grade 10</title>
+  <style>
+    /* =========================================
+     CSS VARIABLES & RESET
+  ========================================= */
+    :root {
+      --primary: #4f6ef7;
+      --primary-light: #7b93ff;
+      --primary-dark: #3451d1;
+      --secondary: #f064a5;
+      --accent: #00d4aa;
+      --accent2: #ff8c42;
+      --bg-from: #e8edff;
+      --bg-via: #f0e8ff;
+      --bg-to: #ffe8f5;
+      --glass-bg: rgba(255, 255, 255, 0.55);
+      --glass-border: rgba(255, 255, 255, 0.75);
+      --glass-shadow: 0 8px 40px rgba(79, 110, 247, 0.10), 0 2px 8px rgba(79, 110, 247, 0.07);
+      --card-shadow: 0 12px 48px rgba(79, 110, 247, 0.13), 0 2px 8px rgba(240, 100, 165, 0.07);
+      --text-primary: #1a2340;
+      --text-secondary: #4a5580;
+      --text-muted: #8892b0;
+      --correct: #00c48c;
+      --incorrect: #ff4d6d;
+      --warning: #ffb830;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --font-display: 'Georgia', 'Times New Roman', serif;
+      --font-body: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--bg-from) 0%, var(--bg-via) 50%, var(--bg-to) 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 18s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* =========================================
+     FLOATING BACKGROUND SHAPES
+  ========================================= */
+    .bg-shapes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.22;
+      animation: floatShape linear infinite;
+    }
+
+    .shape-1 {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, #a5b4fc, #818cf8);
+      top: -10%;
+      left: -8%;
+      animation-duration: 28s;
+    }
+
+    .shape-2 {
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, #f9a8d4, #ec4899);
+      top: 60%;
+      right: -5%;
+      animation-duration: 22s;
+      animation-direction: reverse;
+    }
+
+    .shape-3 {
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, #6ee7b7, #34d399);
+      bottom: -8%;
+      left: 30%;
+      animation-duration: 34s;
+    }
+
+    .shape-4 {
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, #fcd34d, #f59e0b);
+      top: 30%;
+      right: 20%;
+      animation-duration: 19s;
+    }
+
+    .shape-5 {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, #c4b5fd, #7c3aed);
+      top: 15%;
+      left: 55%;
+      animation-duration: 25s;
+      animation-direction: reverse;
+    }
+
+    @keyframes floatShape {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      33% {
+        transform: translateY(-40px) rotate(60deg);
+      }
+
+      66% {
+        transform: translateY(20px) rotate(120deg);
+      }
+
+      100% {
+        transform: translateY(0) rotate(180deg);
+      }
+    }
+
+    /* =========================================
+     LAYOUT CONTAINER
+  ========================================= */
+    #app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    /* =========================================
+     SCREEN VISIBILITY
+  ========================================= */
+    .screen {
+      display: none;
+      width: 100%;
+      max-width: 760px;
+    }
+
+    .screen.active {
+      display: block;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =========================================
+     GLASSMORPHISM CARD
+  ========================================= */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(1.6);
+      -webkit-backdrop-filter: blur(20px) saturate(1.6);
+      border: 1.5px solid var(--glass-border);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 44px 48px;
+    }
+
+    @media (max-width: 600px) {
+      .glass-card {
+        padding: 28px 20px;
+      }
+    }
+
+    /* =========================================
+     START SCREEN
+  ========================================= */
+    .start-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, rgba(79, 110, 247, 0.13), rgba(240, 100, 165, 0.10));
+      border: 1px solid rgba(79, 110, 247, 0.22);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .start-badge span {
+      font-size: 1rem;
+    }
+
+    .start-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .start-title em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .start-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 520px;
+    }
+
+    .info-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79, 110, 247, 0.09);
+      border: 1px solid rgba(79, 110, 247, 0.18);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--primary-dark);
+    }
+
+    .pill-icon {
+      font-size: 1rem;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(79, 110, 247, 0.2), transparent);
+      margin: 28px 0;
+    }
+
+    .skills-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+
+    .skill-chip {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(79, 110, 247, 0.15);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .skill-chip strong {
+      display: block;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+    }
+
+    /* =========================================
+     BUTTONS
+  ========================================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: #fff;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-size: 1.08rem;
+      box-shadow: 0 6px 24px rgba(79, 110, 247, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(79, 110, 247, 0.45);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--text-secondary);
+      padding: 11px 24px;
+      border-radius: 50px;
+      font-size: 0.92rem;
+      border: 1.5px solid rgba(79, 110, 247, 0.18);
+      box-shadow: 0 2px 8px rgba(79, 110, 247, 0.06);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--primary);
+      border-color: var(--primary-light);
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, var(--accent) 0%, #00b894 100%);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 1rem;
+      box-shadow: 0 6px 20px rgba(0, 212, 170, 0.3);
+    }
+
+    .btn-accent:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(0, 212, 170, 0.4);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, var(--secondary) 0%, #e91e8c 100%);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 1rem;
+      box-shadow: 0 6px 20px rgba(240, 100, 165, 0.3);
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(240, 100, 165, 0.4);
+    }
+
+    .btn-sm {
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      border-radius: 50px;
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* =========================================
+     TEST SCREEN
+  ========================================= */
+    .test-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .test-title-bar {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .question-counter {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(79, 110, 247, 0.1);
+      padding: 6px 16px;
+      border-radius: 50px;
+      border: 1px solid rgba(79, 110, 247, 0.2);
+    }
+
+    /* Progress bar */
+    .progress-track {
+      height: 6px;
+      background: rgba(79, 110, 247, 0.12);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 3px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Section badge */
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(90deg, rgba(79, 110, 247, 0.1), rgba(240, 100, 165, 0.08));
+      border: 1px solid rgba(79, 110, 247, 0.2);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+    }
+
+    /* Question text */
+    .question-text {
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .question-text .blank {
+      display: inline-block;
+      border-bottom: 2.5px solid var(--primary);
+      min-width: 60px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Options */
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1.8px solid rgba(79, 110, 247, 0.15);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      color: var(--text-primary);
+      text-align: left;
+      transition: var(--transition);
+      box-shadow: 0 2px 6px rgba(79, 110, 247, 0.04);
+    }
+
+    .option-btn:hover {
+      background: rgba(79, 110, 247, 0.08);
+      border-color: var(--primary-light);
+      transform: translateX(4px);
+    }
+
+    .option-btn.selected {
+      background: linear-gradient(90deg, rgba(79, 110, 247, 0.12), rgba(79, 110, 247, 0.06));
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .option-btn.correct {
+      background: rgba(0, 196, 140, 0.12);
+      border-color: var(--correct);
+      color: #00815e;
+    }
+
+    .option-btn.incorrect {
+      background: rgba(255, 77, 109, 0.10);
+      border-color: var(--incorrect);
+      color: #cc1f3d;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(79, 110, 247, 0.1);
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--primary);
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+
+    .option-btn.selected .option-label {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .option-btn.correct .option-label {
+      background: var(--correct);
+      color: #fff;
+    }
+
+    .option-btn.incorrect .option-label {
+      background: var(--incorrect);
+      color: #fff;
+    }
+
+    /* Navigation */
+    .test-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Audio player */
+    .audio-player {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(79, 110, 247, 0.07);
+      border: 1px solid rgba(79, 110, 247, 0.2);
+      border-radius: var(--radius-sm);
+      padding: 14px 20px;
+      margin-bottom: 20px;
+    }
+
+    .audio-icon {
+      font-size: 1.4rem;
+    }
+
+    .audio-info {
+      flex: 1;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .audio-info strong {
+      display: block;
+      color: var(--text-primary);
+      font-size: 0.93rem;
+    }
+
+    .audio-wave {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      height: 20px;
+    }
+
+    .wave-bar {
+      width: 3px;
+      border-radius: 2px;
+      background: var(--primary);
+      animation: waveAnim 1.2s ease-in-out infinite;
+    }
+
+    .wave-bar:nth-child(1) {
+      height: 8px;
+      animation-delay: 0s;
+    }
+
+    .wave-bar:nth-child(2) {
+      height: 14px;
+      animation-delay: 0.1s;
+    }
+
+    .wave-bar:nth-child(3) {
+      height: 20px;
+      animation-delay: 0.2s;
+    }
+
+    .wave-bar:nth-child(4) {
+      height: 14px;
+      animation-delay: 0.3s;
+    }
+
+    .wave-bar:nth-child(5) {
+      height: 8px;
+      animation-delay: 0.4s;
+    }
+
+    @keyframes waveAnim {
+
+      0%,
+      100% {
+        transform: scaleY(0.5);
+        opacity: 0.5;
+      }
+
+      50% {
+        transform: scaleY(1);
+        opacity: 1;
+      }
+    }
+
+    .audio-wave.paused .wave-bar {
+      animation-play-state: paused;
+    }
+
+    /* Explanation box */
+    .explanation-box {
+      background: rgba(0, 212, 170, 0.08);
+      border: 1px solid rgba(0, 212, 170, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: #005d4b;
+      line-height: 1.6;
+      display: none;
+    }
+
+    .explanation-box.show {
+      display: block;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    .explanation-box strong {
+      color: #007a62;
+    }
+
+    /* Question map */
+    .question-map-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 4px 8px;
+      text-decoration: underline;
+      font-family: var(--font-body);
+    }
+
+    .question-map {
+      display: none;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(79, 110, 247, 0.15);
+    }
+
+    .question-map.open {
+      display: flex;
+    }
+
+    .qmap-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      background: rgba(79, 110, 247, 0.08);
+      color: var(--text-secondary);
+    }
+
+    .qmap-dot.answered {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .qmap-dot.current {
+      outline: 2.5px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* =========================================
+     CONFIRM DIALOG
+  ========================================= */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(26, 35, 64, 0.5);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .overlay.open {
+      display: flex;
+      animation: fadeIn 0.25s ease both;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .dialog {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 40px 36px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 24px 80px rgba(26, 35, 64, 0.18);
+      text-align: center;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    .dialog-icon {
+      font-size: 2.8rem;
+      margin-bottom: 16px;
+    }
+
+    .dialog h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .dialog p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .dialog-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    /* =========================================
+     RESULTS SCREEN
+  ========================================= */
+    .results-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .results-trophy {
+      font-size: 3.5rem;
+      margin-bottom: 12px;
+      animation: bounceIn 0.7s ease both;
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      60% {
+        transform: scale(1.15);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .results-title {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .results-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .score-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin: 28px 0;
+    }
+
+    .score-circle {
+      position: relative;
+      width: 140px;
+      height: 140px;
+    }
+
+    .score-svg {
+      transform: rotate(-90deg);
+    }
+
+    .score-track {
+      fill: none;
+      stroke: rgba(79, 110, 247, 0.12);
+      stroke-width: 10;
+    }
+
+    .score-progress {
+      fill: none;
+      stroke: url(#scoreGrad);
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 377;
+      stroke-dashoffset: 377;
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    }
+
+    .score-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .score-number {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .score-total {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .score-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+    }
+
+    .stat-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .stat-dot.correct {
+      background: var(--correct);
+    }
+
+    .stat-dot.incorrect {
+      background: var(--incorrect);
+    }
+
+    .stat-dot.skipped {
+      background: var(--warning);
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .stat-val {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* Grade badge */
+    .grade-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 22px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      margin: 0 auto 28px;
+    }
+
+    .grade-excellent {
+      background: rgba(0, 196, 140, 0.14);
+      border: 1.5px solid rgba(0, 196, 140, 0.4);
+      color: #007a62;
+    }
+
+    .grade-good {
+      background: rgba(79, 110, 247, 0.12);
+      border: 1.5px solid rgba(79, 110, 247, 0.3);
+      color: var(--primary-dark);
+    }
+
+    .grade-average {
+      background: rgba(255, 184, 48, 0.13);
+      border: 1.5px solid rgba(255, 184, 48, 0.4);
+      color: #8a6a00;
+    }
+
+    .grade-poor {
+      background: rgba(255, 77, 109, 0.10);
+      border: 1.5px solid rgba(255, 77, 109, 0.3);
+      color: #cc1f3d;
+    }
+
+    /* Skill breakdown */
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .skill-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .skill-bar-label {
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      width: 130px;
+      flex-shrink: 0;
+    }
+
+    .skill-bar-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(79, 110, 247, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+    }
+
+    .skill-bar-pct {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* Feedback cards */
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 560px) {
+      .feedback-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feedback-card {
+      background: rgba(255, 255, 255, 0.55);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(79, 110, 247, 0.13);
+      padding: 16px 18px;
+    }
+
+    .feedback-card h4 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feedback-card.strength h4 {
+      color: #007a62;
+    }
+
+    .feedback-card.weakness h4 {
+      color: #cc1f3d;
+    }
+
+    .feedback-card.suggestion h4 {
+      color: var(--primary-dark);
+    }
+
+    .feedback-card ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .feedback-card li {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .feedback-card li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      font-size: 0.9rem;
+    }
+
+    .feedback-card.strength li::before {
+      color: var(--correct);
+    }
+
+    .feedback-card.weakness li::before {
+      color: var(--incorrect);
+    }
+
+    .feedback-card.suggestion li::before {
+      color: var(--primary);
+    }
+
+    /* Review section */
+    .review-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .review-item {
+      background: rgba(255, 255, 255, 0.55);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(79, 110, 247, 0.12);
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .review-item:hover {
+      border-color: var(--primary-light);
+    }
+
+    .review-item-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .review-qnum {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+    }
+
+    .review-status {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 50px;
+      flex-shrink: 0;
+    }
+
+    .review-status.correct {
+      background: rgba(0, 196, 140, 0.13);
+      color: #007a62;
+    }
+
+    .review-status.incorrect {
+      background: rgba(255, 77, 109, 0.10);
+      color: #cc1f3d;
+    }
+
+    .review-status.skipped {
+      background: rgba(255, 184, 48, 0.12);
+      color: #8a6a00;
+    }
+
+    .review-qtext {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .review-answers {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .review-option {
+      font-size: 0.84rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      color: var(--text-secondary);
+    }
+
+    .review-option.selected-answer {
+      background: rgba(255, 77, 109, 0.09);
+      color: #cc1f3d;
+      font-weight: 600;
+    }
+
+    .review-option.correct-answer {
+      background: rgba(0, 196, 140, 0.09);
+      color: #007a62;
+      font-weight: 600;
+    }
+
+    .review-option.correct-selected {
+      background: rgba(0, 196, 140, 0.13);
+      color: #007a62;
+      font-weight: 600;
+    }
+
+    .review-explanation {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: rgba(79, 110, 247, 0.06);
+      border-radius: 8px;
+      font-size: 0.84rem;
+      color: var(--primary-dark);
+      line-height: 1.6;
+    }
+
+    .results-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 28px 0;
+    }
+
+    /* =========================================
+     TABS
+  ========================================= */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: rgba(79, 110, 247, 0.07);
+      border-radius: var(--radius-sm);
+      padding: 4px;
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: 10px;
+      transition: var(--transition);
+    }
+
+    .tab-btn.active {
+      background: #fff;
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(79, 110, 247, 0.12);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    /* =========================================
+     MISC UTILITIES
+  ========================================= */
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-4 {
+      margin-top: 16px;
+    }
+
+    .mt-6 {
+      margin-top: 24px;
+    }
+
+    .mb-4 {
+      margin-bottom: 16px;
+    }
+
+    .mb-6 {
+      margin-bottom: 24px;
+    }
+
+    .flex {
+      display: flex;
+    }
+
+    .gap-3 {
+      gap: 12px;
+    }
+
+    .items-center {
+      align-items: center;
+    }
+
+    .justify-center {
+      justify-content: center;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(79, 110, 247, 0.25);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(79, 110, 247, 0.45);
+    }
+
+    /* Loading state for audio button */
+    .audio-btn-playing {
+      animation: pulse 1.5s ease infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+    }
+
+    /* =========================================
+     BILINGUAL TOGGLE
+  ========================================= */
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      background: rgba(79, 110, 247, 0.08);
+      border: 1.5px solid rgba(79, 110, 247, 0.2);
+      border-radius: 50px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      color: var(--text-muted);
+      transition: var(--transition);
+      letter-spacing: 0.04em;
+    }
+
+    .lang-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50px;
+    }
+
+    .lang-btn:hover:not(.active) {
+      color: var(--primary);
+      background: rgba(79, 110, 247, 0.08);
+    }
+
+    .vi-text {
+      display: none;
+      font-style: italic;
+      color: var(--text-secondary);
+      font-size: 0.93em;
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+
+    .vi-text.show {
+      display: block;
+    }
+
+    /* Bilingual explanation */
+    .vi-explanation {
+      display: none;
+      margin-top: 6px;
+    }
+
+    .vi-explanation.show {
+      display: block;
+    }
+
+
+
+    /* =========================================
+     DIFFICULTY SELECTOR
+  ========================================= */
+    .difficulty-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 500px) {
+      .difficulty-selector {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .diff-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 16px 12px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 2px solid rgba(79, 110, 247, 0.15);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .diff-btn:hover {
+      background: rgba(79, 110, 247, 0.07);
+      border-color: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    .diff-btn.active {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, rgba(79, 110, 247, 0.12), rgba(79, 110, 247, 0.06));
+      box-shadow: 0 4px 16px rgba(79, 110, 247, 0.15);
+    }
+
+    .diff-btn[data-diff="easy"].active {
+      border-color: var(--correct);
+      background: rgba(0, 196, 140, 0.09);
+    }
+
+    .diff-btn[data-diff="medium"].active {
+      border-color: var(--warning);
+      background: rgba(255, 184, 48, 0.09);
+    }
+
+    .diff-btn[data-diff="hard"].active {
+      border-color: var(--incorrect);
+      background: rgba(255, 77, 109, 0.08);
+    }
+
+    .diff-icon {
+      font-size: 1.5rem;
+    }
+
+    .diff-btn strong {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .diff-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Difficulty badge on test header */
+    .diff-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .diff-badge.easy {
+      background: rgba(0, 196, 140, 0.12);
+      color: #007a62;
+      border: 1px solid rgba(0, 196, 140, 0.3);
+    }
+
+    .diff-badge.medium {
+      background: rgba(255, 184, 48, 0.12);
+      color: #8a6a00;
+      border: 1px solid rgba(255, 184, 48, 0.3);
+    }
+
+    .diff-badge.hard {
+      background: rgba(255, 77, 109, 0.10);
+      color: #cc1f3d;
+      border: 1px solid rgba(255, 77, 109, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating background shapes -->
+  <div class="bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="shape shape-5"></div>
+  </div>
+
+  <!-- Main app container -->
+  <div id="app">
+
+    <!-- ================================================
+       SCREEN 1: START
+  ================================================ -->
+    <div id="screen-start" class="screen active">
+      <div class="glass-card">
+        <div class="start-badge"><span>🎓</span> Official Practice Test</div>
+        <h1 class="start-title">
+          English Entrance Test<br>
+          <em>Grade 9 → Grade 10</em>
+        </h1>
+        <p class="start-desc">
+          A comprehensive practice exam designed to help you prepare for the official
+          secondary school entrance examination. Test your skills across all major
+          English language areas.
+        </p>
+
+        <div class="info-pills">
+          <div class="pill"><span class="pill-icon">❓</span> 50 Questions</div>
+          <div class="pill"><span class="pill-icon">⏱</span> ~60 Minutes</div>
+          <div class="pill"><span class="pill-icon">📊</span> Instant Results</div>
+          <div class="pill"><span class="pill-icon">🔁</span> Full Review</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <p class="section-title">📚 Skills Covered</p>
+        <div class="skills-preview">
+          <div class="skill-chip"><strong>A</strong>Phonetics</div>
+          <div class="skill-chip"><strong>B</strong>Grammar</div>
+          <div class="skill-chip"><strong>B</strong>Vocabulary</div>
+          <div class="skill-chip"><strong>C</strong>Reading</div>
+          <div class="skill-chip"><strong>D</strong>Listening</div>
+          <div class="skill-chip"><strong>E</strong>Social</div>
+          <div class="skill-chip"><strong>F</strong>Writing</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <p class="section-title">🎯 Choose Difficulty</p>
+        <div class="difficulty-selector" id="difficulty-selector">
+          <button class="diff-btn active" data-diff="easy" onclick="App.selectDifficulty('easy')">
+            <span class="diff-icon">🟢</span>
+            <strong>Easy</strong>
+            <span class="diff-desc">Dễ — Ôn tập cơ bản</span>
+          </button>
+          <button class="diff-btn" data-diff="medium" onclick="App.selectDifficulty('medium')">
+            <span class="diff-icon">🟡</span>
+            <strong>Medium</strong>
+            <span class="diff-desc">Trung bình — Luyện thi</span>
+          </button>
+          <button class="diff-btn" data-diff="hard" onclick="App.selectDifficulty('hard')">
+            <span class="diff-icon">🔴</span>
+            <strong>Hard</strong>
+            <span class="diff-desc">Khó — Thi thật</span>
+          </button>
+        </div>
+
+        <button class="btn btn-primary" onclick="App.startTest()" style="margin-top:28px;">
+          <span>▶</span> Start Test
+        </button>
+      </div>
+    </div>
+
+    <!-- ================================================
+       SCREEN 2: TEST
+  ================================================ -->
+    <div id="screen-test" class="screen">
+      <div class="glass-card">
+        <!-- Header -->
+        <div class="test-header">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="test-title-bar">🧪 English Entrance Practice</span>
+            <span class="diff-badge" id="diff-badge">Medium</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <div class="lang-toggle" id="lang-toggle">
+              <button class="lang-btn active" onclick="App.setLang('en')">EN</button>
+              <button class="lang-btn" onclick="App.setLang('vi')">VI</button>
+            </div>
+            <span class="question-counter" id="question-counter">Question 1 / 50</span>
+          </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width: 2%;"></div>
+        </div>
+
+        <!-- Question map toggle -->
+        <button class="question-map-toggle" onclick="App.toggleMap()">📋 Question map</button>
+        <div class="question-map" id="question-map"></div>
+
+        <!-- Section badge -->
+        <div class="section-badge" id="section-badge">📚 Grammar</div>
+
+        <!-- Audio player (hidden by default) -->
+        <div class="audio-player" id="audio-player" style="display:none;">
+          <span class="audio-icon">🎧</span>
+          <div class="audio-info">
+            <strong id="audio-title">Listening Track</strong>
+            <span id="audio-desc">Listen carefully before answering</span>
+          </div>
+          <div class="audio-wave paused" id="audio-wave">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-play" onclick="App.playAudio()">▶ Play</button>
+        </div>
+
+        <!-- Question -->
+        <div class="question-text" id="question-text"></div>
+
+        <!-- Options -->
+        <div class="options-grid" id="options-grid"></div>
+
+        <!-- Explanation (shown after review mode) -->
+        <div class="explanation-box" id="explanation-box">
+          <strong>💡 Explanation:</strong> <span id="explanation-text"></span>
+          <div class="vi-explanation" id="vi-explanation">
+            <strong style="color:#007a62;">💡 Giải thích:</strong> <span id="vi-explanation-text"></span>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="test-nav">
+          <button class="btn btn-secondary" id="btn-prev" onclick="App.prevQuestion()">← Previous</button>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-primary" id="btn-next" onclick="App.nextQuestion()">Next →</button>
+          </div>
+        </div>
+
+        <!-- Submit button (shown on last question) -->
+        <div id="submit-area" style="display:none;text-align:center;margin-top:20px;">
+          <div class="divider"></div>
+          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:14px;">You've reached the last question.</p>
+          <button class="btn btn-danger" onclick="App.showConfirm()">✅ Submit Test</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================
+       SCREEN 3: RESULTS
+  ================================================ -->
+    <div id="screen-results" class="screen">
+      <div class="glass-card">
+
+        <!-- SVG gradient for score circle -->
+        <svg width="0" height="0" style="position:absolute;">
+          <defs>
+            <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#4f6ef7" />
+              <stop offset="100%" stop-color="#f064a5" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+          <div class="lang-toggle" id="lang-toggle-results">
+            <button class="lang-btn active" onclick="App.setLang('en')">EN</button>
+            <button class="lang-btn" onclick="App.setLang('vi')">VI</button>
+          </div>
+        </div>
+        <div class="results-header">
+          <div class="results-trophy" id="trophy-icon">🏆</div>
+          <div class="results-title" id="results-title">Test Completed!</div>
+          <div class="results-subtitle">Here is your detailed performance analysis</div>
+        </div>
+
+        <!-- Score circle + stats -->
+        <div class="score-display">
+          <div class="score-circle">
+            <svg class="score-svg" width="140" height="140" viewBox="0 0 140 140">
+              <circle class="score-track" cx="70" cy="70" r="60" />
+              <circle class="score-progress" id="score-arc" cx="70" cy="70" r="60" />
+            </svg>
+            <div class="score-center">
+              <div class="score-number" id="score-number">0</div>
+              <div class="score-total" id="score-total">/ 50</div>
+            </div>
+          </div>
+          <div class="score-stats" id="score-stats"></div>
+        </div>
+
+        <div style="text-align:center;">
+          <div class="grade-badge" id="grade-badge">⭐ Calculating...</div>
+          <div style="font-size:0.9rem;color:var(--text-secondary);" id="grade-desc"></div>
+        </div>
+
+        <div class="divider" style="margin:24px 0;"></div>
+
+        <!-- Tabs: Analysis / Review -->
+        <div class="tabs">
+          <button class="tab-btn active" onclick="App.showTab('analysis')">📊 Analysis</button>
+          <button class="tab-btn" onclick="App.showTab('review')">🔍 Review Answers</button>
+        </div>
+
+        <!-- Analysis tab -->
+        <div class="tab-panel active" id="tab-analysis">
+          <div class="section-title">📈 Skill Breakdown</div>
+          <div class="skill-bars" id="skill-bars"></div>
+          <div class="divider"></div>
+          <div class="section-title" style="margin-top:20px;">💬 Feedback</div>
+          <div class="feedback-grid" id="feedback-grid"></div>
+        </div>
+
+        <!-- Review tab -->
+        <div class="tab-panel" id="tab-review">
+          <div class="review-list" id="review-list"></div>
+        </div>
+
+        <div class="results-actions">
+          <button class="btn btn-secondary" onclick="App.retakeTest()">🔄 Retake Test</button>
+          <button class="btn btn-primary" onclick="App.printResults()">🖨 Print Results</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- #app -->
+
+  <!-- ================================================
+     CONFIRM DIALOG OVERLAY
+================================================ -->
+  <div class="overlay" id="confirm-overlay">
+    <div class="dialog">
+      <div class="dialog-icon">⚠️</div>
+      <h2>Submit Your Test?</h2>
+      <p>
+        You are about to submit your test. <br>
+        <strong id="unanswered-count"></strong><br>
+        This action cannot be undone.
+      </p>
+      <div class="dialog-actions">
+        <button class="btn btn-secondary" onclick="App.closeConfirm()">✗ Go Back</button>
+        <button class="btn btn-danger" onclick="App.submitTest()">✓ Submit Now</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================
+     JAVASCRIPT
+================================================ -->
+  <script>
+
+    /* ============================================================
+       DATA: Question Bank
+       Teachers can modify this array to replace questions.
+       
+       Fields:
+       - id:          unique number
+       - section:     display section name
+       - skill:       internal skill key (for analytics)
+       - type:        question type hint
+       - question:    question text (use ___ for blanks)
+       - options:     array of 4 answer strings
+       - answer:      0-based index of correct answer
+       - explanation: explanation text shown in review
+       - audio:       (optional) object { title, description } for listening Qs
+    ============================================================ */
+
+    const questions = [
+
+      // ============================================================
+      // SECTION A: PHONETICS (Q1–Q5)
+      // ============================================================
+      {
+        id: 1,
+        difficulty: "easy",
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "pronunciation",
+        question: "Choose the word that has the underlined part pronounced differently from the others.\n\nA. ch<u>ea</u>p  B. m<u>ea</u>t  C. br<u>ea</u>d  D. s<u>ea</u>t",
+        options: ["cheap", "meat", "bread", "seat"],
+        answer: 2,
+        explanation: "In 'bread', the 'ea' is pronounced /ɛ/ as in 'bed'. In the other words (cheap, meat, seat), 'ea' is pronounced /iː/.",
+        viQuestion: "Chọn từ có phần gạch chân được phát âm KHÁC với các từ còn lại.\n\nA. ch<u>ea</u>p  B. m<u>ea</u>t  C. br<u>ea</u>d  D. s<u>ea</u>t",
+        viExplanation: "Trong từ \"bread\", \"ea\" được phát âm là /ɛ/ (giống như \"bed\"). Còn trong cheap, meat, seat, \"ea\" đều phát âm là /iː/ (âm dài)."
+      },
+      {
+        id: 2,
+        difficulty: "easy",
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "pronunciation",
+        question: "Choose the word whose underlined part is pronounced differently from the others.\n\nA. th<u>i</u>n  B. f<u>i</u>ll  C. m<u>i</u>nd  D. s<u>i</u>t",
+        options: ["thin", "fill", "mind", "sit"],
+        answer: 2,
+        explanation: "'Mind' has the vowel sound /aɪ/ (long i), while 'thin', 'fill', and 'sit' all have /ɪ/ (short i).",
+        viQuestion: "Chọn từ có phần gạch chân được phát âm KHÁC với các từ còn lại.\n\nA. th<u>i</u>n  B. f<u>i</u>ll  C. m<u>i</u>nd  D. s<u>i</u>t",
+        viExplanation: "\"Mind\" có nguyên âm /aɪ/ (i dài), còn \"thin\", \"fill\", \"sit\" đều có âm /ɪ/ (i ngắn)."
+      },
+      {
+        id: 3,
+        difficulty: "medium",
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "stress",
+        question: "Choose the word that has a different stress pattern from the others.",
+        options: ["education", "information", "preparation", "television"],
+        answer: 3,
+        explanation: "'Television' is typically stressed on the first syllable (TEL-e-vis-ion), while 'education', 'information', and 'preparation' are all stressed on the third syllable (immediately before the -tion suffix).",
+        viQuestion: "Chọn từ có trọng âm KHÁC với các từ còn lại.",
+        viExplanation: "\"Television\" thường có trọng âm rơi vào âm tiết đầu tiên (TEL-e-vis-ion). Trong khi đó, \"education\", \"information\", và \"preparation\" đều có trọng âm rơi vào âm tiết thứ ba (ngay trước đuôi -tion)."
+      },
+      {
+        id: 4,
+        difficulty: "medium",
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "stress",
+        question: "Which word has the stress on the FIRST syllable?",
+        options: ["decide", "repeat", "discuss", "visit"],
+        answer: 3,
+        explanation: "'Visit' is stressed on the first syllable (VIS-it). The others — decide, repeat, discuss — all have stress on the second syllable.",
+        viQuestion: "Từ nào có trọng âm ở âm tiết ĐẦU TIÊN?",
+        viExplanation: "\"Visit\" có trọng âm ở âm tiết đầu (VIS-it). Các từ còn lại — decide, repeat, discuss — đều có trọng âm ở âm tiết thứ hai."
+      },
+      {
+        id: 5,
+        difficulty: "hard",
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "pronunciation",
+        question: "Choose the word whose underlined letter(s) is pronounced differently.\n\nA. <u>ph</u>one  B. <u>ph</u>ysics  C. uphe<u>av</u>al  D. ele<u>ph</u>ant",
+        options: ["phone", "physics", "upheaval", "elephant"],
+        answer: 2,
+        explanation: "In 'upheaval', 'av' is not 'ph'. The 'ph' in phone, physics, and elephant is all pronounced /f/. 'Upheaval' does not contain 'ph' at all in that position — it's a distractor.",
+        viQuestion: "Chọn từ có chữ/nhóm chữ được gạch chân phát âm KHÁC với các từ còn lại.\n\nA. <u>ph</u>one  B. <u>ph</u>ysics  C. uphe<u>av</u>al  D. ele<u>ph</u>ant",
+        viExplanation: "Trong phone, physics, elephant, \"ph\" đều phát âm là /f/. \"Upheaval\" không chứa \"ph\" ở vị trí đó — đây là từ gây nhiễu."
+      },
+      {
+        id: 6,
+        difficulty: "easy",
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "pronunciation",
+        question: "Choose the word whose underlined part is pronounced differently.\n\nA. work<u>ed</u>  B. stopp<u>ed</u>  C. forc<u>ed</u>  D. want<u>ed</u>",
+        options: ["worked", "stopped", "forced", "wanted"],
+        answer: 3,
+        explanation: "In 'wanted', '-ed' is pronounced /ɪd/. In 'worked', 'stopped', and 'forced', it is pronounced /t/ because the base words end in voiceless sounds (/k/, /p/, /s/).",
+        viQuestion: "Chọn từ có phần gạch chân phát âm khác với các từ còn lại.\n\nA. work<u>ed</u>  B. stopp<u>ed</u>  C. forc<u>ed</u>  D. want<u>ed</u>",
+        viExplanation: "Trong 'wanted', đuôi '-ed' phát âm là /ɪd/. Trong các từ còn lại, nó được phát âm là /t/ vì từ gốc kết thúc bằng âm vô thanh (/k/, /p/, /s/)."
+      },
+      {
+        id: 7,
+        difficulty: "easy",
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "pronunciation",
+        question: "Choose the word whose underlined part is pronounced differently.\n\nA. book<u>s</u>  B. pen<u>s</u>  C. cat<u>s</u>  D. map<u>s</u>",
+        options: ["books", "pens", "cats", "maps"],
+        answer: 1,
+        explanation: "In 'pens', '-s' is pronounced /z/ (after a voiced sound /n/). In 'books', 'cats', and 'maps', it is pronounced /s/ (after voiceless sounds /k/, /t/, /p/).",
+        viQuestion: "Chọn từ có phần gạch chân phát âm khác với các từ còn lại.\n\nA. book<u>s</u>  B. pen<u>s</u>  C. cat<u>s</u>  D. map<u>s</u>",
+        viExplanation: "Trong 'pens', '-s' được phát âm là /z/ (sau âm hữu thanh /n/). Trong các từ còn lại, nó phát âm là /s/ (sau âm vô thanh /k/, /t/, /p/)."
+      },
+      {
+        id: 8,
+        difficulty: "medium",
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "stress",
+        question: "Choose the word that has a different stress pattern from the others.",
+        options: ["agree", "allow", "answer", "attract"],
+        answer: 2,
+        explanation: "'Answer' is stressed on the first syllable (AN-swer). The other three are verbs stressed on the second syllable (a-GREE, a-LLOW, a-TTRACT).",
+        viQuestion: "Chọn từ có trọng âm khác với các từ còn lại.",
+        viExplanation: "'Answer' có trọng âm rơi vào âm tiết đầu tiên (AN-swer). Ba từ còn lại là động từ có trọng âm rơi vào âm tiết thứ hai."
+      },
+      {
+        id: 9,
+        difficulty: "medium",
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "pronunciation",
+        question: "Choose the word whose underlined part is pronounced differently.\n\nA. l<u>ou</u>d  B. ab<u>ou</u>t  C. c<u>ou</u>sin  D. m<u>ou</u>th",
+        options: ["loud", "about", "cousin", "mouth"],
+        answer: 2,
+        explanation: "'Cousin' is pronounced with /ʌ/ (like 'up'). The other words contain the diphthong /aʊ/ (like 'now').",
+        viQuestion: "Chọn từ có phần gạch chân phát âm khác với các từ còn lại.\n\nA. l<u>ou</u>d  B. ab<u>ou</u>t  C. c<u>ou</u>sin  D. m<u>ou</u>th",
+        viExplanation: "Trong 'cousin', 'ou' phát âm là /ʌ/ (âm 'v ngược'). Các từ còn lại phát âm là nguyên âm đôi /aʊ/."
+      },
+      {
+        id: 10,
+        difficulty: "hard",
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "stress",
+        question: "Choose the word that has a different stress pattern from the others.",
+        options: ["pioneer", "volunteer", "engineer", "committee"],
+        answer: 3,
+        explanation: "'Committee' is stressed on the second syllable (com-MIT-tee). The others are stressed on the final syllable (-EER).",
+        viQuestion: "Chọn từ có trọng âm khác với các từ còn lại.",
+        viExplanation: "'Committee' có trọng âm rơi vào âm tiết thứ hai (com-MIT-tee). Các từ còn lại có đuôi '-eer' thường nhận trọng âm ở chính âm tiết đó."
+      },
+
+      // ============================================================
+      // SECTION B: GRAMMAR & VOCABULARY (Q6–Q22)
+      // ============================================================
+      {
+        id: 6,
+        difficulty: "easy",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "verb_tense",
+        question: "She usually ___ to school by bus.",
+        options: ["go", "goes", "going", "went"],
+        answer: 1,
+        explanation: "Use present simple with 'usually' for habitual actions. Third person singular (she) takes 'goes'.",
+        viQuestion: "Cô ấy thường ___ đến trường bằng xe buýt.",
+        viExplanation: "Dùng thì hiện tại đơn với \"usually\" để diễn tả hành động thói quen. Ngôi thứ ba số ít (she) dùng \"goes\"."
+      },
+      {
+        id: 7,
+        difficulty: "medium",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "verb_tense",
+        question: "By the time we arrived, the film ___.",
+        options: ["already started", "has already started", "had already started", "was already starting"],
+        answer: 2,
+        explanation: "Past perfect is used to describe an action that was completed before another past action. 'Had already started' is correct.",
+        viQuestion: "Khi chúng tôi đến nơi, bộ phim ___.",
+        viExplanation: "Thì quá khứ hoàn thành dùng để diễn tả hành động đã hoàn thành TRƯỚC một hành động khác trong quá khứ. Đáp án đúng là \"had already started\"."
+      },
+      {
+        id: 8,
+        difficulty: "medium",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "gerund_infinitive",
+        question: "I look forward to ___ you again soon.",
+        options: ["see", "seeing", "seen", "have seen"],
+        answer: 1,
+        explanation: "'Look forward to' is followed by a gerund (-ing form). The correct answer is 'seeing'.",
+        viQuestion: "Tôi mong được ___ bạn sớm.",
+        viExplanation: "\"Look forward to\" được theo sau bởi danh động từ (V-ing). Đáp án đúng là \"seeing\"."
+      },
+      {
+        id: 9,
+        difficulty: "medium",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "conditional",
+        question: "If I ___ you, I would apologize to her immediately.",
+        options: ["am", "was", "were", "had been"],
+        answer: 2,
+        explanation: "In a second conditional (unreal present situation), we use 'were' for all persons in the if-clause: 'If I were you...'",
+        viQuestion: "Nếu tôi là bạn, tôi sẽ xin lỗi cô ấy ngay.",
+        viExplanation: "Trong câu điều kiện loại 2 (giả thiết không có thật ở hiện tại), ta dùng \"were\" cho tất cả các ngôi trong mệnh đề if: \"If I were you...\""
+      },
+      {
+        id: 10,
+        difficulty: "medium",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "wish",
+        question: "She wishes she ___ harder last year.",
+        options: ["studied", "had studied", "would study", "studies"],
+        answer: 1,
+        explanation: "'Wish' + past perfect (had + V3) is used to express regret about a past situation.",
+        viQuestion: "Cô ấy ước mình đã học chăm chỉ hơn năm ngoái.",
+        viExplanation: "\"Wish\" + quá khứ hoàn thành (had + V3) dùng để diễn tả sự hối tiếc về một điều trong quá khứ."
+      },
+      {
+        id: 11,
+        difficulty: "easy",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "superlative",
+        question: "That is ___ building in the city.",
+        options: ["the most tall", "the tallest", "taller", "most tall"],
+        answer: 1,
+        explanation: "Short adjectives (one syllable) form superlatives with '-est'. 'Tall' → 'the tallest'.",
+        viQuestion: "Đó là ___ tòa nhà trong thành phố.",
+        viExplanation: "Tính từ ngắn (một âm tiết) tạo dạng so sánh nhất bằng cách thêm \"-est\". \"Tall\" → \"the tallest\"."
+      },
+      {
+        id: 12,
+        difficulty: "easy",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "articles",
+        question: "Can you play ___ guitar?",
+        options: ["a", "an", "the", "Ø (no article)"],
+        answer: 2,
+        explanation: "We use 'the' with musical instruments: 'play the guitar', 'play the piano'.",
+        viQuestion: "Bạn có biết chơi ___ guitar không?",
+        viExplanation: "Dùng \"the\" với các nhạc cụ: \"play the guitar\", \"play the piano\"."
+      },
+      {
+        id: 13,
+        difficulty: "easy",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "preposition",
+        question: "She is very good ___ playing chess.",
+        options: ["at", "in", "on", "for"],
+        answer: 0,
+        explanation: "'Good at' is the correct collocation: 'She is good at playing chess.'",
+        viQuestion: "Cô ấy rất giỏi ___ chơi cờ vua.",
+        viExplanation: "\"Good at\" là cụm từ đúng: \"She is good at playing chess.\""
+      },
+      {
+        id: 14,
+        difficulty: "medium",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "relative_pronoun",
+        question: "The man ___ car was stolen reported it to the police.",
+        options: ["who", "whom", "whose", "which"],
+        answer: 2,
+        explanation: "'Whose' is the possessive relative pronoun. It shows ownership: 'the man whose car'.",
+        viQuestion: "Người đàn ông ___ xe bị đánh cắp đã trình báo với cảnh sát.",
+        viExplanation: "\"Whose\" là đại từ quan hệ sở hữu. Nó chỉ sự sở hữu: \"the man whose car\"."
+      },
+      {
+        id: 15,
+        difficulty: "medium",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "passive",
+        question: "The new bridge ___ next year.",
+        options: ["will build", "will be built", "is building", "builds"],
+        answer: 1,
+        explanation: "Future passive voice = will + be + past participle. 'Will be built' is correct.",
+        viQuestion: "Cây cầu mới ___ vào năm tới.",
+        viExplanation: "Câu bị động tương lai = will + be + V3 (quá khứ phân từ). Đáp án đúng là \"will be built\"."
+      },
+      {
+        id: 16,
+        difficulty: "easy",
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "phrasal_verb",
+        question: "Don't give ___! You're almost finished.",
+        options: ["up", "out", "in", "away"],
+        answer: 0,
+        explanation: "'Give up' means to stop trying. 'Don't give up!' means 'Don't stop trying!'",
+        viQuestion: "Đừng ___ ! Bạn sắp xong rồi.",
+        viExplanation: "\"Give up\" có nghĩa là từ bỏ, ngừng cố gắng. \"Don't give up!\" nghĩa là \"Đừng bỏ cuộc!\""
+      },
+      {
+        id: 17,
+        difficulty: "medium",
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "collocation",
+        question: "She made a great ___ to the success of the project.",
+        options: ["contribution", "participation", "performance", "attendance"],
+        answer: 0,
+        explanation: "'Make a contribution' is the correct collocation. We contribute to the success of something.",
+        viQuestion: "Cô ấy đã có ___ lớn vào sự thành công của dự án.",
+        viExplanation: "\"Make a contribution\" là cụm từ đúng. Chúng ta đóng góp (contribute) vào sự thành công của điều gì đó."
+      },
+      {
+        id: 18,
+        difficulty: "easy",
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "synonym",
+        question: "Choose the word CLOSEST in meaning to 'enormous'.",
+        options: ["small", "average", "huge", "pretty"],
+        answer: 2,
+        explanation: "'Enormous' means very large. The synonym is 'huge'. The others are antonyms or unrelated.",
+        viQuestion: "Chọn từ CÓ NGHĨA GẦN NHẤT với từ \"enormous\".",
+        viExplanation: "\"Enormous\" có nghĩa là rất lớn. Từ đồng nghĩa là \"huge\". Các từ còn lại là trái nghĩa hoặc không liên quan."
+      },
+      {
+        id: 19,
+        difficulty: "easy",
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "antonym",
+        question: "Choose the word OPPOSITE in meaning to 'generous'.",
+        options: ["kind", "selfish", "polite", "helpful"],
+        answer: 1,
+        explanation: "'Generous' means willing to give freely. Its antonym is 'selfish' — putting oneself first.",
+        viQuestion: "Chọn từ TRÁI NGHĨA với từ \"generous\".",
+        viExplanation: "\"Generous\" có nghĩa là hào phóng, sẵn sàng cho đi. Trái nghĩa của nó là \"selfish\" (ích kỷ)."
+      },
+      {
+        id: 20,
+        difficulty: "medium",
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "word_form",
+        question: "His ___ of the local culture impressed everyone. (KNOW)",
+        options: ["know", "knowing", "knowledge", "knowledgeable"],
+        answer: 2,
+        explanation: "The noun form of 'know' is 'knowledge'. We need a noun after 'His' (possessive).",
+        viQuestion: "___ của anh ấy về văn hóa địa phương đã gây ấn tượng với mọi người. (KNOW)",
+        viExplanation: "Danh từ của \"know\" là \"knowledge\". Chúng ta cần danh từ sau \"His\" (sở hữu cách)."
+      },
+      {
+        id: 21,
+        difficulty: "medium",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "reported_speech",
+        question: "He said: 'I am studying for my exam.' → He said that he ___ for his exam.",
+        options: ["is studying", "was studying", "studied", "had studied"],
+        answer: 1,
+        explanation: "Reported speech shifts tense back: present continuous → past continuous. 'is studying' → 'was studying'.",
+        viQuestion: "Anh ấy nói: \"Tôi đang ôn thi.\" → Anh ấy nói rằng anh ấy ___ để thi.",
+        viExplanation: "Câu tường thuật lùi thì: hiện tại tiếp diễn → quá khứ tiếp diễn. \"is studying\" → \"was studying\"."
+      },
+      {
+        id: 22,
+        difficulty: "easy",
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "modal",
+        question: "You ___ eat so much junk food. It's bad for your health.",
+        options: ["should", "shouldn't", "must", "can"],
+        answer: 1,
+        explanation: "'Shouldn't' is used to advise someone NOT to do something. 'You shouldn't eat junk food.'",
+        viQuestion: "Bạn ___ ăn nhiều đồ ăn nhanh. Nó không tốt cho sức khỏe của bạn.",
+        viExplanation: "\"Shouldn't\" dùng để khuyên ai đó KHÔNG nên làm điều gì đó. \"You shouldn't eat junk food.\""
+      },
+
+      // ============================================================
+      // SECTION C: READING (Q23–Q36)
+      // ============================================================
+      {
+        id: 23,
+        difficulty: "easy",
+        section: "C. Reading – Signs",
+        skill: "reading",
+        type: "signs",
+        question: "You see a sign that reads: 'WET FLOOR'. What does it mean?",
+        options: [
+          "The floor has just been washed and may be slippery.",
+          "You are not allowed to walk on the floor.",
+          "The floor needs to be cleaned.",
+          "The floor is broken."
+        ],
+        answer: 0,
+        explanation: "'Wet Floor' signs warn that the surface is slippery due to cleaning. Be careful walking there.",
+        viQuestion: "Bạn nhìn thấy một biển báo có nội dung: \"WET FLOOR\" (SÀN ƯỚT). Điều đó có nghĩa là gì?",
+        viExplanation: "Biển báo \"Wet Floor\" cảnh báo rằng bề mặt sàn trơn do vừa được lau. Hãy cẩn thận khi đi qua."
+      },
+      {
+        id: 24,
+        difficulty: "easy",
+        section: "C. Reading – Signs",
+        skill: "reading",
+        type: "signs",
+        question: "A sign on a shop door reads: 'BACK IN 10 MINUTES'. What should you do?",
+        options: [
+          "The shop is permanently closed.",
+          "You should come back in about 10 minutes.",
+          "You have to wait inside the shop.",
+          "The shop opens in 10 hours."
+        ],
+        answer: 1,
+        explanation: "This notice means the shopkeeper has stepped out briefly and will return within 10 minutes.",
+        viQuestion: "Một tấm biển trên cửa cửa hàng có nội dung: \"BACK IN 10 MINUTES\" (TRỞ LẠI TRONG 10 PHÚT). Bạn nên làm gì?",
+        viExplanation: "Thông báo này có nghĩa là chủ cửa hàng đã ra ngoài một lúc và sẽ quay lại trong vòng 10 phút."
+      },
+      {
+        id: 25,
+        difficulty: "medium",
+        section: "C. Reading – Cloze",
+        skill: "reading",
+        type: "cloze",
+        question: "Smartphones have completely changed the way people ___. Today, almost everyone carries a small computer in their pocket.",
+        options: ["communicate", "communicated", "communicating", "to communicate"],
+        answer: 0,
+        explanation: "In the phrase 'the way people communicate', there is a relative clause where 'that' or 'in which' has been omitted. 'Communicate' is the main verb of this clause and must agree with the subject 'people' in the present tense.",
+        viQuestion: "Điện thoại thông minh đã thay đổi hoàn toàn cách mọi người ___. Ngày nay, hầu hết mọi người đều mang theo một chiếc máy tính nhỏ trong túi.",
+        viExplanation: "Trong cụm \"the way people communicate\", đây là một mệnh đề quan hệ đã lược bỏ đại từ \"that\" hoặc \"in which\". \"Communicate\" đóng vai trò là động từ chính của mệnh đề này và được chia ở thì hiện tại đơn phù hợp với chủ ngữ số nhiều \"people\"."
+      },
+      {
+        id: 26,
+        difficulty: "medium",
+        section: "C. Reading – Cloze",
+        skill: "reading",
+        type: "cloze",
+        question: "Global warming is one of the most serious problems ___ the world today. Scientists are calling for immediate action.",
+        options: ["to face", "facing", "faced", "faces"],
+        answer: 1,
+        explanation: "A participial phrase following a noun: 'problems facing the world' — the problems are currently facing/affecting the world.",
+        viQuestion: "Biến đổi khí hậu là một trong những vấn đề nghiêm trọng nhất ___ thế giới hiện nay. Các nhà khoa học đang kêu gọi hành động ngay lập tức.",
+        viExplanation: "Mệnh đề phân từ đứng sau danh từ: \"problems facing the world\" — những vấn đề đang ảnh hưởng đến thế giới."
+      },
+      {
+        id: 27,
+        difficulty: "easy",
+        section: "C. Reading – Comprehension",
+        skill: "reading",
+        type: "comprehension",
+        question: "Read the following passage and answer:\n\n'The Amazon rainforest, often called the lungs of the Earth, produces about 20% of the world's oxygen. It covers over 5.5 million square kilometres and is home to approximately 10% of all species on Earth. Unfortunately, deforestation threatens this vital ecosystem.'\n\nWhat percentage of the world's oxygen does the Amazon produce?",
+        options: ["10%", "20%", "50%", "55%"],
+        answer: 1,
+        explanation: "The passage states the Amazon 'produces about 20% of the world's oxygen'.",
+        viQuestion: "Đọc đoạn văn sau và trả lời:\n\n\"Rừng Amazon, thường được gọi là lá phổi của Trái Đất, tạo ra khoảng 20% lượng oxy của thế giới. Nó trải rộng hơn 5,5 triệu km² và là nơi sinh sống của khoảng 10% tất cả các loài trên Trái Đất. Thật không may, nạn phá rừng đang đe dọa hệ sinh thái quan trọng này.\"\n\nRừng Amazon tạo ra bao nhiêu phần trăm lượng oxy thế giới?",
+        viExplanation: "Đoạn văn nêu rõ rừng Amazon \"tạo ra khoảng 20% lượng oxy của thế giới\"."
+      },
+      {
+        id: 28,
+        difficulty: "easy",
+        section: "C. Reading – Comprehension",
+        skill: "reading",
+        type: "comprehension",
+        question: "Based on the passage in Q27, what is the main threat to the Amazon rainforest?",
+        options: ["Climate change", "Tourism", "Deforestation", "Pollution"],
+        answer: 2,
+        explanation: "The passage directly states 'deforestation threatens this vital ecosystem'.",
+        viQuestion: "Dựa trên đoạn văn ở câu 27, mối đe dọa chính đối với rừng Amazon là gì?",
+        viExplanation: "Đoạn văn nêu trực tiếp \"nạn phá rừng đang đe dọa hệ sinh thái quan trọng này\"."
+      },
+      {
+        id: 29,
+        difficulty: "medium",
+        section: "C. Reading – Comprehension",
+        skill: "reading",
+        type: "comprehension",
+        question: "Based on the passage in Q27, the word 'vital' in the last sentence is closest in meaning to:",
+        options: ["large", "ancient", "essential", "beautiful"],
+        answer: 2,
+        explanation: "'Vital' means absolutely necessary or essential. The Amazon is described as a critically important ecosystem.",
+        viQuestion: "Dựa trên đoạn văn ở câu 27, từ \"vital\" trong câu cuối gần nghĩa nhất với từ nào?",
+        viExplanation: "\"Vital\" có nghĩa là tuyệt đối cần thiết, không thể thiếu (essential). Rừng Amazon được mô tả là hệ sinh thái cực kỳ quan trọng."
+      },
+      {
+        id: 30,
+        difficulty: "medium",
+        section: "C. Reading – Sentence Insertion",
+        skill: "reading",
+        type: "sentence_insertion",
+        question: "Choose the sentence that best fits the blank (marked [■]) in this paragraph:\n\n'Exercise has many benefits. It improves cardiovascular health and builds muscle strength. [■] Furthermore, regular physical activity can improve your sleep quality.'\n",
+        options: [
+          "Exercise can be difficult for some people.",
+          "It also boosts mental health and reduces stress.",
+          "Many people prefer watching television.",
+          "Sports equipment can be expensive."
+        ],
+        answer: 1,
+        explanation: "The paragraph lists benefits of exercise. 'It also boosts mental health and reduces stress' flows logically between physical benefits and sleep benefits.",
+        viQuestion: "Chọn câu phù hợp nhất để điền vào chỗ trống [■] trong đoạn văn:\n\n\"Tập thể dục có nhiều lợi ích. Nó cải thiện sức khỏe tim mạch và tăng cường sức mạnh cơ bắp. [■] Hơn nữa, hoạt động thể chất thường xuyên có thể cải thiện chất lượng giấc ngủ của bạn.\"",
+        viExplanation: "Đoạn văn liệt kê các lợi ích của tập thể dục. \"Nó cũng tăng cường sức khỏe tâm thần và giảm căng thẳng\" diễn đạt logic giữa lợi ích thể chất và lợi ích giấc ngủ."
+      },
+      {
+        id: 31,
+        difficulty: "medium",
+        section: "C. Reading – Sentence Ordering",
+        skill: "reading",
+        type: "sentence_ordering",
+        question: "Arrange the sentences in the correct order to form a coherent paragraph:\n\n1. Finally, rinse well with cold water.\n2. First, apply a small amount of shampoo to your wet hair.\n3. To wash your hair properly, follow these steps.\n4. Then, massage your scalp gently for two minutes.",
+        options: ["3 – 2 – 4 – 1", "1 – 2 – 3 – 4", "2 – 3 – 4 – 1", "3 – 1 – 2 – 4"],
+        answer: 0,
+        explanation: "The correct order is: Introduction (3) → First step (2) → Then (4) → Finally (1). Discourse markers guide the sequence.",
+        viQuestion: "Sắp xếp các câu theo thứ tự đúng để tạo thành đoạn văn mạch lạc:\n\n1. Cuối cùng, xả lại bằng nước lạnh.\n2. Đầu tiên, thoa một lượng nhỏ dầu gội vào tóc ướt.\n3. Để gội đầu đúng cách, hãy làm theo các bước sau.\n4. Sau đó, massage nhẹ da đầu trong hai phút.",
+        viExplanation: "Thứ tự đúng: Giới thiệu (3) → Bước đầu tiên (2) → Tiếp theo (4) → Cuối cùng (1). Các từ nối chỉ thứ tự hướng dẫn chúng ta."
+      },
+      {
+        id: 32,
+        difficulty: "easy",
+        section: "C. Reading – Comprehension",
+        skill: "reading",
+        type: "comprehension",
+        question: "Read this short text:\n\n'Despite being only 16, Anna has already published two novels and speaks four languages. She hopes to study linguistics at university.'\n\nWhat does Anna hope to study?",
+        options: ["Literature", "Languages", "Linguistics", "Law"],
+        answer: 2,
+        explanation: "The text clearly states: 'She hopes to study linguistics at university.'",
+        viQuestion: "Đọc đoạn văn ngắn này:\n\n\"Mặc dù mới 16 tuổi, Anna đã xuất bản hai cuốn tiểu thuyết và nói được bốn thứ tiếng. Cô ấy hy vọng sẽ học ngôn ngữ học tại trường đại học.\"\n\nAnna hy vọng sẽ học ngành gì?",
+        viExplanation: "Đoạn văn nêu rõ: \"Cô ấy hy vọng sẽ học ngôn ngữ học tại trường đại học.\""
+      },
+      {
+        id: 33,
+        difficulty: "medium",
+        section: "C. Reading – Cloze",
+        skill: "reading",
+        type: "cloze",
+        question: "Many young people today prefer online shopping ___ going to physical stores because it saves time and offers more variety.",
+        options: ["to", "than", "rather than", "instead"],
+        answer: 0,
+        explanation: "The standard structure is 'prefer V-ing to V-ing'. We use 'to' to compare two preferences.",
+        viQuestion: "Nhiều bạn trẻ ngày nay thích mua sắm trực tuyến ___ đến các cửa hàng truyền thống vì tiết kiệm thời gian và có nhiều lựa chọn hơn.",
+        viExplanation: "Cấu trúc chuẩn là 'prefer V-ing to V-ing'. Chúng ta dùng giới từ 'to' để so sánh giữa hai sở thích."
+      },
+      {
+        id: 34,
+        difficulty: "easy",
+        section: "C. Reading – Cloze",
+        skill: "reading",
+        type: "cloze",
+        question: "Learning a new language ___ time and dedication, but the rewards are truly worthwhile.",
+        options: ["requires", "requiring", "required", "is required"],
+        answer: 0,
+        explanation: "'Learning a new language' is the subject. We need a present simple verb: 'requires'.",
+        viQuestion: "Học một ngôn ngữ mới ___ thời gian và sự cống hiến, nhưng phần thưởng thực sự đáng giá.",
+        viExplanation: "\"Learning a new language\" là chủ ngữ. Chúng ta cần động từ ở thì hiện tại đơn: \"requires\"."
+      },
+      {
+        id: 35,
+        difficulty: "easy",
+        section: "C. Reading – Comprehension",
+        skill: "reading",
+        type: "comprehension",
+        question: "Read the advertisement:\n\n'Summer Language Camp! Ages 12–18. July 1–31. Learn English with native teachers. Limited spots available. Register before June 15!'\n\nWho is the camp designed for?",
+        options: ["Adults over 18", "Teachers", "Students aged 12 to 18", "Students aged 6 to 12"],
+        answer: 2,
+        explanation: "The advertisement specifies 'Ages 12–18', so the camp targets students in that age range.",
+        viQuestion: "Đọc quảng cáo:\n\n\"Trại hè học tiếng Anh! Độ tuổi 12–18. Từ 1/7 đến 31/7. Học tiếng Anh với giáo viên bản ngữ. Số lượng có hạn. Đăng ký trước ngày 15/6!\"\n\nTrại hè được thiết kế cho đối tượng nào?",
+        viExplanation: "Quảng cáo ghi rõ \"Độ tuổi 12–18\", vì vậy trại hè dành cho học sinh trong độ tuổi đó."
+      },
+      {
+        id: 36,
+        difficulty: "easy",
+        section: "C. Reading – Comprehension",
+        skill: "reading",
+        type: "comprehension",
+        question: "Based on the advertisement in Q35, when is the registration deadline?",
+        options: ["July 1", "July 31", "June 15", "June 1"],
+        answer: 2,
+        explanation: "The ad states 'Register before June 15!' — the deadline for registration.",
+        viQuestion: "Dựa trên quảng cáo ở câu 35, hạn chót đăng ký là khi nào?",
+        viExplanation: "Quảng cáo ghi \"Đăng ký trước ngày 15/6!\" — đây là hạn chót đăng ký."
+      },
+
+      // ============================================================
+      // SECTION D: LISTENING (Q37–Q41)
+      // ============================================================
+      {
+        id: 37,
+        difficulty: "easy",
+        section: "D. Listening",
+        skill: "listening",
+        type: "listening_dialogue",
+        audio: {
+          title: "Dialogue Track 1",
+          description: "Listen to a short conversation between two students"
+        },
+        // Đã bỏ "A says", "B replies" để TTS đọc mượt mà hơn
+        audioText: "Are you free this Saturday? - I think so. Why? - Do you want to come to my birthday party? It starts at 6 pm. - That sounds great! Where is it? - At the Blue Garden Restaurant on Park Street.",
+        question: "[🎧 Listening] Listen to the conversation and answer the question:\n\nWhere is the birthday party being held?",
+        options: [
+          "At school",
+          "At a cinema",
+          "At Blue Garden Restaurant",
+          "At the speaker's house"
+        ],
+        answer: 2,
+        explanation: "The speaker mentions the location is 'At the Blue Garden Restaurant on Park Street'.",
+        viQuestion: "[🎧 Nghe] Nghe đoạn hội thoại và trả lời câu hỏi:\n\nBữa tiệc sinh nhật được tổ chức ở đâu?",
+        viExplanation: "Người nói đề cập rằng địa điểm là \"Tại nhà hàng Blue Garden trên phố Park\"."
+      },
+      {
+        id: 38,
+        difficulty: "easy",
+        section: "D. Listening",
+        skill: "listening",
+        type: "listening_dialogue",
+        audio: {
+          title: "Dialogue Track 1",
+          description: "Continue listening to the conversation"
+        },
+        // Đã loại bỏ phần dẫn chuyện để TTS đọc tự nhiên hơn
+        audioText: "Are you free this Saturday? - I think so. Why? - Do you want to come to my birthday party? It starts at 6 pm. - That sounds great! Where is it? - At the Blue Garden Restaurant on Park Street.",
+        question: "[🎧 Listening] Based on the dialogue, what time does the birthday party start?",
+        options: ["5:00 pm", "6:00 pm", "7:00 pm", "8:00 pm"],
+        answer: 1,
+        explanation: "The speaker clearly states: 'It starts at 6 pm.'",
+        viQuestion: "[🎧 Nghe] Dựa vào đoạn hội thoại, bữa tiệc sinh nhật bắt đầu lúc mấy giờ?",
+        viExplanation: "Người nói nêu rõ: \"Nó bắt đầu lúc 6 giờ chiều.\""
+      },
+      {
+        id: 39,
+        difficulty: "medium",
+        section: "D. Listening",
+        skill: "listening",
+        type: "listening_news",
+        audio: {
+          title: "News Report Track",
+          description: "Listen to a short news bulletin"
+        },
+        audioText: "Good morning. In today's top stories: City officials announced a new recycling program set to launch next month. The program will allow residents to recycle plastics, paper, and glass at special collection points across the city.",
+        question: "[🎧 Listening] Listen to the news bulletin, then answer:\n\nWhat is the main topic of the news report?",
+        options: [
+          "A new school opening",
+          "A new recycling program",
+          "A city road construction project",
+          "A new hospital"
+        ],
+        answer: 1,
+        explanation: "The report is about 'a new recycling program set to launch next month'.",
+        viQuestion: "[🎧 Nghe] Nghe bản tin và trả lời:\n\nChủ đề chính của bản tin là gì?",
+        viExplanation: "Bản tin nói về \"chương trình tái chế mới sẽ ra mắt vào tháng tới\"."
+      },
+      {
+        id: 40,
+        difficulty: "medium",
+        section: "D. Listening",
+        skill: "listening",
+        type: "listening_news",
+        audio: {
+          title: "News Report Track",
+          description: "Continue listening to the news report"
+        },
+        audioText: "Good morning. In today's top stories: City officials announced a new recycling program set to launch next month. The program will allow residents to recycle plastics, paper, and glass at special collection points across the city.",
+        question: "[🎧 Listening] Based on the news in Q39, what materials can be recycled in the new program?",
+        options: [
+          "Metals and electronics",
+          "Clothing and fabric",
+          "Plastics, paper, and glass",
+          "Food and organic waste"
+        ],
+        answer: 2,
+        explanation: "The news states residents will be able to recycle 'plastics, paper, and glass'.",
+        viQuestion: "[🎧 Nghe] Dựa vào bản tin ở câu 39, những vật liệu nào có thể được tái chế trong chương trình mới?",
+        viExplanation: "Bản tin nêu cư dân sẽ có thể tái chế \"nhựa, giấy và thủy tinh\"."
+      },
+      {
+        id: 41,
+        difficulty: "medium",
+        section: "D. Listening",
+        skill: "listening",
+        type: "listening_dialogue",
+        audio: {
+          title: "Dialogue Track 2",
+          description: "Listen to a conversation at a bookstore"
+        },
+        // Đã tối ưu hóa cho TTS: Bỏ "A says", "B replies" và phần dẫn nhập
+        audioText: "Excuse me, do you have any books about Vietnamese history? - Yes, we do. They are in Section C, on the second floor. - Thank you. Do you also have English grammar books? - Those are on the ground floor, Section A.",
+        question: "[🎧 Listening] Listen to the conversation at a bookstore and answer:\n\nWhere can the customer find the English grammar books?",
+        options: [
+          "Section C, second floor",
+          "Section A, ground floor",
+          "Section B, first floor",
+          "Section A, second floor"
+        ],
+        answer: 1,
+        explanation: "The bookstore staff member specifies that English grammar books are 'on the ground floor, Section A'.",
+        viQuestion: "[🎧 Nghe] Nghe cuộc trò chuyện tại hiệu sách và trả lời:\n\nKhách hàng có thể tìm thấy sách ngữ pháp tiếng Anh ở đâu?",
+        viExplanation: "Nhân viên hiệu sách nêu rõ sách ngữ pháp tiếng Anh ở \"tầng trệt, khu A\"."
+      },
+
+      // ============================================================
+      // SECTION E: SOCIAL INTERACTION (Q42–Q45)
+      // ============================================================
+      {
+        id: 42,
+        difficulty: "easy",
+        section: "E. Social Interaction",
+        skill: "social",
+        type: "response",
+        question: "Choose the most appropriate response:\n\nA: 'Thank you so much for your help!'\nB: '___'",
+        options: [
+          "I don't think so.",
+          "You're welcome! Happy to help.",
+          "No, I can't.",
+          "That's very kind of you."
+        ],
+        answer: 1,
+        explanation: "'You're welcome! Happy to help.' is the standard, polite response to 'Thank you'. Option D is used when someone compliments you.",
+        viQuestion: "Chọn câu trả lời PHÙ HỢP NHẤT:\n\nA: \"Cảm ơn bạn rất nhiều vì sự giúp đỡ!\"\nB: \"___\"",
+        viExplanation: "\"You're welcome! Happy to help.\" là câu trả lời lịch sự chuẩn khi được cảm ơn. Đáp án D dùng khi ai đó khen ngợi bạn."
+      },
+      {
+        id: 43,
+        difficulty: "easy",
+        section: "E. Social Interaction",
+        skill: "social",
+        type: "response",
+        question: "Choose the most appropriate response:\n\nA: 'Could you open the window, please?'\nB: '___'",
+        options: [
+          "Yes, I'd be glad to.",
+          "No, the window is open.",
+          "I don't want a window.",
+          "The window is very nice."
+        ],
+        answer: 0,
+        explanation: "When someone makes a polite request with 'Could you...?', the natural response to agree is 'Yes, I'd be glad to' or 'Of course!'",
+        viQuestion: "Chọn câu trả lời PHÙ HỢP NHẤT:\n\nA: \"Bạn có thể mở cửa sổ giúp tôi không?\"\nB: \"___\"",
+        viExplanation: "Khi ai đó đưa ra yêu cầu lịch sự với \"Could you...?\", câu trả lời đồng ý tự nhiên là \"Yes, I'd be glad to\" hoặc \"Of course!\""
+      },
+      {
+        id: 44,
+        difficulty: "medium",
+        section: "E. Social Interaction",
+        skill: "social",
+        type: "conversation_order",
+        question: "Arrange the conversation in the correct order:\n\n1. A: 'Have a great trip!'\n2. A: 'Where are you going?'\n3. B: 'Thank you!'\n4. B: 'I'm going to visit my grandparents in Hanoi.'",
+        options: [
+          "2 – 4 – 1 – 3",
+          "1 – 2 – 3 – 4",
+          "4 – 2 – 1 – 3",
+          "2 – 1 – 4 – 3"
+        ],
+        answer: 0,
+        explanation: "Natural conversation flow: A asks where B is going (2) → B answers (4) → A gives a farewell (1) → B thanks A (3).",
+        viQuestion: "Sắp xếp đoạn hội thoại theo thứ tự đúng:\n\n1. A: \"Chúc bạn có chuyến đi vui vẻ!\"\n2. A: \"Bạn đi đâu vậy?\"\n3. B: \"Cảm ơn!\"\n4. B: \"Tôi đi thăm ông bà ở Hà Nội.\"",
+        viExplanation: "Trình tự hội thoại tự nhiên: A hỏi B đi đâu (2) → B trả lời (4) → A chúc lên đường (1) → B cảm ơn (3)."
+      },
+      {
+        id: 45,
+        difficulty: "easy",
+        section: "E. Social Interaction",
+        skill: "social",
+        type: "response",
+        question: "Choose the most appropriate response:\n\nA: 'I'm sorry I'm late. The traffic was terrible.'\nB: '___'",
+        options: [
+          "You should be more careful.",
+          "No problem. Please take a seat.",
+          "I hate traffic too.",
+          "Traffic is always bad."
+        ],
+        answer: 1,
+        explanation: "'No problem. Please take a seat.' is the most polite and practical response when someone apologizes for being late to a meeting.",
+        viQuestion: "Chọn câu trả lời PHÙ HỢP NHẤT:\n\nA: \"Tôi xin lỗi vì đến muộn. Tắc đường quá.\"\nB: \"___\"",
+        viExplanation: "\"No problem. Please take a seat.\" là câu trả lời lịch sự và thực tế nhất khi ai đó xin lỗi vì đến muộn trong một cuộc họp."
+      },
+
+      // ============================================================
+      // SECTION F: WRITING (Q46–Q50)
+      // ============================================================
+      {
+        id: 46,
+        difficulty: "medium",
+        section: "F. Writing – Error Correction",
+        skill: "writing",
+        type: "error_correction",
+        question: "Identify the error in the following sentence:\n\n'She has been living in this city since five years.'",
+        options: [
+          "'She' should be 'Her'",
+          "'has been living' should be 'lived'",
+          "'since' should be 'for'",
+          "No error"
+        ],
+        answer: 2,
+        explanation: "Use 'for' with a period of time (five years), and 'since' with a specific point in time (2019, last Monday). Correct: 'for five years'.",
+        viQuestion: "Xác định lỗi sai trong câu sau:\n\n\"She has been living in this city since five years.\"",
+        viExplanation: "Dùng \"for\" với khoảng thời gian (five years), và \"since\" với một thời điểm cụ thể (2019, thứ Hai tuần trước). Đúng: \"for five years\"."
+      },
+      {
+        id: 47,
+        difficulty: "medium",
+        section: "F. Writing – Sentence Transformation",
+        skill: "writing",
+        type: "sentence_transformation",
+        question: "Choose the sentence that has the SAME MEANING as the original:\n\n'It's too hot for us to go outside.'",
+        options: [
+          "It's so hot that we can go outside.",
+          "It's so hot that we can't go outside.",
+          "We can go outside because it's hot.",
+          "Although it's hot, we go outside."
+        ],
+        answer: 1,
+        explanation: "'Too + adj + to + verb' = 'So + adj + that + subject + can't + verb'. 'Too hot to go out' = 'So hot that we can't go out'.",
+        viQuestion: "Chọn câu có NGHĨA TƯƠNG ĐƯƠNG với câu gốc:\n\n\"Trời nóng quá để chúng tôi ra ngoài.\"",
+        viExplanation: "\"Too + adj + to + verb\" = \"So + adj + that + chủ ngữ + can't + verb\". \"Too hot to go out\" = \"So hot that we can't go out\"."
+      },
+      {
+        id: 48,
+        difficulty: "medium",
+        section: "F. Writing – Sentence Combination",
+        skill: "writing",
+        type: "sentence_combination",
+        question: "Combine the two sentences into one using a relative clause:\n\n'The woman is my teacher. She is standing at the door.'",
+        options: [
+          "The woman, which is standing at the door, is my teacher.",
+          "The woman who is standing at the door is my teacher.",
+          "The woman whom standing at the door is my teacher.",
+          "The woman is standing at the door is my teacher."
+        ],
+        answer: 1,
+        explanation: "Use 'who' to introduce a relative clause about a person: 'The woman who is standing at the door is my teacher.'",
+        viQuestion: "Kết hợp hai câu thành một câu sử dụng mệnh đề quan hệ:\n\n\"Người phụ nữ là giáo viên của tôi. Cô ấy đang đứng ở cửa.\"",
+        viExplanation: "Dùng \"who\" để dẫn mệnh đề quan hệ nói về người: \"The woman who is standing at the door is my teacher.\""
+      },
+      {
+        id: 49,
+        difficulty: "easy",
+        section: "F. Writing – Word Form",
+        skill: "writing",
+        type: "word_form",
+        question: "Choose the correct form of the word to complete the sentence:\n\n'The movie was so ___ that I fell asleep. (BORE)'",
+        options: ["bore", "boring", "bored", "boredom"],
+        answer: 1,
+        explanation: "'Boring' describes what causes the feeling (the movie is boring). 'Bored' describes how someone feels (I was bored). The movie was BORING.",
+        viQuestion: "Chọn dạng đúng của từ để hoàn thành câu:\n\n\"Bộ phim ___ đến mức tôi ngủ thiếp đi. (BORE)\"",
+        viExplanation: "\"Boring\" mô tả thứ GÂY RA cảm giác (bộ phim thì boring). \"Bored\" mô tả cảm giác của người (tôi thấy bored). Bộ phim thì BORING."
+      },
+      {
+        id: 50,
+        difficulty: "medium",
+        section: "F. Writing – Sentence Building",
+        skill: "writing",
+        type: "sentence_building",
+        question: "Arrange the words to form a correct sentence:\n\n[ not / she / hard / studied / had / enough ]",
+        options: [
+          "She had not studied hard enough.",
+          "She not had studied hard enough.",
+          "Had she not studied enough hard.",
+          "She studied not hard had enough."
+        ],
+        answer: 0,
+        explanation: "Past perfect negative: Subject + had + not + past participle + adverb phrase. 'She had not studied hard enough.'",
+        viQuestion: "Sắp xếp các từ thành câu đúng:\n\n[ not / she / hard / studied / had / enough ]",
+        viExplanation: "Câu phủ định quá khứ hoàn thành: Chủ ngữ + had + not + V3 + trạng từ. \"She had not studied hard enough.\""
+      },
+
+      // ============================================================
+      // EXTENDED QUESTION BANK – additional questions for variety
+      // Each question has a `difficulty` field: "easy"/"medium"/"hard"
+      // The existing 50 questions (above) are tagged inside JS at runtime.
+      // ============================================================
+
+      // ── PHONETICS (extra) ──────────────────────────────────────
+      {
+        id: 51,
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "pronunciation",
+        difficulty: "easy",
+        question: "Choose the word whose underlined part is pronounced differently.\n\nA. b<u>oo</u>k  B. f<u>oo</u>d  C. sc<u>hoo</u>l  D. m<u>oo</u>n",
+        options: ["book", "food", "school", "moon"],
+        answer: 0,
+        explanation: "'Book' has /ʊ/ (short oo). 'Food', 'school', and 'moon' all have /uː/ (long oo).",
+        viQuestion: "Chọn từ có phần gạch chân được phát âm KHÁC với các từ còn lại.\n\nA. b<u>oo</u>k  B. f<u>oo</u>d  C. sc<u>hoo</u>l  D. m<u>oo</u>n",
+        viExplanation: "'Book' có âm /ʊ/ (oo ngắn). 'Food', 'school', 'moon' đều có âm /uː/ (oo dài)."
+      },
+      {
+        id: 52,
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "stress",
+        difficulty: "easy",
+        question: "Choose the word with a different stress pattern.",
+        options: ["happy", "sorry", "begin", "pretty"], // Đã bỏ dấu trọng âm để tăng độ khó
+        answer: 2,
+        explanation: "'Begin' is stressed on the second syllable (be-GIN). The others — happy, sorry, pretty — are stressed on the first syllable.",
+        viQuestion: "Chọn từ có trọng âm KHÁC với các từ còn lại.",
+        viExplanation: "'Begin' có trọng âm ở âm tiết thứ hai (be-GIN). Các từ còn lại đều có trọng âm ở âm tiết đầu."
+      },
+      {
+        id: 53,
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "pronunciation",
+        difficulty: "medium",
+        question: "Choose the word whose underlined letter(s) is pronounced differently.\n\nA. <u>ch</u>air  B. <u>ch</u>erry  C. <u>ch</u>emist  D. <u>ch</u>ildren",
+        options: ["chair", "cherry", "chemist", "children"],
+        answer: 2,
+        explanation: "In 'chemist', 'ch' is pronounced /k/. In chair, cherry, and children, 'ch' is pronounced /tʃ/.",
+        viQuestion: "Chọn từ có phần gạch chân được phát âm KHÁC.\n\nA. <u>ch</u>air  B. <u>ch</u>erry  C. <u>ch</u>emist  D. <u>ch</u>ildren",
+        viExplanation: "Trong 'chemist', 'ch' phát âm là /k/. Trong chair, cherry, children, 'ch' phát âm là /tʃ/."
+      },
+      {
+        id: 54,
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "stress",
+        difficulty: "medium",
+        question: "Choose the word that has stress on the SECOND syllable.",
+        options: ["science", "purpose", "report", "garden"],
+        answer: 2,
+        explanation: "'Report' is stressed on the second syllable (re-PORT). Science, purpose, and garden all stress the first syllable.",
+        viQuestion: "Chọn từ có trọng âm ở âm tiết THỨ HAI.",
+        viExplanation: "'Report' có trọng âm ở âm tiết thứ hai (re-PORT). Science, purpose, garden đều có trọng âm ở âm tiết đầu."
+      },
+      {
+        id: 55,
+        section: "A. Phonetics",
+        skill: "phonetics",
+        type: "pronunciation",
+        difficulty: "hard",
+        question: "Choose the word whose underlined part is pronounced differently.\n\nA. <u>th</u>ink  B. <u>th</u>ese  C. <u>th</u>anks  D. <u>th</u>irty",
+        options: ["think", "these", "thanks", "thirty"],
+        answer: 1,
+        explanation: "In 'these', 'th' is the voiced /ð/. In think, thanks, thirty, 'th' is the voiceless /θ/.",
+        viQuestion: "Chọn từ có phần gạch chân được phát âm KHÁC.\n\nA. <u>th</u>ink  B. <u>th</u>ese  C. <u>th</u>anks  D. <u>th</u>irty",
+        viExplanation: "Trong 'these', 'th' là âm hữu thanh /ð/. Trong think, thanks, thirty, 'th' là âm vô thanh /θ/."
+      },
+
+      // ── GRAMMAR extra ────────────────────────────────────────────
+      {
+        id: 56,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "verb_tense",
+        difficulty: "easy",
+        question: "Look! The children ___ in the park.",
+        options: ["play", "plays", "are playing", "played"],
+        answer: 2,
+        explanation: "'Look!' signals something happening right now → present continuous. 'Are playing' is correct.",
+        viQuestion: "Nhìn kìa! Bọn trẻ đang ___ trong công viên.",
+        viExplanation: "'Look!' là dấu hiệu của hành động đang xảy ra → thì hiện tại tiếp diễn. 'Are playing' là đúng."
+      },
+      {
+        id: 57,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "verb_tense",
+        difficulty: "easy",
+        question: "I ___ my homework before dinner yesterday.",
+        options: ["finish", "finished", "have finished", "had finished"],
+        answer: 3,
+        explanation: "The action was completed before another past event (dinner) → past perfect: 'had finished'.",
+        viQuestion: "Tôi ___ bài tập về nhà trước bữa tối hôm qua.",
+        viExplanation: "Hành động hoàn thành trước một sự kiện trong quá khứ (bữa tối) → quá khứ hoàn thành: 'had finished'."
+      },
+      {
+        id: 58,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "passive",
+        difficulty: "easy",
+        question: "This letter ___ by my father last night.",
+        options: ["wrote", "was written", "is written", "has written"],
+        answer: 1,
+        explanation: "Past passive = was/were + past participle. 'Was written' is correct.",
+        viQuestion: "Bức thư này ___ bởi cha tôi tối qua.",
+        viExplanation: "Bị động quá khứ = was/were + V3. 'Was written' là đúng."
+      },
+      {
+        id: 59,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "conditional",
+        difficulty: "medium",
+        question: "If it ___ tomorrow, we will cancel the picnic.",
+        options: ["rains", "rained", "will rain", "would rain"],
+        answer: 0,
+        explanation: "Type 1 conditional: If + present simple, will + base verb. 'If it rains...'",
+        viQuestion: "Nếu trời ___ vào ngày mai, chúng tôi sẽ huỷ buổi dã ngoại.",
+        viExplanation: "Câu điều kiện loại 1: If + hiện tại đơn, will + động từ nguyên mẫu. 'If it rains...'"
+      },
+      {
+        id: 60,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "conditional",
+        difficulty: "hard",
+        question: "If she ___ harder, she would have passed the exam.",
+        options: ["studied", "had studied", "would study", "studies"],
+        answer: 1,
+        explanation: "Type 3 conditional (unreal past): If + past perfect, would have + V3. 'Had studied' is correct.",
+        viQuestion: "Nếu cô ấy ___ chăm chỉ hơn, cô ấy đã đậu kỳ thi rồi.",
+        viExplanation: "Câu điều kiện loại 3 (giả định trong quá khứ): If + quá khứ hoàn thành, would have + V3. 'Had studied' là đúng."
+      },
+      {
+        id: 61,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "gerund_infinitive",
+        difficulty: "easy",
+        question: "She enjoys ___ novels in her free time.",
+        options: ["read", "to read", "reading", "reads"],
+        answer: 2,
+        explanation: "'Enjoy' is always followed by a gerund (-ing form): 'enjoys reading'.",
+        viQuestion: "Cô ấy thích ___ tiểu thuyết vào thời gian rảnh.",
+        viExplanation: "'Enjoy' luôn đi với danh động từ (-ing): 'enjoys reading'."
+      },
+      {
+        id: 62,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "gerund_infinitive",
+        difficulty: "medium",
+        question: "He decided ___ a new job after the summer.",
+        options: ["finding", "find", "to find", "found"],
+        answer: 2,
+        explanation: "'Decide' is followed by an infinitive (to + verb): 'decided to find'.",
+        viQuestion: "Anh ấy quyết định ___ một công việc mới sau mùa hè.",
+        viExplanation: "'Decide' đi với động từ nguyên mẫu có 'to': 'decided to find'."
+      },
+      {
+        id: 63,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "relative_pronoun",
+        difficulty: "easy",
+        question: "This is the book ___ I told you about.",
+        options: ["who", "whom", "which", "whose"],
+        answer: 2,
+        explanation: "'Which' is used for things in relative clauses. 'This is the book which I told you about.'",
+        viQuestion: "Đây là cuốn sách ___ tôi đã nói với bạn.",
+        viExplanation: "'Which' dùng cho sự vật trong mệnh đề quan hệ. 'This is the book which I told you about.'"
+      },
+      {
+        id: 64,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "wish",
+        difficulty: "medium",
+        question: "I wish I ___ speak French fluently.",
+        options: ["can", "could", "will", "would"],
+        answer: 1,
+        explanation: "'Wish' + past simple/could expresses an unreal desire in the present. 'I wish I could speak...'",
+        viQuestion: "Tôi ước mình ___ nói tiếng Pháp lưu loát.",
+        viExplanation: "'Wish' + could/quá khứ đơn diễn tả mong muốn không có thật ở hiện tại. 'I wish I could speak...'"
+      },
+      {
+        id: 65,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "preposition",
+        difficulty: "easy",
+        question: "He has been interested ___ photography since childhood.",
+        options: ["on", "in", "at", "for"],
+        answer: 1,
+        explanation: "'Interested in' is the correct collocation. We are interested IN something.",
+        viQuestion: "Anh ấy đã đam mê ___ nhiếp ảnh từ nhỏ.",
+        viExplanation: "'Interested in' là cụm từ đúng. Chúng ta 'interested in' điều gì đó."
+      },
+      {
+        id: 66,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "articles",
+        difficulty: "medium",
+        question: "___ Amazon is the largest river in South America.",
+        options: ["A", "An", "The", "Ø (no article)"],
+        answer: 2,
+        explanation: "Use 'the' with names of rivers: 'the Amazon', 'the Nile', 'the Mekong'.",
+        viQuestion: "___ Amazon là con sông lớn nhất ở Nam Mỹ.",
+        viExplanation: "Dùng 'the' với tên các con sông: 'the Amazon', 'the Nile', 'the Mekong'."
+      },
+      {
+        id: 67,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "reported_speech",
+        difficulty: "medium",
+        question: "She asked me: 'Do you like coffee?' → She asked me ___ coffee.",
+        options: ["if I like", "whether I liked", "do I like", "that I liked"],
+        answer: 1,
+        explanation: "Reported yes/no questions use 'whether/if + subject + past verb': 'whether I liked'.",
+        viQuestion: "Cô ấy hỏi tôi: 'Bạn có thích cà phê không?' → Cô ấy hỏi tôi ___ cà phê.",
+        viExplanation: "Câu hỏi Yes/No trong lời nói gián tiếp dùng 'whether/if + chủ ngữ + động từ quá khứ': 'whether I liked'."
+      },
+      {
+        id: 68,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "modal",
+        difficulty: "easy",
+        question: "You ___ wear a seatbelt when driving. It's the law.",
+        options: ["should", "must", "might", "could"],
+        answer: 1,
+        explanation: "'Must' expresses strong obligation or necessity. Wearing a seatbelt is a legal requirement.",
+        viQuestion: "Bạn ___ đeo dây an toàn khi lái xe. Đó là luật.",
+        viExplanation: "'Must' diễn tả nghĩa vụ mạnh hoặc sự cần thiết. Đeo dây an toàn là yêu cầu pháp lý."
+      },
+      {
+        id: 69,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "superlative",
+        difficulty: "medium",
+        question: "Mount Everest is ___ mountain in the world.",
+        options: ["high", "higher", "the highest", "the most high"],
+        answer: 2,
+        explanation: "Superlative of one-syllable adjective: 'the highest'. 'The most high' is incorrect.",
+        viQuestion: "Đỉnh Everest là ngọn núi ___ trên thế giới.",
+        viExplanation: "So sánh nhất của tính từ một âm tiết: 'the highest'. 'The most high' là sai."
+      },
+      {
+        id: 70,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "passive",
+        difficulty: "hard",
+        question: "The project ___ by the team when the manager arrived.",
+        options: ["was completing", "had been completed", "has been completed", "is completed"],
+        answer: 1,
+        explanation: "Past perfect passive = had been + past participle. The project was completed BEFORE the manager arrived.",
+        viQuestion: "Dự án ___ bởi nhóm khi giám đốc đến.",
+        viExplanation: "Bị động quá khứ hoàn thành = had been + V3. Dự án hoàn thành TRƯỚC khi giám đốc đến."
+      },
+      {
+        id: 71,
+        section: "B. Grammar",
+        skill: "grammar",
+        type: "verb_tense",
+        difficulty: "hard",
+        question: "By 2030, scientists ___ a cure for this disease.",
+        options: ["found", "will find", "will have found", "have found"],
+        answer: 2,
+        explanation: "Future perfect (will have + V3) is used for actions completed by a specific future time.",
+        viQuestion: "Đến năm 2030, các nhà khoa học ___ thuốc chữa bệnh này.",
+        viExplanation: "Tương lai hoàn thành (will have + V3) dùng cho hành động hoàn thành trước một thời điểm trong tương lai."
+      },
+
+      // ── VOCABULARY extra ──────────────────────────────────────────
+      {
+        id: 72,
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "phrasal_verb",
+        difficulty: "easy",
+        question: "Please turn ___ the lights when you leave the room.",
+        options: ["on", "off", "up", "down"],
+        answer: 1,
+        explanation: "'Turn off' means to stop a device or light. 'Turn off the lights.'",
+        viQuestion: "Hãy tắt ___ đèn khi bạn rời khỏi phòng.",
+        viExplanation: "'Turn off' có nghĩa là tắt một thiết bị hay đèn."
+      },
+      {
+        id: 73,
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "collocation",
+        difficulty: "easy",
+        question: "She ___ a decision to study abroad after much thought.",
+        options: ["did", "made", "took", "had"],
+        answer: 1,
+        explanation: "'Make a decision' is the correct collocation, not 'do' or 'take'.",
+        viQuestion: "Cô ấy ___ quyết định du học sau khi suy nghĩ kỹ.",
+        viExplanation: "'Make a decision' là cụm từ đúng, không dùng 'do' hay 'take'."
+      },
+      {
+        id: 74,
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "synonym",
+        difficulty: "medium",
+        question: "Choose the word CLOSEST in meaning to 'ancient'.",
+        options: ["modern", "old", "foreign", "typical"],
+        answer: 1,
+        explanation: "'Ancient' means very old, especially relating to long-ago history. The closest synonym is 'old'.",
+        viQuestion: "Chọn từ CÓ NGHĨA GẦN NHẤT với từ 'ancient'.",
+        viExplanation: "'Ancient' có nghĩa là rất cũ, đặc biệt liên quan đến lịch sử xa xưa. Từ đồng nghĩa gần nhất là 'old'."
+      },
+      {
+        id: 75,
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "antonym",
+        difficulty: "easy",
+        question: "Choose the word OPPOSITE in meaning to 'confident'.",
+        options: ["brave", "shy", "clever", "polite"],
+        answer: 1,
+        explanation: "'Confident' means self-assured. Its antonym is 'shy' — lacking confidence in social situations.",
+        viQuestion: "Chọn từ TRÁI NGHĨA với từ 'confident'.",
+        viExplanation: "'Confident' có nghĩa là tự tin. Trái nghĩa của nó là 'shy' (nhút nhát)."
+      },
+      {
+        id: 76,
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "word_form",
+        difficulty: "medium",
+        question: "The doctor ___ her patients to exercise regularly. (ENCOURAGE)",
+        options: ["encourage", "encourages", "encouragement", "encouraging"],
+        answer: 1,
+        explanation: "Third-person singular present simple requires '-s': 'The doctor encourages'.",
+        viQuestion: "Bác sĩ ___ bệnh nhân của mình tập thể dục đều đặn. (ENCOURAGE)",
+        viExplanation: "Ngôi thứ ba số ít ở hiện tại đơn cần thêm '-s': 'The doctor encourages'."
+      },
+      {
+        id: 77,
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "phrasal_verb",
+        difficulty: "medium",
+        question: "The flight was ___ due to the bad weather.",
+        options: ["called off", "called on", "called for", "called up"],
+        answer: 0,
+        explanation: "'Call off' means to cancel. 'The flight was called off' = the flight was cancelled.",
+        viQuestion: "Chuyến bay bị ___ vì thời tiết xấu.",
+        viExplanation: "'Call off' có nghĩa là hủy bỏ. 'The flight was called off' = chuyến bay bị hủy."
+      },
+      {
+        id: 78,
+        section: "B. Vocabulary",
+        skill: "vocabulary",
+        type: "synonym",
+        difficulty: "hard",
+        question: "Choose the word CLOSEST in meaning to 'reluctant'.",
+        options: ["eager", "unwilling", "excited", "pleased"],
+        answer: 1,
+        explanation: "'Reluctant' means unwilling or hesitant to do something. The closest synonym is 'unwilling'.",
+        viQuestion: "Chọn từ CÓ NGHĨA GẦN NHẤT với từ 'reluctant'.",
+        viExplanation: "'Reluctant' có nghĩa là không sẵn lòng hoặc do dự. Từ đồng nghĩa gần nhất là 'unwilling'."
+      },
+
+      // ── READING extra ─────────────────────────────────────────────
+      {
+        id: 79,
+        section: "C. Reading – Signs",
+        skill: "reading",
+        type: "signs",
+        difficulty: "easy",
+        question: "A sign in a library reads: 'SILENCE PLEASE'. What does it mean?",
+        options: [
+          "You must leave the library now.",
+          "Please be quiet in this area.",
+          "No food or drink allowed.",
+          "You must sit down."
+        ],
+        answer: 1,
+        explanation: "'Silence Please' is a common library sign asking visitors to be quiet so others can study.",
+        viQuestion: "Một biển trong thư viện có nội dung: 'SILENCE PLEASE' (Vui lòng giữ yên lặng). Điều đó có nghĩa là gì?",
+        viExplanation: "'Silence Please' là biển thường gặp ở thư viện yêu cầu giữ yên lặng để người khác học tập."
+      },
+      {
+        id: 80,
+        section: "C. Reading – Signs",
+        skill: "reading",
+        type: "signs",
+        difficulty: "easy",
+        question: "A sign on a door says: 'PUSH'. What should you do to open the door?",
+        options: [
+          "Pull the door toward you.",
+          "Knock on the door first.",
+          "Push the door away from you.",
+          "Wait for someone to open it."
+        ],
+        answer: 2,
+        explanation: "'Push' means you should push the door away from you to open it.",
+        viQuestion: "Một biển trên cửa có nội dung: 'PUSH' (Đẩy). Bạn nên làm gì để mở cửa?",
+        viExplanation: "'Push' có nghĩa là bạn đẩy cửa ra xa bạn để mở cửa."
+      },
+      {
+        id: 81,
+        section: "C. Reading – Cloze",
+        skill: "reading",
+        type: "cloze",
+        difficulty: "easy",
+        question: "My sister is very talented. She ___ play three musical instruments.",
+        options: ["can", "must", "should", "has"],
+        answer: 0,
+        explanation: "'Can' expresses ability. 'She can play three musical instruments.'",
+        viQuestion: "Em gái tôi rất tài năng. Cô ấy ___ chơi ba nhạc cụ.",
+        viExplanation: "'Can' diễn tả khả năng. 'She can play three musical instruments.'"
+      },
+      {
+        id: 82,
+        section: "C. Reading – Cloze",
+        skill: "reading",
+        type: "cloze",
+        difficulty: "medium",
+        question: "The students were told to ___ their mobile phones during the exam.",
+        options: ["turn off", "turn on", "take off", "put on"],
+        answer: 0,
+        explanation: "'Turn off' means to switch off/deactivate. Students must turn off phones during exams.",
+        viQuestion: "Học sinh được yêu cầu ___ điện thoại di động trong suốt kỳ thi.",
+        viExplanation: "'Turn off' có nghĩa là tắt/vô hiệu hóa. Học sinh phải tắt điện thoại trong giờ thi."
+      },
+      {
+        id: 83,
+        section: "C. Reading – Comprehension",
+        skill: "reading",
+        type: "comprehension",
+        difficulty: "easy",
+        question: "Read the text:\n\n'Hoi An is a beautiful ancient town in central Vietnam. It is famous for its well-preserved trading port and colourful lanterns. Every month, on the night of the full moon, the town turns off its electric lights and lights lanterns instead.'\n\nWhat is Hoi An famous for?",
+        options: [
+          "Its modern skyscrapers and shopping malls",
+          "Its well-preserved trading port and colourful lanterns",
+          "Its beautiful beaches and water sports",
+          "Its hot springs and mountain trekking"
+        ],
+        answer: 1,
+        explanation: "The text states Hoi An is 'famous for its well-preserved trading port and colourful lanterns'.",
+        viQuestion: "Đọc đoạn văn:\n\n'Hội An là một thị trấn cổ xinh đẹp ở miền Trung Việt Nam. Nó nổi tiếng với cảng thương mại được bảo tồn tốt và những chiếc đèn lồng đầy màu sắc. Hàng tháng, vào đêm rằm, thị trấn tắt đèn điện và thắp đèn lồng thay thế.'\n\nHội An nổi tiếng vì điều gì?",
+        viExplanation: "Đoạn văn nêu Hội An 'nổi tiếng với cảng thương mại được bảo tồn tốt và những chiếc đèn lồng đầy màu sắc'."
+      },
+      {
+        id: 84,
+        section: "C. Reading – Comprehension",
+        skill: "reading",
+        type: "comprehension",
+        difficulty: "easy",
+        question: "Based on the passage in Q83, what happens on the night of the full moon?",
+        options: [
+          "The town organises a boat race on the river.",
+          "Restaurants serve special full moon dishes.",
+          "The town turns off electric lights and lights lanterns.",
+          "Shops close early for a festival."
+        ],
+        answer: 2,
+        explanation: "The text says: 'the town turns off its electric lights and lights lanterns instead' on the full moon night.",
+        viQuestion: "Dựa vào đoạn văn ở câu 83, điều gì xảy ra vào đêm rằm?",
+        viExplanation: "Đoạn văn nêu: 'thị trấn tắt đèn điện và thắp đèn lồng thay thế' vào đêm rằm."
+      },
+      {
+        id: 85,
+        section: "C. Reading – Comprehension",
+        skill: "reading",
+        type: "comprehension",
+        difficulty: "medium",
+        question: "Read the following text:\n\n'Teenagers today spend an average of 7 hours per day looking at screens, including phones, computers, and televisions. Experts warn that excessive screen time can lead to sleep problems, eye strain, and reduced physical activity. However, not all screen use is harmful — educational content and video calls with family can be beneficial.'\n\nAccording to experts, which of the following is a BENEFIT of screen use?",
+        options: [
+          "Reduced physical activity",
+          "Eye strain from prolonged use",
+          "Video calls with family",
+          "Sleep problems"
+        ],
+        answer: 2,
+        explanation: "The text says 'video calls with family can be beneficial' — this is listed as a benefit.",
+        viQuestion: "Đọc đoạn văn sau:\n\n'Thanh thiếu niên ngày nay dành trung bình 7 giờ mỗi ngày nhìn màn hình. Các chuyên gia cảnh báo việc dùng màn hình quá nhiều có thể gây mất ngủ, mỏi mắt và giảm hoạt động thể chất. Tuy nhiên, không phải tất cả việc dùng màn hình đều có hại — nội dung giáo dục và gọi video cho gia đình có thể có lợi.'\n\nTheo các chuyên gia, điều nào là LỢI ÍCH của việc dùng màn hình?",
+        viExplanation: "Đoạn văn nêu 'gọi video cho gia đình có thể có lợi' — đây được liệt kê là lợi ích."
+      },
+      {
+        id: 86,
+        section: "C. Reading – Cloze",
+        skill: "reading",
+        type: "cloze",
+        difficulty: "hard",
+        question: "Despite ___ hard all year, he failed to pass the final examination.",
+        options: ["to study", "studied", "studying", "study"],
+        answer: 2,
+        explanation: "After 'despite', we use a gerund (-ing form): 'Despite studying hard...'",
+        viQuestion: "Mặc dù ___ chăm chỉ cả năm, anh ấy vẫn không qua được kỳ thi cuối năm.",
+        viExplanation: "Sau 'despite', ta dùng danh động từ (-ing): 'Despite studying hard...'"
+      },
+      {
+        id: 87,
+        section: "C. Reading – Sentence Insertion",
+        skill: "reading",
+        type: "sentence_insertion",
+        difficulty: "medium",
+        question: "Choose the sentence that best fits the blank [■]:\n\n'Renewable energy is becoming increasingly important. Solar and wind power are now cheaper than ever before. [■] Many countries have already set ambitious targets to reduce carbon emissions.'\n",
+        options: [
+          "Oil prices have risen sharply this year.",
+          "This shift is helping countries reduce their dependence on fossil fuels.",
+          "Electric cars are very expensive to buy.",
+          "Some people prefer traditional energy sources."
+        ],
+        answer: 1,
+        explanation: "The sentence 'This shift is helping countries reduce their dependence on fossil fuels' logically connects the previous sentence about cheap renewable energy to the next about emission targets.",
+        viQuestion: "Chọn câu phù hợp nhất điền vào chỗ trống [■]:\n\n'Năng lượng tái tạo ngày càng trở nên quan trọng. Năng lượng mặt trời và gió hiện nay rẻ hơn bao giờ hết. [■] Nhiều quốc gia đã đặt ra các mục tiêu đầy tham vọng để giảm lượng khí thải carbon.'",
+        viExplanation: "Câu 'Sự thay đổi này đang giúp các nước giảm sự phụ thuộc vào nhiên liệu hóa thạch' kết nối logic giữa câu về năng lượng rẻ và câu về mục tiêu giảm khí thải."
+      },
+      {
+        id: 88,
+        section: "C. Reading – Sentence Ordering",
+        skill: "reading",
+        type: "sentence_ordering",
+        difficulty: "medium",
+        question: "Arrange the sentences to form a correct paragraph:\n\n1. As a result, he was promoted to team leader.\n2. He always arrived early and stayed late.\n3. Tom was known as the most hardworking employee.\n4. His dedication impressed his manager greatly.",
+        options: ["3 – 2 – 4 – 1", "1 – 2 – 3 – 4", "2 – 3 – 1 – 4", "3 – 4 – 2 – 1"],
+        answer: 0,
+        explanation: "Logical order: Introduce Tom's reputation (3) → Evidence of his work ethic (2) → Effect on manager (4) → Result/promotion (1).",
+        viQuestion: "Sắp xếp các câu để tạo thành đoạn văn đúng:\n\n1. Kết quả là, anh ấy được thăng chức lên trưởng nhóm.\n2. Anh ấy luôn đến sớm và về muộn.\n3. Tom được biết đến là nhân viên chăm chỉ nhất.\n4. Sự tận tụy của anh ấy đã gây ấn tượng mạnh với quản lý.",
+        viExplanation: "Thứ tự logic: Giới thiệu Tom (3) → Bằng chứng về tinh thần làm việc (2) → Ảnh hưởng đến quản lý (4) → Kết quả/thăng chức (1)."
+      },
+      {
+        id: 89,
+        section: "C. Reading – Comprehension",
+        skill: "reading",
+        type: "comprehension",
+        difficulty: "hard",
+        question: "Read the text:\n\n'The term \"digital native\" refers to people who have grown up with technology and are comfortable using it. In contrast, \"digital immigrants\" are those who adopted technology later in life and may find it more challenging. However, researchers now argue that growing up with technology does not automatically make someone skilled at using it effectively — that requires deliberate practice and critical thinking.'\n\nWhat do researchers argue about digital natives?",
+        options: [
+          "They are always better at using technology than digital immigrants.",
+          "Growing up with technology alone does not guarantee digital skills.",
+          "Digital immigrants can never catch up with digital natives.",
+          "Technology use should be limited for young people."
+        ],
+        answer: 1,
+        explanation: "Researchers argue that 'growing up with technology does not automatically make someone skilled' — it requires deliberate practice.",
+        viQuestion: "Đọc đoạn văn:\n\n'Thuật ngữ \"người bản địa kỹ thuật số\" chỉ những người lớn lên cùng công nghệ. Ngược lại, \"người nhập cư kỹ thuật số\" là những người tiếp cận công nghệ muộn hơn. Tuy nhiên, các nhà nghiên cứu cho rằng lớn lên cùng công nghệ không tự động làm cho ai đó thành thạo sử dụng nó — điều đó đòi hỏi thực hành có chủ đích và tư duy phê phán.'\n\nCác nhà nghiên cứu lập luận gì về người bản địa kỹ thuật số?",
+        viExplanation: "Các nhà nghiên cứu cho rằng 'lớn lên cùng công nghệ không tự động làm cho ai đó thành thạo' — điều đó đòi hỏi thực hành có chủ đích."
+      },
+
+      // ── LISTENING extra ───────────────────────────────────────────
+      {
+        id: 90,
+        section: "D. Listening",
+        skill: "listening",
+        type: "listening_dialogue",
+        difficulty: "easy",
+        audio: { title: "Dialogue Track 3", description: "Listen to a short conversation about food" },
+        audioText: "A conversation at a restaurant. A says: Are you ready to order? B replies: Yes, I'd like a bowl of pho and a glass of lemon juice, please. A says: Certainly. Anything else? B replies: No, that's all, thank you.",
+        question: "[🎧 Listening] Listen to the conversation at a restaurant, then answer:\n\nWhat does the customer order to drink?",
+        options: ["Orange juice", "Lemon juice", "Water", "Milk"],
+        answer: 1,
+        explanation: "The customer says 'a glass of lemon juice, please'.",
+        viQuestion: "[🎧 Nghe] Nghe cuộc trò chuyện tại nhà hàng rồi trả lời:\n\nKhách hàng gọi gì để uống?",
+        viExplanation: "Khách hàng nói 'a glass of lemon juice, please' (một ly nước chanh)."
+      },
+      {
+        id: 91,
+        section: "D. Listening",
+        skill: "listening",
+        type: "listening_dialogue",
+        difficulty: "medium",
+        audio: { title: "Dialogue Track 4", description: "Listen to a phone conversation" },
+        audioText: "A phone conversation. A says: Hello, can I speak to Dr. Nguyen please? B replies: I'm sorry, she's with a patient right now. Can I take a message? A says: Yes please. Could you tell her that Mr. Tan called and ask her to call me back at 0912 345 678? B replies: Of course, I'll pass that on.",
+        question: "[🎧 Listening] Listen to the phone conversation, then answer:\n\nWhy can't the caller speak to Dr. Nguyen?",
+        options: [
+          "She is on another phone call.",
+          "She is with a patient.",
+          "She has gone home.",
+          "She is in a meeting."
+        ],
+        answer: 1,
+        explanation: "The receptionist says 'she's with a patient right now'.",
+        viQuestion: "[🎧 Nghe] Nghe cuộc trò chuyện qua điện thoại rồi trả lời:\n\nTại sao người gọi không thể nói chuyện với bác sĩ Nguyễn?",
+        viExplanation: "Lễ tân nói 'she's with a patient right now' (bác sĩ đang tiếp bệnh nhân)."
+      },
+      {
+        id: 92,
+        section: "D. Listening",
+        skill: "listening",
+        type: "listening_news",
+        difficulty: "medium",
+        audio: { title: "News Report Track 2", description: "Listen to a weather forecast" },
+        audioText: "Good afternoon. Here is today's weather forecast. Ho Chi Minh City will experience heavy rain this afternoon with temperatures around 28 degrees. The rain is expected to ease by this evening. Tomorrow will be mostly sunny with light winds. Have a safe journey home.",
+        question: "[🎧 Listening] Listen to the weather forecast, then answer:\n\nWhat will the weather be like tomorrow?",
+        options: [
+          "Heavy rain all day",
+          "Cloudy with strong winds",
+          "Mostly sunny with light winds",
+          "Thunderstorms in the morning"
+        ],
+        answer: 2,
+        explanation: "The forecast says 'Tomorrow will be mostly sunny with light winds'.",
+        viQuestion: "[🎧 Nghe] Nghe dự báo thời tiết rồi trả lời:\n\nThời tiết ngày mai sẽ như thế nào?",
+        viExplanation: "Dự báo nêu 'Tomorrow will be mostly sunny with light winds' (ngày mai nắng nhẹ, gió nhẹ)."
+      },
+      {
+        id: 93,
+        section: "D. Listening",
+        skill: "listening",
+        type: "listening_dialogue",
+        difficulty: "hard",
+        audio: { title: "Dialogue Track 5", description: "Listen to a conversation about study plans" },
+        audioText: "A conversation between two students. A says: Have you decided what to study at university yet? B replies: I'm thinking about computer science, but my parents want me to study medicine. A says: That's a tough choice. What do you actually enjoy? B replies: Honestly, I love coding. I spend hours on it every evening. I think I'll follow my passion and choose computer science.",
+        question: "[🎧 Listening] Listen to the conversation, then answer:\n\nWhat does student B decide to study?",
+        options: ["Medicine", "Engineering", "Computer Science", "Business"],
+        answer: 2,
+        explanation: "Student B says 'I think I'll follow my passion and choose computer science'.",
+        viQuestion: "[🎧 Nghe] Nghe cuộc trò chuyện rồi trả lời:\n\nHọc sinh B quyết định học ngành gì?",
+        viExplanation: "Học sinh B nói 'I think I'll follow my passion and choose computer science' (tôi sẽ theo đam mê và chọn khoa học máy tính)."
+      },
+
+      // ── SOCIAL INTERACTION extra ──────────────────────────────────
+      {
+        id: 94,
+        section: "E. Social Interaction",
+        skill: "social",
+        type: "response",
+        difficulty: "easy",
+        question: "Choose the most appropriate response:\n\nA: 'Congratulations on passing your exam!'\nB: '___'",
+        options: [
+          "I don't care about exams.",
+          "Thank you so much! I worked really hard.",
+          "That's not my problem.",
+          "You're welcome."
+        ],
+        answer: 1,
+        explanation: "'Thank you so much! I worked really hard.' is the natural, polite response to congratulations.",
+        viQuestion: "Chọn câu trả lời PHÙ HỢP NHẤT:\n\nA: 'Chúc mừng bạn đã vượt qua kỳ thi!'\nB: '___'",
+        viExplanation: "'Thank you so much! I worked really hard.' là câu trả lời tự nhiên và lịch sự khi được chúc mừng."
+      },
+      {
+        id: 95,
+        section: "E. Social Interaction",
+        skill: "social",
+        type: "response",
+        difficulty: "medium",
+        question: "Choose the most appropriate response:\n\nA: 'Would you mind if I opened the window?'\nB: '___'",
+        options: [
+          "No, I don't mind at all. Go ahead.",
+          "Yes, open it please.",
+          "The window is closed.",
+          "I like windows."
+        ],
+        answer: 0,
+        explanation: "With 'Would you mind if...?', answering 'No, I don't mind' means you ALLOW it. 'Go ahead' confirms permission.",
+        viQuestion: "Chọn câu trả lời PHÙ HỢP NHẤT:\n\nA: 'Bạn có phiền không nếu tôi mở cửa sổ?'\nB: '___'",
+        viExplanation: "Với 'Would you mind if...?', trả lời 'No, I don't mind' có nghĩa là bạn ĐỒNG Ý. 'Go ahead' xác nhận sự cho phép."
+      },
+      {
+        id: 96,
+        section: "E. Social Interaction",
+        skill: "social",
+        type: "response",
+        difficulty: "hard",
+        question: "Choose the most appropriate response:\n\nA: 'I'm afraid I can't make it to your party on Saturday.'\nB: '___'",
+        options: [
+          "That's fine. Maybe next time!",
+          "You should come anyway.",
+          "I don't have a party.",
+          "What time is your party?"
+        ],
+        answer: 0,
+        explanation: "'That's fine. Maybe next time!' is the polite and understanding response when someone declines an invitation.",
+        viQuestion: "Chọn câu trả lời PHÙ HỢP NHẤT:\n\nA: 'Tôi sợ là không thể đến dự tiệc của bạn vào thứ Bảy được.'\nB: '___'",
+        viExplanation: "'That's fine. Maybe next time!' là câu trả lời lịch sự và thông cảm khi ai đó từ chối lời mời."
+      },
+      {
+        id: 97,
+        section: "E. Social Interaction",
+        skill: "social",
+        type: "conversation_order",
+        difficulty: "medium",
+        question: "Arrange the conversation in the correct order:\n\n1. B: 'It's on Nguyen Hue Street, next to the post office.'\n2. A: 'Excuse me, how do I get to the central market?'\n3. A: 'Thank you very much!'\n4. B: 'Go straight ahead for two blocks, then turn left.'",
+        options: ["2 – 4 – 1 – 3", "1 – 2 – 3 – 4", "2 – 1 – 4 – 3", "4 – 2 – 1 – 3"],
+        answer: 0,
+        explanation: "Natural flow: ask for directions (2) → first direction (4) → location landmark (1) → thanks (3).",
+        viQuestion: "Sắp xếp đoạn hội thoại theo thứ tự đúng:\n\n1. B: 'Nó ở phố Nguyễn Huệ, bên cạnh bưu điện.'\n2. A: 'Xin lỗi, tôi đến chợ trung tâm bằng cách nào?'\n3. A: 'Cảm ơn bạn rất nhiều!'\n4. B: 'Đi thẳng hai dãy nhà, rồi rẽ trái.'",
+        viExplanation: "Trình tự tự nhiên: hỏi đường (2) → chỉ đường đầu tiên (4) → mốc vị trí (1) → cảm ơn (3)."
+      },
+
+      // ── WRITING extra ─────────────────────────────────────────────
+      {
+        id: 98,
+        section: "F. Writing – Error Correction",
+        skill: "writing",
+        type: "error_correction",
+        difficulty: "easy",
+        question: "Identify the error in the following sentence:\n\n'He go to the gym every morning before work.'",
+        options: [
+          "'He' should be 'His'",
+          "'go' should be 'goes'",
+          "'every' should be 'all'",
+          "No error"
+        ],
+        answer: 1,
+        explanation: "Third person singular present simple requires 's': 'He goes to the gym.'",
+        viQuestion: "Tìm lỗi sai trong câu sau:\n\n'He go to the gym every morning before work.'",
+        viExplanation: "Ngôi thứ ba số ít ở hiện tại đơn cần thêm 's': 'He goes to the gym.'"
+      },
+      {
+        id: 99,
+        section: "F. Writing – Sentence Transformation",
+        skill: "writing",
+        type: "sentence_transformation",
+        difficulty: "medium",
+        question: "Choose the sentence that has the SAME MEANING as the original:\n\n'Although she was tired, she continued working.'",
+        options: [
+          "Because she was tired, she continued working.",
+          "She was tired, so she stopped working.",
+          "In spite of being tired, she continued working.",
+          "She continued working because she was not tired."
+        ],
+        answer: 2,
+        explanation: "'Although + clause' = 'In spite of + gerund/noun'. Both express contrast/concession.",
+        viQuestion: "Chọn câu có NGHĨA TƯƠNG ĐƯƠNG:\n\n'Mặc dù mệt, cô ấy vẫn tiếp tục làm việc.'",
+        viExplanation: "'Although + mệnh đề' = 'In spite of + danh động từ/danh từ'. Cả hai đều diễn tả sự tương phản."
+      },
+      {
+        id: 100,
+        section: "F. Writing – Sentence Combination",
+        skill: "writing",
+        type: "sentence_combination",
+        difficulty: "medium",
+        question: "Combine the two sentences:\n\n'The movie was very interesting. I watched it twice.'",
+        options: [
+          "The movie was such interesting that I watched it twice.",
+          "The movie was so interesting that I watched it twice.",
+          "The movie was too interesting to watch twice.",
+          "Because the movie interesting, I watched it twice."
+        ],
+        answer: 1,
+        explanation: "'So + adjective + that' is the correct structure: 'The movie was so interesting that I watched it twice.'",
+        viQuestion: "Kết hợp hai câu:\n\n'Bộ phim rất hay. Tôi đã xem nó hai lần.'",
+        viExplanation: "'So + tính từ + that' là cấu trúc đúng: 'The movie was so interesting that I watched it twice.'"
+      },
+      {
+        id: 101,
+        section: "F. Writing – Word Form",
+        skill: "writing",
+        type: "word_form",
+        difficulty: "easy",
+        question: "Her ___ of the local history was impressive. (KNOW)",
+        options: ["know", "knowing", "knowledge", "known"],
+        answer: 2,
+        explanation: "The noun form of 'know' is 'knowledge'. We need a noun after the possessive 'Her'.",
+        viQuestion: "___ của cô ấy về lịch sử địa phương rất ấn tượng. (KNOW)",
+        viExplanation: "Danh từ của 'know' là 'knowledge'. Chúng ta cần danh từ sau sở hữu cách 'Her'."
+      },
+      {
+        id: 102,
+        section: "F. Writing – Error Correction",
+        skill: "writing",
+        type: "error_correction",
+        difficulty: "medium",
+        question: "Identify the error:\n\n'Neither the students nor the teacher were present at the meeting.'",
+        options: [
+          "'Neither' should be 'Either'",
+          "'were' should be 'was'",
+          "'present' should be 'presenting'",
+          "No error"
+        ],
+        answer: 1,
+        explanation: "With 'neither...nor', the verb agrees with the NEAREST subject ('the teacher' → singular). So 'was' is correct.",
+        viQuestion: "Tìm lỗi sai:\n\n'Neither the students nor the teacher were present at the meeting.'",
+        viExplanation: "Với 'neither...nor', động từ chia theo CHỦ NGỮ GẦN NHẤT ('the teacher' → số ít). Vì vậy 'was' mới đúng."
+      },
+      {
+        id: 103,
+        section: "F. Writing – Sentence Building",
+        skill: "writing",
+        type: "sentence_building",
+        difficulty: "hard",
+        question: "Arrange the words to form a correct sentence:\n\n[ have / I / regret / to / inform / you / that ]",
+        options: [
+          "I have to regret inform you that.",
+          "I regret to have you inform that.",
+          "I regret to inform you that I have.",
+          "I have to inform you that I regret."
+        ],
+        answer: 2,
+        explanation: "'I regret to inform you that...' is a formal phrase. 'Regret + to-infinitive' expresses reluctance about an action.",
+        viQuestion: "Sắp xếp các từ thành câu đúng:\n\n[ have / I / regret / to / inform / you / that ]",
+        viExplanation: "'I regret to inform you that...' là cụm từ trang trọng. 'Regret + to-infinitive' diễn tả sự tiếc nuối về một hành động."
+      },
+      {
+        id: 104,
+        section: "F. Writing – Sentence Transformation",
+        skill: "writing",
+        type: "sentence_transformation",
+        difficulty: "hard",
+        question: "Choose the sentence with the SAME MEANING:\n\n'It is said that he invented a new vaccine.'",
+        options: [
+          "He is said to invent a new vaccine.",
+          "He is said to have invented a new vaccine.",
+          "It said that he invented a new vaccine.",
+          "He said that he invented a new vaccine."
+        ],
+        answer: 1,
+        explanation: "'It is said that + subject + past verb' → 'Subject + is said + to have + V3'. This is the correct passive reporting structure.",
+        viQuestion: "Chọn câu có NGHĨA TƯƠNG ĐƯƠNG:\n\n'Người ta nói rằng ông ấy đã phát minh ra một loại vắc-xin mới.'",
+        viExplanation: "'It is said that + chủ ngữ + động từ quá khứ' → 'Chủ ngữ + is said + to have + V3'. Đây là cấu trúc bị động tường thuật đúng."
+      }
+
+    ]; // end questions array
+
+    /* ============================================================
+       APPLICATION LOGIC
+    ============================================================ */
+
+    const App = (() => {
+
+      // State
+      let currentQ = 0;
+      let activeQuestions = [];   // 50 questions selected for this exam session
+      let userAnswers = [];
+      let reviewMode = false;
+      let audioPlaying = false;
+      let activeTab = 'analysis';
+      let currentLang = 'en'; // 'en' or 'vi'
+      let selectedDifficulty = 'easy'; // 'easy' | 'medium' | 'hard'
+
+      // Exam blueprint: how many questions per skill per difficulty
+      // Total always = 50
+      const EXAM_BLUEPRINT = {
+        easy: {
+          phonetics: 4, grammar: 10, vocabulary: 4,
+          reading: 14, listening: 4, social: 5, writing: 9
+        },
+        medium: {
+          phonetics: 5, grammar: 12, vocabulary: 4,
+          reading: 13, listening: 5, social: 5, writing: 6
+        },
+        hard: {
+          phonetics: 5, grammar: 12, vocabulary: 5,
+          reading: 12, listening: 5, social: 4, writing: 7
+        }
+      };
+
+      /* -------------------------------------------------------
+         DIFFICULTY SELECTION
+      ------------------------------------------------------- */
+      function selectDifficulty(diff) {
+        selectedDifficulty = diff;
+        document.querySelectorAll('.diff-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.diff === diff);
+        });
+      }
+
+      /* -------------------------------------------------------
+         BUILD EXAM: pick 50 questions from bank matching blueprint
+      ------------------------------------------------------- */
+      function buildExam(difficulty) {
+        const blueprint = EXAM_BLUEPRINT[difficulty];
+        const selected = [];
+
+        // For each skill, filter eligible questions by difficulty preference
+        // Priority: exact difficulty match → then any difficulty
+        const diffPool = {
+          easy: ['easy'],
+          medium: ['medium', 'easy'],
+          hard: ['hard', 'medium', 'easy']
+        };
+        const allowedDiffs = diffPool[difficulty];
+
+        Object.entries(blueprint).forEach(([skill, count]) => {
+          // Get all bank questions for this skill
+          const pool = questions.filter(q => q.skill === skill);
+
+          // Sort by preferred difficulty first
+          const sorted = [...pool].sort((a, b) => {
+            const ai = allowedDiffs.indexOf(a.difficulty ?? 'medium');
+            const bi = allowedDiffs.indexOf(b.difficulty ?? 'medium');
+            const aScore = ai < 0 ? 99 : ai;
+            const bScore = bi < 0 ? 99 : bi;
+            return aScore - bScore;
+          });
+
+          // Shuffle within same-priority groups to avoid always same order
+          const shuffled = stableShuffle(sorted, allowedDiffs);
+
+          // Pick 'count' from pool (wrap around if not enough)
+          for (let i = 0; i < count; i++) {
+            if (shuffled.length > 0) {
+              selected.push(shuffled[i % shuffled.length]);
+            }
+          }
+        });
+
+        // Sort final set by section order so exam flows logically
+        const sectionOrder = [
+          'phonetics', 'grammar', 'vocabulary', 'reading', 'listening', 'social', 'writing'
+        ];
+        selected.sort((a, b) => {
+          const ai = sectionOrder.indexOf(a.skill);
+          const bi = sectionOrder.indexOf(b.skill);
+          return ai !== bi ? ai - bi : (a.id - b.id);
+        });
+
+        return selected;
+      }
+
+      function stableShuffle(arr, allowedDiffs) {
+        // Group by priority tier and shuffle within each tier
+        const tiers = {};
+        arr.forEach(q => {
+          const tier = allowedDiffs.indexOf(q.difficulty ?? 'medium');
+          const key = tier < 0 ? 99 : tier;
+          if (!tiers[key]) tiers[key] = [];
+          tiers[key].push(q);
+        });
+        const result = [];
+        Object.keys(tiers).sort((a, b) => a - b).forEach(key => {
+          const group = tiers[key];
+          // Fisher-Yates shuffle within tier
+          for (let i = group.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [group[i], group[j]] = [group[j], group[i]];
+          }
+          result.push(...group);
+        });
+        return result;
+      }
+
+      // DOM references
+      const screens = {
+        start: document.getElementById('screen-start'),
+        test: document.getElementById('screen-test'),
+        results: document.getElementById('screen-results')
+      };
+
+      /* -------------------------------------------------------
+         NAVIGATION HELPERS
+      ------------------------------------------------------- */
+      function showScreen(name) {
+        Object.values(screens).forEach(s => s.classList.remove('active'));
+        screens[name].classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      /* -------------------------------------------------------
+         START TEST
+      ------------------------------------------------------- */
+      function startTest() {
+        currentQ = 0;
+        activeQuestions = buildExam(selectedDifficulty);
+        userAnswers = new Array(activeQuestions.length).fill(null);
+        reviewMode = false;
+
+        // Update difficulty badge on test screen
+        const badge = document.getElementById('diff-badge');
+        if (badge) {
+          const labels = { easy: '🟢 Easy', medium: '🟡 Medium', hard: '🔴 Hard' };
+          badge.textContent = labels[selectedDifficulty] || selectedDifficulty;
+          badge.className = `diff-badge ${selectedDifficulty}`;
+        }
+
+        buildQuestionMap();
+        renderQuestion();
+        showScreen('test');
+      }
+
+      /* -------------------------------------------------------
+         QUESTION RENDERING
+      ------------------------------------------------------- */
+      function renderQuestion() {
+        const q = activeQuestions[currentQ];
+        const idx = currentQ;
+        const total = activeQuestions.length;
+
+        // Counter & progress
+        document.getElementById('question-counter').textContent =
+          `Question ${idx + 1} / ${total}`;
+        document.getElementById('progress-fill').style.width =
+          `${((idx + 1) / total) * 100}%`;
+
+        // Section badge icons
+        const sectionIcons = {
+          'A. Phonetics': '🔊',
+          'B. Grammar': '📖',
+          'B. Vocabulary': '📝',
+          'C. Reading – Signs': '🪧',
+          'C. Reading – Cloze': '✏️',
+          'C. Reading – Comprehension': '📄',
+          'C. Reading – Sentence Insertion': '➕',
+          'C. Reading – Sentence Ordering': '🔢',
+          'D. Listening': '🎧',
+          'E. Social Interaction': '💬',
+          'F. Writing – Error Correction': '❌',
+          'F. Writing – Sentence Transformation': '🔄',
+          'F. Writing – Sentence Combination': '🔗',
+          'F. Writing – Word Form': '🔤',
+          'F. Writing – Sentence Building': '🏗️'
+        };
+
+        const icon = sectionIcons[q.section] || '📚';
+        document.getElementById('section-badge').innerHTML =
+          `${icon} ${q.section}`;
+
+        // Question text (handle multi-line with newlines, bilingual)
+        const qTextEN = q.question.replace(/\n/g, '<br>').replace(/___/g, '<span class=\"blank\">___</span>');
+        const qTextVI = q.viQuestion
+          ? q.viQuestion.replace(/\n/g, '<br>').replace(/___/g, '<span class=\"blank\">___</span>')
+          : '';
+        document.getElementById('question-text').innerHTML =
+          `<span class="en-qtext">${qTextEN}</span>` +
+          (qTextVI ? `<div class="vi-text${currentLang === 'vi' ? ' show' : ''}" id="vi-qtext">${qTextVI}</div>` : '');
+
+        // Audio player
+        const audioPlayer = document.getElementById('audio-player');
+        if (q.audio) {
+          audioPlayer.style.display = 'flex';
+          document.getElementById('audio-title').textContent = q.audio.title;
+          document.getElementById('audio-desc').textContent = q.audio.description;
+          document.getElementById('btn-play').textContent = '▶ Play';
+          audioPlaying = false;
+          document.getElementById('audio-wave').classList.add('paused');
+        } else {
+          audioPlayer.style.display = 'none';
+        }
+
+        // Options
+        const optionsGrid = document.getElementById('options-grid');
+        optionsGrid.innerHTML = '';
+        const labels = ['A', 'B', 'C', 'D'];
+
+        q.options.forEach((opt, i) => {
+          const btn = document.createElement('button');
+          btn.className = 'option-btn';
+
+          const alreadyAnswered = userAnswers[idx] !== null;
+
+          // Classes for review mode OR already-answered state
+          if (reviewMode || alreadyAnswered) {
+            if (i === q.answer) btn.classList.add('correct');
+            if (i === userAnswers[idx] && i !== q.answer) btn.classList.add('incorrect');
+            if (alreadyAnswered && !reviewMode) btn.onclick = null; // lock answered question
+            else if (reviewMode) btn.onclick = null;
+            else btn.onclick = () => selectAnswer(i);
+          } else {
+            btn.onclick = () => selectAnswer(i);
+          }
+
+          btn.innerHTML = `
+        <span class="option-label">${labels[i]}</span>
+        <span>${opt}</span>
+      `;
+          optionsGrid.appendChild(btn);
+        });
+
+        // Explanation: show if answered (instant feedback) or review mode
+        const exBox = document.getElementById('explanation-box');
+        const exText = document.getElementById('explanation-text');
+        const viExEl = document.getElementById('vi-explanation');
+        const viExTx = document.getElementById('vi-explanation-text');
+        if (reviewMode || userAnswers[idx] !== null) {
+          exBox.classList.add('show');
+          exText.textContent = q.explanation;
+          if (q.viExplanation) {
+            viExTx.textContent = q.viExplanation;
+            viExEl.classList.toggle('show', currentLang === 'vi');
+          } else {
+            viExEl.classList.remove('show');
+          }
+        } else {
+          exBox.classList.remove('show');
+        }
+
+        // Nav buttons
+        document.getElementById('btn-prev').disabled = (idx === 0);
+        document.getElementById('btn-next').style.display =
+          (idx < total - 1) ? 'inline-flex' : 'none';
+
+        // Submit area on last question
+        const submitArea = document.getElementById('submit-area');
+        submitArea.style.display = (idx === total - 1 && !reviewMode) ? 'block' : 'none';
+
+        // Update map
+        updateQuestionMap();
+      }
+
+      function selectAnswer(optionIndex) {
+        if (reviewMode) return;
+        // Don't allow changing answer once answered
+        if (userAnswers[currentQ] !== null) return;
+
+        userAnswers[currentQ] = optionIndex;
+        const q = activeQuestions[currentQ];
+        const labels = ['A', 'B', 'C', 'D'];
+
+        // Apply immediate visual feedback to all option buttons
+        const optionBtns = document.querySelectorAll('.option-btn');
+        optionBtns.forEach((btn, i) => {
+          btn.onclick = null; // disable further clicks
+          if (i === q.answer) {
+            btn.classList.add('correct');
+            btn.querySelector('.option-label').style.background = 'var(--correct)';
+            btn.querySelector('.option-label').style.color = '#fff';
+          }
+          if (i === optionIndex && i !== q.answer) {
+            btn.classList.add('incorrect');
+            btn.querySelector('.option-label').style.background = 'var(--incorrect)';
+            btn.querySelector('.option-label').style.color = '#fff';
+          }
+          if (i === optionIndex && i === q.answer) {
+            btn.classList.add('correct');
+          }
+        });
+
+        // Show explanation immediately (bilingual)
+        const exBox = document.getElementById('explanation-box');
+        const exText = document.getElementById('explanation-text');
+        const viExEl2 = document.getElementById('vi-explanation');
+        const viExTx2 = document.getElementById('vi-explanation-text');
+        exText.textContent = q.explanation;
+        exBox.classList.add('show');
+        if (q.viExplanation) {
+          viExTx2.textContent = q.viExplanation;
+          viExEl2.classList.toggle('show', currentLang === 'vi');
+        }
+
+        // Update question map dot
+        updateQuestionMap();
+
+        // Show submit area if this is the last question
+        const submitArea = document.getElementById('submit-area');
+        if (currentQ === activeQuestions.length - 1) {
+          submitArea.style.display = 'block';
+        }
+      }
+
+      /* -------------------------------------------------------
+         QUESTION NAVIGATION
+      ------------------------------------------------------- */
+      function nextQuestion() {
+        stopAudio();
+        if (currentQ < activeQuestions.length - 1) {
+          currentQ++;
+          renderQuestion();
+        }
+      }
+
+      function prevQuestion() {
+        stopAudio();
+        if (currentQ > 0) {
+          currentQ--;
+          renderQuestion();
+        }
+      }
+
+      function skipQuestion() {
+        stopAudio();
+        if (currentQ < activeQuestions.length - 1) {
+          currentQ++;
+          renderQuestion();
+        }
+      }
+
+      function goToQuestion(idx) {
+        stopAudio();
+        currentQ = idx;
+        renderQuestion();
+      }
+
+      /* -------------------------------------------------------
+         LANGUAGE TOGGLE
+      ------------------------------------------------------- */
+      function setLang(lang) {
+        currentLang = lang;
+
+        // Update all toggle buttons
+        document.querySelectorAll('.lang-toggle .lang-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+        });
+
+        // Toggle VI question text visibility
+        document.querySelectorAll('.vi-text').forEach(el => {
+          el.classList.toggle('show', lang === 'vi');
+        });
+
+        // Toggle VI explanation visibility
+        const viExEl = document.getElementById('vi-explanation');
+        if (viExEl) viExEl.classList.toggle('show', lang === 'vi');
+
+        // Re-render review list if on results screen (it rebuilds HTML)
+        if (document.getElementById('tab-review').classList.contains('active')) {
+          renderReviewList();
+        }
+      }
+
+      /* -------------------------------------------------------
+         QUESTION MAP
+      ------------------------------------------------------- */
+      function buildQuestionMap() {
+        const map = document.getElementById('question-map');
+        map.innerHTML = '';
+        activeQuestions.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className = 'qmap-dot';
+          dot.textContent = i + 1;
+          dot.onclick = () => { goToQuestion(i); toggleMap(true); };
+          map.appendChild(dot);
+        });
+      }
+
+      function updateQuestionMap() {
+        const dots = document.querySelectorAll('.qmap-dot');
+        dots.forEach((dot, i) => {
+          dot.classList.remove('answered', 'current');
+          if (userAnswers[i] !== null) dot.classList.add('answered');
+          if (i === currentQ) dot.classList.add('current');
+        });
+      }
+
+      function toggleMap(forceClose = false) {
+        const map = document.getElementById('question-map');
+        if (forceClose) { map.classList.remove('open'); return; }
+        map.classList.toggle('open');
+      }
+
+      /* -------------------------------------------------------
+         AUDIO – Web Speech API (Text-to-Speech)
+         Uses the browser's built-in SpeechSynthesis to read the
+         actual audioText of each listening question aloud in
+         a human-like English voice.
+      ------------------------------------------------------- */
+
+      function stopAudio() {
+        if (window.speechSynthesis) {
+          window.speechSynthesis.cancel();
+        }
+        audioPlaying = false;
+      }
+
+      function playAudio() {
+        const btn = document.getElementById('btn-play');
+        const wave = document.getElementById('audio-wave');
+
+        // If currently speaking → cancel (pause/stop)
+        if (audioPlaying) {
+          stopAudio();
+          btn.textContent = '▶ Play';
+          wave.classList.add('paused');
+          btn.classList.remove('audio-btn-playing');
+          return;
+        }
+
+        // Check browser support
+        if (!window.speechSynthesis) {
+          alert('Sorry, your browser does not support Text-to-Speech. Please use Chrome or Edge.');
+          return;
+        }
+
+        const q = activeQuestions[currentQ];
+        // Use dedicated audioText if provided, otherwise fall back to question text
+        // Strip emoji and bracketed prefixes from fallback text
+        const rawText = q.audioText || q.question;
+        const cleanText = rawText
+          .replace(/\[.*?\]/g, '')          // remove [🎧 Listening] etc.
+          .replace(/[\u0080-\uFFFF]/g, ' ')   // remove non-ASCII (emojis)
+          .replace(/\s+/g, ' ')
+          .trim();
+
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.88;   // slightly slower for students
+        utterance.pitch = 1.0;
+        utterance.volume = 1.0;
+
+        // Pick the best available English voice
+        const voices = window.speechSynthesis.getVoices();
+        const enVoice = voices.find(v => v.lang === 'en-US' && v.localService) ||
+          voices.find(v => v.lang === 'en-US') ||
+          voices.find(v => v.lang.startsWith('en')) ||
+          null;
+        if (enVoice) utterance.voice = enVoice;
+
+        // onstart: update UI to "playing" state
+        utterance.onstart = () => {
+          audioPlaying = true;
+          btn.textContent = '⏸ Pause';
+          wave.classList.remove('paused');
+          btn.classList.add('audio-btn-playing');
+        };
+
+        // onend: update UI to "replay" state
+        utterance.onend = () => {
+          audioPlaying = false;
+          btn.textContent = '↺ Replay';
+          wave.classList.add('paused');
+          btn.classList.remove('audio-btn-playing');
+        };
+
+        // onerror: graceful fallback
+        utterance.onerror = () => {
+          audioPlaying = false;
+          btn.textContent = '▶ Play';
+          wave.classList.add('paused');
+          btn.classList.remove('audio-btn-playing');
+        };
+
+        // Some browsers need a short delay after cancel() before speaking again
+        setTimeout(() => {
+          window.speechSynthesis.speak(utterance);
+        }, 120);
+      }
+
+      /* -------------------------------------------------------
+         CONFIRM DIALOG
+      ------------------------------------------------------- */
+      function showConfirm() {
+        const unanswered = userAnswers.filter(a => a === null).length;
+        const el = document.getElementById('unanswered-count');
+        if (unanswered > 0) {
+          el.textContent = `⚠️ You have ${unanswered} unanswered question(s).`;
+        } else {
+          el.textContent = '✓ All questions answered.';
+        }
+        document.getElementById('confirm-overlay').classList.add('open');
+      }
+
+      function closeConfirm() {
+        document.getElementById('confirm-overlay').classList.remove('open');
+      }
+
+      /* -------------------------------------------------------
+         SUBMIT & SCORE CALCULATION
+      ------------------------------------------------------- */
+      function submitTest() {
+        closeConfirm();
+        stopAudio();
+        const results = calculateResults();
+        renderResults(results);
+        showScreen('results');
+      }
+
+      function calculateResults() {
+        let totalCorrect = 0;
+        let totalSkipped = 0;
+
+        // Skill tracking
+        const skills = {
+          phonetics: { correct: 0, total: 0, name: 'Phonetics' },
+          grammar: { correct: 0, total: 0, name: 'Grammar' },
+          vocabulary: { correct: 0, total: 0, name: 'Vocabulary' },
+          reading: { correct: 0, total: 0, name: 'Reading' },
+          listening: { correct: 0, total: 0, name: 'Listening' },
+          social: { correct: 0, total: 0, name: 'Social Interaction' },
+          writing: { correct: 0, total: 0, name: 'Writing' }
+        };
+
+        activeQuestions.forEach((q, i) => {
+          const skill = q.skill;
+          if (skills[skill]) {
+            skills[skill].total++;
+            if (userAnswers[i] === null) {
+              totalSkipped++;
+            } else if (userAnswers[i] === q.answer) {
+              totalCorrect++;
+              skills[skill].correct++;
+            }
+          } else {
+            if (userAnswers[i] === null) totalSkipped++;
+            else if (userAnswers[i] === q.answer) totalCorrect++;
+          }
+        });
+
+        const totalAnswered = activeQuestions.length - totalSkipped;
+        const totalIncorrect = totalAnswered - totalCorrect;
+        const pct = Math.round((totalCorrect / activeQuestions.length) * 100);
+
+        return {
+          totalCorrect,
+          totalIncorrect,
+          totalSkipped,
+          total: activeQuestions.length,
+          pct,
+          skills
+        };
+      }
+
+      /* -------------------------------------------------------
+         RESULTS RENDERING
+      ------------------------------------------------------- */
+      function renderResults(res) {
+        // Trophy and title based on score
+        let trophy, title, gradeClass, gradeText, gradeDesc;
+        if (res.pct >= 80) {
+          trophy = '🏆'; title = 'Outstanding!'; gradeClass = 'grade-excellent';
+          gradeText = '⭐ Excellent Performance';
+          gradeDesc = 'You are very well prepared for the entrance exam!';
+        } else if (res.pct >= 60) {
+          trophy = '🎯'; title = 'Good Job!'; gradeClass = 'grade-good';
+          gradeText = '✅ Good Performance';
+          gradeDesc = 'You performed well. Focus on your weak areas to excel.';
+        } else if (res.pct >= 40) {
+          trophy = '📚'; title = 'Keep Studying!'; gradeClass = 'grade-average';
+          gradeText = '⚡ Average Performance';
+          gradeDesc = 'You need to review several areas to improve your score.';
+        } else {
+          trophy = '💪'; title = 'Don\'t Give Up!'; gradeClass = 'grade-poor';
+          gradeText = '⚠ Needs Improvement';
+          gradeDesc = 'Intensive practice is recommended. You can do it!';
+        }
+
+        document.getElementById('trophy-icon').textContent = trophy;
+        document.getElementById('results-title').textContent = title;
+        document.getElementById('score-number').textContent = res.totalCorrect;
+        document.getElementById('score-total').textContent = `/ ${res.total}`;
+
+        // Animate score arc
+        const circumference = 377; // 2π × 60
+        const dashoffset = circumference - (res.pct / 100) * circumference;
+        setTimeout(() => {
+          document.getElementById('score-arc').style.strokeDashoffset = dashoffset;
+        }, 200);
+
+        // Stats
+        document.getElementById('score-stats').innerHTML = `
+      <div class="stat-row">
+        <div class="stat-dot correct"></div>
+        <span class="stat-label">Correct</span>
+        <span class="stat-val">${res.totalCorrect}</span>
+      </div>
+      <div class="stat-row">
+        <div class="stat-dot incorrect"></div>
+        <span class="stat-label">Incorrect</span>
+        <span class="stat-val">${res.totalIncorrect}</span>
+      </div>
+      <div class="stat-row">
+        <div class="stat-dot skipped"></div>
+        <span class="stat-label">Skipped</span>
+        <span class="stat-val">${res.totalSkipped}</span>
+      </div>
+      <div class="stat-row" style="margin-top:4px;border-top:1px solid rgba(79,110,247,0.1);padding-top:8px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--primary);flex-shrink:0;"></div>
+        <span class="stat-label">Score</span>
+        <span class="stat-val" style="color:var(--primary);">${res.pct}%</span>
+      </div>
+    `;
+
+        // Grade badge
+        const gradeBadge = document.getElementById('grade-badge');
+        gradeBadge.className = `grade-badge ${gradeClass}`;
+        gradeBadge.textContent = gradeText;
+        document.getElementById('grade-desc').textContent = gradeDesc;
+
+        // Skill bars
+        const skillColors = {
+          phonetics: 'linear-gradient(90deg,#a78bfa,#7c3aed)',
+          grammar: 'linear-gradient(90deg,#4f6ef7,#3451d1)',
+          vocabulary: 'linear-gradient(90deg,#06b6d4,#0284c7)',
+          reading: 'linear-gradient(90deg,#10b981,#059669)',
+          listening: 'linear-gradient(90deg,#f59e0b,#d97706)',
+          social: 'linear-gradient(90deg,#f064a5,#e91e8c)',
+          writing: 'linear-gradient(90deg,#ff8c42,#ea580c)'
+        };
+
+        const skillBars = document.getElementById('skill-bars');
+        skillBars.innerHTML = '';
+        Object.entries(res.skills).forEach(([key, sk]) => {
+          if (sk.total === 0) return;
+          const pct = Math.round((sk.correct / sk.total) * 100);
+          const bar = document.createElement('div');
+          bar.className = 'skill-bar-row';
+          bar.innerHTML = `
+        <div class="skill-bar-label">${sk.name}</div>
+        <div class="skill-bar-track">
+          <div class="skill-bar-fill" style="width:0%;background:${skillColors[key] || 'var(--primary)'};"
+               data-pct="${pct}"></div>
+        </div>
+        <div class="skill-bar-pct">${pct}%</div>
+      `;
+          skillBars.appendChild(bar);
+        });
+
+        // Animate skill bars
+        setTimeout(() => {
+          document.querySelectorAll('.skill-bar-fill').forEach(el => {
+            el.style.width = el.dataset.pct + '%';
+          });
+        }, 400);
+
+        // Generate feedback
+        renderFeedback(res);
+
+        // Render review list
+        renderReviewList();
+      }
+
+      /* -------------------------------------------------------
+         FEEDBACK GENERATION
+      ------------------------------------------------------- */
+      function renderFeedback(res) {
+        const strengths = [];
+        const weaknesses = [];
+        const suggestions = [];
+
+        const thresholdGood = 70;
+        const thresholdWeak = 50;
+
+        Object.entries(res.skills).forEach(([key, sk]) => {
+          if (sk.total === 0) return;
+          const pct = Math.round((sk.correct / sk.total) * 100);
+          if (pct >= thresholdGood) {
+            strengths.push(`${sk.name} (${pct}%)`);
+          } else if (pct < thresholdWeak) {
+            weaknesses.push(`${sk.name} (${pct}%)`);
+          }
+        });
+
+        // Specific suggestions based on weak skills
+        const suggestionMap = {
+          phonetics: ['Review vowel sounds (long vs. short)', 'Practice word stress patterns', 'Focus on -ed/-ing endings pronunciation'],
+          grammar: ['Review conditional sentences (Type 1, 2, 3)', 'Study reported speech tense shifts', 'Practice modal verbs usage'],
+          vocabulary: ['Learn common phrasal verbs', 'Study synonyms and antonyms', 'Practice word form transformations'],
+          reading: ['Practice skimming and scanning techniques', 'Learn to identify topic sentences', 'Study discourse connectors'],
+          listening: ['Practice with English audio/news daily', 'Focus on understanding main ideas', 'Take notes while listening'],
+          social: ['Learn common English responses and phrases', 'Study polite request forms', 'Practice conversation sequencing'],
+          writing: ['Review sentence transformation rules', 'Study error correction patterns', 'Practice combining sentences with relative clauses']
+        };
+
+        Object.entries(res.skills).forEach(([key, sk]) => {
+          if (sk.total === 0) return;
+          const pct = Math.round((sk.correct / sk.total) * 100);
+          if (pct < thresholdWeak && suggestionMap[key]) {
+            suggestionMap[key].forEach(s => {
+              if (!suggestions.includes(s)) suggestions.push(s);
+            });
+          }
+        });
+
+        const feedbackGrid = document.getElementById('feedback-grid');
+        feedbackGrid.innerHTML = '';
+
+        if (strengths.length > 0) {
+          feedbackGrid.innerHTML += `
+        <div class="feedback-card strength">
+          <h4>✅ Strong Areas</h4>
+          <ul>${strengths.map(s => `<li>${s}</li>`).join('')}</ul>
+        </div>
+      `;
+        }
+
+        if (weaknesses.length > 0) {
+          feedbackGrid.innerHTML += `
+        <div class="feedback-card weakness" style="grid-column:${strengths.length > 0 ? 'auto' : '1 / span 2'};">
+          <h4>⚠️ Needs Improvement</h4>
+          <ul>${weaknesses.map(s => `<li>${s}</li>`).join('')}</ul>
+        </div>
+      `;
+        }
+
+        if (suggestions.length > 0) {
+          feedbackGrid.innerHTML += `
+        <div class="feedback-card suggestion" style="grid-column: 1 / span 2;">
+          <h4>💡 Recommended Topics to Review</h4>
+          <ul>${suggestions.slice(0, 6).map(s => `<li>${s}</li>`).join('')}</ul>
+        </div>
+      `;
+        }
+
+        if (feedbackGrid.innerHTML === '') {
+          feedbackGrid.innerHTML = `
+        <div class="feedback-card suggestion" style="grid-column: 1 / span 2;">
+          <h4>🎉 Great Performance!</h4>
+          <ul><li>Keep maintaining your excellent preparation.</li><li>Consider attempting past official exam papers.</li></ul>
+        </div>
+      `;
+        }
+      }
+
+      /* -------------------------------------------------------
+         REVIEW LIST
+      ------------------------------------------------------- */
+      function renderReviewList() {
+        const list = document.getElementById('review-list');
+        list.innerHTML = '';
+        const labels = ['A', 'B', 'C', 'D'];
+
+        activeQuestions.forEach((q, i) => {
+          const ua = userAnswers[i];
+          let statusClass, statusText;
+          if (ua === null) {
+            statusClass = 'skipped'; statusText = 'Skipped';
+          } else if (ua === q.answer) {
+            statusClass = 'correct'; statusText = 'Correct';
+          } else {
+            statusClass = 'incorrect'; statusText = 'Incorrect';
+          }
+
+          const item = document.createElement('div');
+          item.className = 'review-item';
+
+          const optionsHTML = q.options.map((opt, j) => {
+            let cls = '';
+            if (j === q.answer && ua === j) cls = 'correct-selected';
+            else if (j === q.answer) cls = 'correct-answer';
+            else if (j === ua) cls = 'selected-answer';
+            return `<div class="review-option ${cls}">${labels[j]}. ${opt}</div>`;
+          }).join('');
+
+          item.innerHTML = `
+        <div class="review-item-header">
+          <span class="review-qnum">Q${i + 1} · ${q.section}</span>
+          <span class="review-status ${statusClass}">${statusText}</span>
+        </div>
+        <div class="review-qtext">
+          ${currentLang === 'vi' && q.viQuestion
+              ? q.viQuestion.replace(/\n/g, ' ').substring(0, 120) + (q.viQuestion.length > 120 ? '…' : '')
+              : q.question.replace(/\n/g, ' ').substring(0, 120) + (q.question.length > 120 ? '…' : '')
+            }
+        </div>
+        <div class="review-answers">${optionsHTML}</div>
+        <div class="review-explanation">
+          💡 ${q.explanation}
+          ${currentLang === 'vi' && q.viExplanation
+              ? '<div style=\"margin-top:6px;color:#3451d1;\">💡 ' + q.viExplanation + '</div>'
+              : ''}
+        </div>
+      `;
+
+          list.appendChild(item);
+        });
+      }
+
+      /* -------------------------------------------------------
+         TABS
+      ------------------------------------------------------- */
+      function showTab(name) {
+        activeTab = name;
+        document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+          btn.classList.toggle('active', ['analysis', 'review'][i] === name);
+        });
+        document.querySelectorAll('.tab-panel').forEach((panel, i) => {
+          panel.classList.toggle('active', ['tab-analysis', 'tab-review'][i] === 'tab-' + name);
+        });
+      }
+
+      /* -------------------------------------------------------
+         RETAKE / PRINT
+      ------------------------------------------------------- */
+      function retakeTest() {
+        showScreen('start');
+      }
+
+      function printResults() {
+        window.print();
+      }
+
+      /* -------------------------------------------------------
+         PUBLIC API
+      ------------------------------------------------------- */
+      return {
+        startTest,
+        selectDifficulty,
+        nextQuestion,
+        prevQuestion,
+        setLang,
+        showConfirm,
+        closeConfirm,
+        submitTest,
+        playAudio,
+        toggleMap,
+        showTab,
+        retakeTest,
+        printResults
+      };
+
+    })(); // end App IIFE
+
+  </script>
+</body>
+
+</html>
