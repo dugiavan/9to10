@@ -1320,6 +1320,169 @@
       justify-content: center;
     }
 
+    /* =========================================
+     FULL ANSWERS SECTION
+  ========================================= */
+    .full-answers-section {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 2px solid rgba(79, 110, 247, 0.12);
+    }
+
+    .full-answers-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .full-answers-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .full-answers-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .full-answers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .fa-item {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1.5px solid rgba(79, 110, 247, 0.12);
+      border-radius: var(--radius-sm);
+      padding: 20px 22px;
+      transition: var(--transition);
+    }
+
+    .fa-item.fa-correct {
+      border-left: 4px solid var(--correct);
+    }
+
+    .fa-item.fa-incorrect {
+      border-left: 4px solid var(--incorrect);
+    }
+
+    .fa-item.fa-skipped {
+      border-left: 4px solid var(--warning);
+    }
+
+    .fa-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .fa-qnum {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .fa-status {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 50px;
+    }
+
+    .fa-status.correct {
+      background: rgba(0, 196, 140, 0.13);
+      color: #007a62;
+    }
+
+    .fa-status.incorrect {
+      background: rgba(255, 77, 109, 0.10);
+      color: #cc1f3d;
+    }
+
+    .fa-status.skipped {
+      background: rgba(255, 184, 48, 0.12);
+      color: #8a6a00;
+    }
+
+    .fa-question {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .fa-options {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .fa-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      background: rgba(79, 110, 247, 0.04);
+    }
+
+    .fa-option-label {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: rgba(79, 110, 247, 0.1);
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .fa-option.fa-opt-correct {
+      background: rgba(0, 196, 140, 0.10);
+      color: #005d4b;
+      font-weight: 600;
+    }
+
+    .fa-option.fa-opt-correct .fa-option-label {
+      background: var(--correct);
+      color: #fff;
+    }
+
+    .fa-option.fa-opt-wrong {
+      background: rgba(255, 77, 109, 0.08);
+      color: #cc1f3d;
+      font-weight: 600;
+    }
+
+    .fa-option.fa-opt-wrong .fa-option-label {
+      background: var(--incorrect);
+      color: #fff;
+    }
+
+    .fa-explanation {
+      padding: 10px 14px;
+      background: rgba(79, 110, 247, 0.06);
+      border-radius: 8px;
+      font-size: 0.84rem;
+      color: var(--primary-dark);
+      line-height: 1.6;
+    }
+
     /* Scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
@@ -1750,6 +1913,15 @@
         <div class="results-actions">
           <button class="btn btn-secondary" onclick="App.retakeTest()">🔄 Retake Test</button>
           <button class="btn btn-primary" onclick="App.printResults()">🖨 Print Results</button>
+        </div>
+
+        <!-- Full Answers Section -->
+        <div class="full-answers-section" id="full-answers-section">
+          <div class="full-answers-header">
+            <div class="full-answers-title">📋 Toàn bộ câu hỏi &amp; đáp án</div>
+            <div class="full-answers-subtitle">Xem lại tất cả câu hỏi và đáp án học sinh đã chọn</div>
+          </div>
+          <div class="full-answers-list" id="full-answers-list"></div>
         </div>
 
       </div>
@@ -4226,6 +4398,9 @@
 
         // Render review list
         renderReviewList();
+
+        // Render full answers section
+        renderFullAnswers();
       }
 
       /* -------------------------------------------------------
@@ -4359,6 +4534,57 @@
               : ''}
         </div>
       `;
+
+          list.appendChild(item);
+        });
+      }
+
+      /* -------------------------------------------------------
+         FULL ANSWERS LIST
+      ------------------------------------------------------- */
+      function renderFullAnswers() {
+        const list = document.getElementById('full-answers-list');
+        list.innerHTML = '';
+        const labels = ['A', 'B', 'C', 'D'];
+
+        activeQuestions.forEach((q, i) => {
+          const ua = userAnswers[i];
+          let statusClass, statusText, itemClass;
+          if (ua === null) {
+            statusClass = 'skipped'; statusText = 'Bỏ qua'; itemClass = 'fa-skipped';
+          } else if (ua === q.answer) {
+            statusClass = 'correct'; statusText = 'Đúng'; itemClass = 'fa-correct';
+          } else {
+            statusClass = 'incorrect'; statusText = 'Sai'; itemClass = 'fa-incorrect';
+          }
+
+          const item = document.createElement('div');
+          item.className = `fa-item ${itemClass}`;
+
+          const qTextRaw = currentLang === 'vi' && q.viQuestion ? q.viQuestion : q.question;
+          const qTextDisplay = qTextRaw.replace(/\n/g, '<br>').replace(/___/g, '<span class="blank">___</span>');
+
+          const optionsHTML = q.options.map((opt, j) => {
+            let cls = '';
+            if (j === q.answer) cls = 'fa-opt-correct';
+            else if (j === ua) cls = 'fa-opt-wrong';
+            return `<div class="fa-option ${cls}">
+              <span class="fa-option-label">${labels[j]}</span>
+              <span>${opt}</span>
+            </div>`;
+          }).join('');
+
+          const expText = currentLang === 'vi' && q.viExplanation ? q.viExplanation : q.explanation;
+
+          item.innerHTML = `
+            <div class="fa-item-header">
+              <span class="fa-qnum">Câu ${i + 1} · ${q.section}</span>
+              <span class="fa-status ${statusClass}">${statusText}</span>
+            </div>
+            <div class="fa-question">${qTextDisplay}</div>
+            <div class="fa-options">${optionsHTML}</div>
+            <div class="fa-explanation">💡 ${expText}</div>
+          `;
 
           list.appendChild(item);
         });
