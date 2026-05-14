@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -643,12 +644,17 @@
       scrollbar-width: none;
       -ms-overflow-style: none;
       background: linear-gradient(to bottom,
-          #87ceeb 0%,
-          #b0e2ff 20%,
-          #c8edff 40%,
-          #d4f0e8 60%,
-          #e8f5dc 80%,
-          #f0f7e8 100%);
+          #fff0f3 0%,
+          /* Hồng sữa nhạt nhất (Cherry Blossom Mist) */
+          #ffdee5 25%,
+          /* Hồng phấn (Cotton Candy) */
+          #fbc2eb 50%,
+          /* Hồng tím nhạt (Lavender Pink) */
+          #f1a7bc 75%,
+          /* Hồng dâu nhạt (Sweet Berry) */
+          #e8a2af 100%
+          /* Hồng tro sang trọng (Dusty Rose) */
+        );
     }
 
     .ghibli-scroll::-webkit-scrollbar {
@@ -2669,13 +2675,17 @@
       color: #1d1d1f;
     }
 
-    /* Filter chips */
+    /* Filter chips — sticky inside ph-body scroll */
     .ph-filters {
       display: flex;
       gap: 0.6rem;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 0.75rem 0 0.75rem;
+      margin: 0 0 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
       background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .ph-filter-chip {
@@ -3277,6 +3287,173 @@
       letter-spacing: .06em;
       margin-bottom: .4rem;
     }
+
+    /* ══════════════════════════════════════════════
+       PH-DETAIL LAYER — slide in from right on mobile
+    ══════════════════════════════════════════════ */
+    .ph-detail-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1100;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      pointer-events: none;
+      /* no dim — the parent ph-modal already dims */
+    }
+
+    .ph-detail-sheet {
+      background: #ffffff;
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-width: 900px;
+      max-height: 94vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 -12px 60px rgba(0, 0, 0, .18);
+      border: 1px solid rgba(0, 0, 0, .05);
+      border-bottom: none;
+      overflow: hidden;
+      pointer-events: all;
+      transform: translateY(100%);
+      transition: transform 0.38s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: transform;
+    }
+
+    .ph-detail-overlay.open .ph-detail-sheet {
+      transform: translateY(0);
+    }
+
+    /* ── Detail header ── */
+    .ph-detail-header {
+      padding: 1rem 1.2rem 0.85rem;
+      background: #ffffff;
+      border-bottom: 1px solid #f2f2f7;
+      flex-shrink: 0;
+    }
+
+    .ph-detail-handle {
+      width: 36px;
+      height: 4px;
+      background: rgba(0, 0, 0, .08);
+      border-radius: 10px;
+      margin: 0 auto 0.9rem;
+    }
+
+    .ph-detail-toprow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .ph-detail-back {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #f5f5f7;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #1d1d1f;
+      flex-shrink: 0;
+      transition: background 0.18s;
+    }
+
+    .ph-detail-back:hover {
+      background: #e5e5ea;
+    }
+
+    .ph-detail-title {
+      flex: 1;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #1d1d1f;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .ph-detail-score-badge {
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .ph-detail-pct {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .ph-detail-frac {
+      font-size: 0.68rem;
+      color: #86868b;
+      font-weight: 700;
+    }
+
+    .ph-detail-meta {
+      font-size: 0.7rem;
+      color: #86868b;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ── Detail filter chips ── */
+    .ph-detail-filters {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .ph-detail-chip {
+      padding: 0.35rem 0.85rem;
+      border-radius: 6px;
+      border: 1px solid #e8e8ed;
+      background: #f5f5f7;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #86868b;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .ph-detail-chip.active {
+      background: #1d1d1f;
+      color: #ffffff;
+      border-color: #1d1d1f;
+    }
+
+    .ph-detail-chip.fc.active {
+      background: #34c759;
+      border-color: #34c759;
+    }
+
+    .ph-detail-chip.fw.active {
+      background: #ff3b30;
+      border-color: #ff3b30;
+    }
+
+    /* ── Detail body ── */
+    .ph-detail-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.2rem 1.2rem 3rem;
+      background: #ffffff;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 0, 0, .1) transparent;
+    }
+
+    /* Reuse ph-q-row styles — they still apply */
   </style>
 
 <body>
@@ -3366,21 +3543,46 @@
         <!-- Lesson tabs -->
         <div class="ph-tabs" id="ph-tabs"></div>
       </div>
-      <!-- Filter chips -->
-      <div class="ph-filters">
-        <button class="ph-filter-chip active" data-filter="all" onclick="setPHFilter('all', this)">Tất cả</button>
-        <button class="ph-filter-chip f-correct" data-filter="correct" onclick="setPHFilter('correct', this)">✅ Câu
-          đúng</button>
-        <button class="ph-filter-chip f-wrong" data-filter="wrong" onclick="setPHFilter('wrong', this)">❌ Câu
-          sai</button>
-      </div>
       <!-- Body -->
       <div class="ph-body" id="ph-body">
+        <!-- Filter chips — sticky inside scroll area -->
+        <div class="ph-filters">
+          <button class="ph-filter-chip active" data-filter="all" onclick="setPHFilter('all', this)">Tất cả</button>
+          <button class="ph-filter-chip f-correct" data-filter="correct" onclick="setPHFilter('correct', this)">✅ Câu
+            đúng</button>
+          <button class="ph-filter-chip f-wrong" data-filter="wrong" onclick="setPHFilter('wrong', this)">❌ Câu
+            sai</button>
+        </div>
         <div class="ph-loading">
           <div class="ph-spinner"></div>
           Đang tải lịch sử...
         </div>
       </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════ PH-DETAIL LAYER — chi tiết 1 bài ══════════ -->
+  <div class="ph-detail-overlay" id="ph-detail-overlay">
+    <div class="ph-detail-sheet" onclick="event.stopPropagation()">
+      <div class="ph-detail-header">
+        <div class="ph-detail-handle"></div>
+        <div class="ph-detail-toprow">
+          <button class="ph-detail-back" onclick="closePHDetail()" title="Quay lại">‹</button>
+          <div class="ph-detail-title" id="ph-detail-title"></div>
+          <div class="ph-detail-score-badge">
+            <div class="ph-detail-pct" id="ph-detail-pct"></div>
+            <div class="ph-detail-frac" id="ph-detail-frac"></div>
+          </div>
+        </div>
+        <div class="ph-detail-meta" id="ph-detail-meta"></div>
+        <div class="ph-detail-filters">
+          <button class="ph-detail-chip active" onclick="setPHDetailFilter('all',this)">Tất cả</button>
+          <button class="ph-detail-chip fc" onclick="setPHDetailFilter('correct',this)">✅ Đúng</button>
+          <button class="ph-detail-chip fw" onclick="setPHDetailFilter('wrong',this)">❌ Sai</button>
+        </div>
+      </div>
+      <div class="ph-detail-body" id="ph-detail-body"></div>
     </div>
   </div>
 
@@ -4370,7 +4572,63 @@
           ],
         }
       },
+      Unlessif: {
+        title: "Unless - If", icon: "🎧",
+        theory: `<strong>Trắc Nghiệm </strong><br>
+
+• Nguyên tắc cốt lõi: <strong>Nhìn từ khóa → xác định dạng → chọn mẫu câu</strong>, không đọc dịch toàn bộ bài.<br><br>
+
+<strong>KẾT LUẬN:</strong><br>
+• Đây là chiến thuật “tối ưu điểm số trong thời gian ngắn”.<br>
+• Không học lan man, không dịch toàn bài.<br>
+• Chỉ luyện phản xạ: <strong>keyword → dạng → đáp án</strong>.`,
+        levels: {
+          easy: [
+            { type: "multiple_choice", q: "Choose the sentence that is closest in meaning to the given sentence:\nIf we do not save electricity, our energy bills will increase.", options: ["Unless we save electricity, our energy bills will increase.", "Unless we don't save electricity, our energy bills will increase.", "If we save electricity, our energy bills will increase.", "Unless we will save electricity, our energy bills will increase."], a: "Unless we save electricity, our energy bills will increase.", lesson: "MẸO: Unless = if not. Khi đổi từ 'If ... not' sang 'Unless', PHẢI bỏ 'not'. Sai cực phổ biến: 'Unless we don't save...'." },
+            { type: "multiple_choice", q: "Choose the correct rewrite:\nUnless students review their lessons regularly, they will forget the knowledge quickly.", options: ["If students don't review their lessons regularly, they will forget the knowledge quickly.", "If students review their lessons regularly, they will forget the knowledge quickly.", "Unless students don't review their lessons regularly, they will forget the knowledge quickly.", "If students didn't review their lessons regularly, they would forget the knowledge quickly."], a: "If students don't review their lessons regularly, they will forget the knowledge quickly.", lesson: "MẸO: Đổi từ Unless → If...not. Công thức chuẩn: Unless + S + V = If + S + do/does not + V." },
+            { type: "multiple_choice", q: "Choose the sentence that best rewrites the following one:\nIf you don't wear a helmet, you may get seriously injured.", options: ["Unless you wear a helmet, you may get seriously injured.", "Unless you don't wear a helmet, you may get seriously injured.", "If you wear a helmet, you may get seriously injured.", "Unless you wearing a helmet, you may get seriously injured."], a: "Unless you wear a helmet, you may get seriously injured.", lesson: "MẸO: Sau Unless dùng mệnh đề khẳng định, KHÔNG thêm 'don't'. 'Unless you don't wear...' là sai ngữ pháp." },
+            { type: "multiple_choice", q: "Choose the correct answer:\nUnless people reduce plastic waste, the environment will become more polluted.", options: ["If people don't reduce plastic waste, the environment will become more polluted.", "If people reduce plastic waste, the environment will become more polluted.", "Unless people don't reduce plastic waste, the environment will become more polluted.", "If people didn't reduce plastic waste, the environment would become more polluted."], a: "If people don't reduce plastic waste, the environment will become more polluted.", lesson: "MẸO: Unless và If...not mang nghĩa tương đương hoàn toàn. Khi đổi câu, chỉ đổi cấu trúc chứ KHÔNG đổi nghĩa." },
+            { type: "multiple_choice", q: "Choose the best rewrite:\nIf she does not practise speaking English every day, she will not improve quickly.", options: ["Unless she practises speaking English every day, she will not improve quickly.", "Unless she doesn't practise speaking English every day, she will not improve quickly.", "If she practises speaking English every day, she will not improve quickly.", "Unless she practised speaking English every day, she would not improve quickly."], a: "Unless she practises speaking English every day, she will not improve quickly.", lesson: "MẸO: Nếu câu gốc có 'does not practise' → đổi sang 'Unless she practises'. Bỏ trợ động từ và bỏ NOT." },
+            { type: "multiple_choice", q: "Choose the sentence closest in meaning:\nUnless we protect forests, many animals will lose their habitats.", options: ["If we don't protect forests, many animals will lose their habitats.", "If we protect forests, many animals will lose their habitats.", "Unless we don't protect forests, many animals will lose their habitats.", "If we didn't protect forests, many animals would lose their habitats."], a: "If we don't protect forests, many animals will lose their habitats.", lesson: "MẸO: Đây là câu điều kiện loại 1. Khi đổi Unless ↔ If...not, thì của động từ vẫn giữ nguyên." },
+            { type: "multiple_choice", q: "Choose the correct rewrite:\nIf the teacher doesn't explain the lesson clearly, students will feel confused.", options: ["Unless the teacher explains the lesson clearly, students will feel confused.", "Unless the teacher doesn't explain the lesson clearly, students will feel confused.", "If the teacher explains the lesson clearly, students will feel confused.", "Unless the teacher explained the lesson clearly, students would feel confused."], a: "Unless the teacher explains the lesson clearly, students will feel confused.", lesson: "MẸO: Sau Unless dùng động từ nguyên mẫu thêm s/es nếu chủ ngữ số ít. Teacher → explains." },
+            { type: "multiple_choice", q: "Choose the best answer:\nUnless you wake up early, you will miss the bus.", options: ["If you don't wake up early, you will miss the bus.", "If you wake up early, you will miss the bus.", "Unless you don't wake up early, you will miss the bus.", "If you didn't wake up early, you would miss the bus."], a: "If you don't wake up early, you will miss the bus.", lesson: "MẸO: Gặp Unless → tự động nghĩ tới If...not. Đây là phản xạ rất quan trọng khi làm rewriting." },
+            { type: "multiple_choice", q: "Choose the sentence that has the same meaning:\nIf they do not follow the safety rules, accidents may happen.", options: ["Unless they follow the safety rules, accidents may happen.", "Unless they don't follow the safety rules, accidents may happen.", "If they follow the safety rules, accidents may happen.", "Unless they followed the safety rules, accidents might happen."], a: "Unless they follow the safety rules, accidents may happen.", lesson: "MẸO: Không được dùng đồng thời 'Unless' và 'not'. Đây là lỗi bẫy kinh điển trong đề thi." },
+            { type: "multiple_choice", q: "Choose the correct rewrite:\nUnless we use public transport more often, traffic problems will become worse.", options: ["If we don't use public transport more often, traffic problems will become worse.", "If we use public transport more often, traffic problems will become worse.", "Unless we don't use public transport more often, traffic problems will become worse.", "If we didn't use public transport more often, traffic problems would become worse."], a: "If we don't use public transport more often, traffic problems will become worse.", lesson: "MẸO: Khi đổi Unless → If...not, nhớ thêm trợ động từ don't/doesn't nếu câu ở hiện tại đơn." },
+            { type: "multiple_choice", q: "If it doesn't rain, we will go for a picnic. -> ______ it rains, we will go for a picnic.", options: ["A. Unless", "B. If", "C. Provided", "D. As long as"], a: "A. Unless", lesson: "Quy tắc cơ bản: Unless tương đương với If... not. Khi câu gốc dùng 'If it doesn't rain', ta thay 'If... not' bằng 'Unless'. Lưu ý khi dùng Unless, động từ 'rain' phải chia khẳng định là 'rains' vì bản thân Unless đã mang nghĩa phủ định." },
+            { type: "multiple_choice", q: "Unless you study harder, you will fail the exam. -> If you ______ harder, you will fail the exam.", options: ["A. study", "B. studied", "C. don't study", "D. didn't study"], a: "C. don't study", lesson: "Quy tắc ngược: Khi chuyển từ Unless sang If, ta phải thêm 'not' vào sau động từ để giữ nguyên nghĩa. Với động từ thường ở hiện tại, ta mượn trợ động từ 'don't' cho chủ ngữ 'you'. Dịch: Nếu bạn không học hành chăm chỉ hơn, bạn sẽ trượt kỳ thi." },
+            { type: "multiple_choice", q: "If we don't protect the forest, many animals will lose their homes. -> ______ we protect the forest, many animals will lose their homes.", options: ["A. If", "B. When", "C. Unless", "D. Because"], a: "C. Unless", lesson: "Chuyển đổi If not: Cụm 'If we don't' được thay thế hoàn toàn bằng từ 'Unless'. Phần còn lại của vế đầu giữ nguyên ở dạng khẳng định 'we protect'. Dịch: Trừ khi chúng ta bảo vệ rừng, nhiều loài động vật sẽ mất nhà." },
+            { type: "multiple_choice", q: "I won't go to the party if you don't come with me. -> I won't go to the party ______ you come with me.", options: ["A. if", "B. unless", "C. because", "D. although"], a: "B. unless", lesson: "Vị trí của mệnh đề: Mệnh đề If/Unless có thể đứng sau. 'if you don't come' được viết lại thành 'unless you come'. Nghĩa của câu không thay đổi: Tôi sẽ không đi dự tiệc trừ khi bạn đi cùng tôi." },
+            { type: "multiple_choice", q: "Unless she ______ her password, she can't log in.", options: ["A. remembers", "B. doesn't remember", "C. remember", "D. remembered"], a: "A. remembers", lesson: "Chia động từ với Unless: Sau Unless, mệnh đề luôn ở dạng khẳng định về mặt hình thức (không có not). Vì chủ ngữ là 'she' nên động từ 'remember' phải thêm 's' thành 'remembers'. Dịch: Trừ khi cô ấy nhớ mật khẩu, cô ấy mới có thể đăng nhập." },
+            { type: "multiple_choice", q: "If you don't hurry, you will miss the bus. -> ______, you will miss the bus.", options: ["A. If you hurry", "B. Unless you hurry", "C. Unless you don't hurry", "D. Unless you hurried"], a: "B. Unless you hurry", lesson: "Phân tích lỗi sai: Phương án C sai vì sau Unless không dùng 'not'. Phương án A sai nghĩa. Đáp án B đúng cấu trúc: Unless + khẳng định thay thế cho If + phủ định. Dịch: Trừ khi bạn nhanh lên, không thì bạn sẽ lỡ chuyến xe buýt." },
+            { type: "multiple_choice", q: "He will be sick unless he ______ eating fast food.", options: ["A. stop", "B. stops", "C. doesn't stop", "D. stopped"], a: "B. stops", lesson: "Sự hòa hợp chủ ngữ và động từ: Sau Unless là mệnh đề khẳng định. Với chủ ngữ số ít 'he', động từ 'stop' phải được chia là 'stops'. Dịch: Anh ấy sẽ bị bệnh trừ khi anh ấy ngừng ăn đồ ăn nhanh." },
+            { type: "multiple_choice", q: "If she isn't busy, she will help us. -> ______ she is busy, she will help us.", options: ["A. If", "B. Unless", "C. Because", "D. Although"], a: "B. Unless", lesson: "Biến đổi tobe: 'If she is not' rút gọn thành 'Unless she is'. Lưu ý nghĩa của câu: Trừ khi cô ấy bận (nghĩa là nếu cô ấy không bận), cô ấy sẽ giúp chúng tôi. Các liên từ khác không phù hợp về ngữ pháp và logic." },
+            { type: "multiple_choice", q: "Unless we ______ steps to protect the planet, it will be in danger.", options: ["A. take", "B. don't take", "C. took", "D. are taking"], a: "A. take", lesson: "Dấu hiệu nhận biết: Câu này mô phỏng ví dụ bạn đã đưa ra. Sau Unless dùng động từ ở dạng khẳng định 'take'. Tuyệt đối không dùng 'don't take' sau Unless vì sẽ tạo ra phủ định kép sai nghĩa." },
+            { type: "multiple_choice", q: "Which sentence has the same meaning as: 'Unless it is warm, we won't go swimming.'?", options: ["A. If it is warm, we will go swimming.", "B. If it is warm, we won't go swimming.", "C. If it isn't warm, we won't go swimming.", "D. If it isn't warm, we will go swimming."], a: "C. If it isn't warm, we won't go swimming.", lesson: "Tìm câu đồng nghĩa: 'Unless it is' tương đương với 'If it is not' (Nếu trời không ấm). Do đó, phương án C giữ nguyên được logic: Nếu trời không ấm, chúng tôi sẽ không đi bơi." },
+            { type: "multiple_choice", q: "If you don't wear a coat, you will catch a cold. -> ______ you wear a coat, you will catch a cold.", options: ["A. Unless", "B. If", "C. When", "D. Or"], a: "A. Unless", lesson: "Chuyển đổi If not: Cụm If you don't được thay thế bằng Unless. Khi dùng Unless, vế câu phải ở dạng khẳng định là you wear. Dịch: Trừ khi bạn mặc áo khoác, bạn sẽ bị cảm lạnh." },
+            { type: "multiple_choice", q: "Unless he ______ more money, he can't buy that car.", options: ["A. has", "B. doesn't have", "C. have", "D. had"], a: "A. has", lesson: "Chia động từ với Unless: Sau Unless ta dùng mệnh đề khẳng định. Với chủ ngữ số ít là he, động từ have phải chia thành has ở thì hiện tại đơn. Dịch: Trừ khi anh ấy có thêm tiền, anh ấy mới mua được chiếc xe đó." },
+            { type: "multiple_choice", q: "If we don't hurry up, we will miss the train. -> Unless we ______, we will miss the train.", options: ["A. hurry up", "B. don't hurry up", "C. hurried up", "D. are hurrying up"], a: "A. hurry up", lesson: "Quy tắc Unless: Unless đã mang nghĩa là nếu không, nên động từ đi sau nó phải ở dạng khẳng định để tránh phủ định kép. Ta chọn hurry up. Dịch: Trừ khi chúng ta nhanh lên, chúng ta sẽ lỡ chuyến tàu." },
+            { type: "multiple_choice", q: "I will call the police if you don't leave now. -> I will call the police ______ you leave now.", options: ["A. if", "B. unless", "C. although", "D. because"], a: "B. unless", lesson: "Thay thế liên từ: Câu gốc dùng if... don't leave (nếu không rời đi), ta dùng unless (trừ khi) để thay thế cho cả cụm if... not này. Dịch: Tôi sẽ gọi cảnh sát trừ khi bạn rời đi ngay bây giờ." },
+            { type: "multiple_choice", q: "Unless you ______ me the truth, I won't help you.", options: ["A. tell", "B. don't tell", "C. told", "D. telling"], a: "A. tell", lesson: "Cấu trúc Unless: Sau Unless là mệnh đề khẳng định. Với chủ ngữ you, động từ tell giữ nguyên mẫu. Lưu ý không dùng don't tell sau Unless. Dịch: Trừ khi bạn nói cho tôi sự thật, tôi sẽ không giúp bạn." },
+            { type: "multiple_choice", q: "If she doesn't eat more, she will be weak. -> ______ she eats more, she will be weak.", options: ["A. If", "B. Unless", "C. Provided", "D. When"], a: "B. Unless", lesson: "Biến đổi phủ định sang khẳng định: If she doesn't eat biến thành Unless she eats. Lưu ý động từ phải thêm s sau Unless vì chủ ngữ là she. Dịch: Trừ khi cô ấy ăn nhiều hơn, cô ấy sẽ bị yếu." },
+            { type: "multiple_choice", q: "Unless it ______ sunny, we won't go to the beach.", options: ["A. is", "B. isn't", "C. be", "D. was"], a: "A. is", lesson: "Động từ tobe với Unless: Ta dùng dạng khẳng định của tobe sau Unless. Với chủ ngữ it, ta dùng is. Dịch: Trừ khi trời nắng (Nếu trời không nắng), chúng tôi sẽ không đi tắm biển." },
+            { type: "multiple_choice", q: "Which sentence has the same meaning as: 'If you don't exercise, you won't stay healthy.'?", options: ["A. Unless you exercise, you will stay healthy.", "B. Unless you exercise, you won't stay healthy.", "C. If you exercise, you won't stay healthy.", "D. Unless you don't exercise, you won't stay healthy."], a: "B. Unless you exercise, you won't stay healthy.", lesson: "Tìm câu đồng nghĩa: Unless you exercise tương đương với If you don't exercise. Vế sau của câu giữ nguyên để đảm bảo ý nghĩa không đổi. Dịch: Trừ khi bạn tập thể dục, bạn sẽ không thể khỏe mạnh." },
+            { type: "multiple_choice", q: "The plants will die if you ______ water them.", options: ["A. don't", "B. unless", "C. not", "D. aren't"], a: "A. don't", lesson: "Hoàn thành câu If: Để tạo nghĩa nếu không, ta cần trợ động từ phủ định don't đứng trước động từ water. Phương án unless không đứng giữa chủ ngữ và động từ như vậy được. Dịch: Cây sẽ chết nếu bạn không tưới nước cho chúng." },
+            { type: "multiple_choice", q: "He can't pass the test ______ he studies very hard.", options: ["A. if", "B. unless", "C. as", "D. when"], a: "B. unless", lesson: "Logic câu: Anh ấy không thể vượt qua bài kiểm tra trừ khi anh ấy học rất chăm chỉ. Unless phù hợp nhất để nối hai vế mang tính điều kiện loại trừ này. Dịch: Anh ấy không thể đỗ trừ khi học cực kỳ chăm chỉ." },
+            { type: "multiple_choice", q: "Choose the sentence that is closest in meaning:\nIf people do not recycle paper, more trees will be cut down.", options: ["Unless people recycle paper, more trees will be cut down.", "Unless people don't recycle paper, more trees will be cut down.", "If people recycle paper, more trees will be cut down.", "Unless people recycled paper, more trees would be cut down."], a: "Unless people recycle paper, more trees will be cut down.", lesson: "MẸO: If + don't/doesn't + V → đổi sang Unless + V. Bỏ hoàn toàn 'don't/doesn't'. Đây là quy tắc bắt buộc." },
+            { type: "multiple_choice", q: "Choose the best rewrite:\nUnless Tom studies harder, he won't pass the final exam.", options: ["If Tom doesn't study harder, he won't pass the final exam.", "If Tom studies harder, he won't pass the final exam.", "Unless Tom doesn't study harder, he won't pass the final exam.", "If Tom didn't study harder, he wouldn't pass the final exam."], a: "If Tom doesn't study harder, he won't pass the final exam.", lesson: "MẸO: Unless = If...not. Khi đổi từ Unless sang If, phải thêm don't/doesn't đúng với chủ ngữ." },
+            { type: "multiple_choice", q: "Choose the sentence closest in meaning:\nIf we don't leave now, we will be late for the meeting.", options: ["Unless we leave now, we will be late for the meeting.", "Unless we don't leave now, we will be late for the meeting.", "If we leave now, we will be late for the meeting.", "Unless we left now, we would be late for the meeting."], a: "Unless we leave now, we will be late for the meeting.", lesson: "MẸO: Sau Unless dùng động từ nguyên mẫu không 'to'. Không dùng 'don't' sau Unless." },
+            { type: "multiple_choice", q: "Choose the correct answer:\nUnless Mai brings her ID card, she can't enter the building.", options: ["If Mai doesn't bring her ID card, she can't enter the building.", "If Mai brings her ID card, she can't enter the building.", "Unless Mai doesn't bring her ID card, she can't enter the building.", "If Mai didn't bring her ID card, she couldn't enter the building."], a: "If Mai doesn't bring her ID card, she can't enter the building.", lesson: "MẸO: Câu gốc dùng Unless → đổi sang If + trợ động từ phủ định. Chủ ngữ số ít 'Mai' → dùng doesn't." },
+            { type: "multiple_choice", q: "Choose the best rewrite:\nIf you do not water these plants regularly, they will die.", options: ["Unless you water these plants regularly, they will die.", "Unless you don't water these plants regularly, they will die.", "If you water these plants regularly, they will die.", "Unless you watered these plants regularly, they would die."], a: "Unless you water these plants regularly, they will die.", lesson: "MẸO: Nếu câu có điều kiện phủ định 'do not water', khi đổi sang Unless phải đổi thành câu khẳng định." },
+            { type: "multiple_choice", q: "Choose the sentence closest in meaning:\nUnless the students wear uniforms, they won't be allowed into the laboratory.", options: ["If the students don't wear uniforms, they won't be allowed into the laboratory.", "If the students wear uniforms, they won't be allowed into the laboratory.", "Unless the students don't wear uniforms, they won't be allowed into the laboratory.", "If the students didn't wear uniforms, they wouldn't be allowed into the laboratory."], a: "If the students don't wear uniforms, they won't be allowed into the laboratory.", lesson: "MẸO: Điều kiện loại 1 thường có: If + hiện tại đơn, will/can/may + V. Đổi Unless ↔ If...not nhưng giữ nguyên thì." },
+            { type: "multiple_choice", q: "Choose the correct rewrite:\nIf we don't act immediately, the problem will become more serious.", options: ["Unless we act immediately, the problem will become more serious.", "Unless we don't act immediately, the problem will become more serious.", "If we act immediately, the problem will become more serious.", "Unless we acted immediately, the problem would become more serious."], a: "Unless we act immediately, the problem will become more serious.", lesson: "MẸO: Gặp cụm 'If ... don't/doesn't' → gần như chắc chắn có thể đổi sang Unless." },
+            { type: "multiple_choice", q: "Choose the best answer:\nUnless Jenny apologizes to her friend, they won't talk to each other again.", options: ["If Jenny doesn't apologize to her friend, they won't talk to each other again.", "If Jenny apologizes to her friend, they won't talk to each other again.", "Unless Jenny doesn't apologize to her friend, they won't talk to each other again.", "If Jenny didn't apologize to her friend, they wouldn't talk to each other again."], a: "If Jenny doesn't apologize to her friend, they won't talk to each other again.", lesson: "MẸO: Chủ ngữ số ít ở hiện tại đơn → động từ thêm s/es (apologizes). Khi đổi sang If...not → dùng doesn't apologize." },
+            { type: "multiple_choice", q: "Choose the sentence closest in meaning:\nIf the weather is not sunny tomorrow, we will cancel the picnic.", options: ["Unless the weather is sunny tomorrow, we will cancel the picnic.", "Unless the weather isn't sunny tomorrow, we will cancel the picnic.", "If the weather is sunny tomorrow, we will cancel the picnic.", "Unless the weather were sunny tomorrow, we would cancel the picnic."], a: "Unless the weather is sunny tomorrow, we will cancel the picnic.", lesson: "MẸO: Với động từ 'to be', If ... is not → Unless ... is. Không dùng 'isn't' sau Unless." },
+            { type: "multiple_choice", q: "Choose the correct rewrite:\nUnless people stop littering, the streets will remain dirty.", options: ["If people don't stop littering, the streets will remain dirty.", "If people stop littering, the streets will remain dirty.", "Unless people don't stop littering, the streets will remain dirty.", "If people didn't stop littering, the streets would remain dirty."], a: "If people don't stop littering, the streets will remain dirty.", lesson: "MẸO: Sau Unless tuyệt đối không đi với NOT. Hãy nhớ công thức vàng: Unless = If...not." },
+          ],
+        }
+      },
     };
+
 
     /* ═══════════════════════════════════════════════
        STATE
@@ -6045,7 +6303,15 @@
       document.getElementById('ph-title').textContent = '📋 Lịch sử của ' + (session.fullname || session.username);
       document.getElementById('ph-stats').style.display = 'none';
       document.getElementById('ph-tabs').innerHTML = '';
-      document.getElementById('ph-body').innerHTML = '<div class="ph-loading"><div class="ph-spinner"></div>Đang tải lịch sử...</div>';
+      // Reset only the sessions container; keep .ph-filters sticky bar intact
+      const phBody = document.getElementById('ph-body');
+      let sessInit = document.getElementById('ph-sessions');
+      if (!sessInit) {
+        sessInit = document.createElement('div');
+        sessInit.id = 'ph-sessions';
+        phBody.appendChild(sessInit);
+      }
+      sessInit.innerHTML = '<div class="ph-loading"><div class="ph-spinner"></div>Đang tải lịch sử...</div>';
 
       try {
         const myData = await fetchMyHistory(session.username, session.fullname);
@@ -6054,7 +6320,11 @@
         renderPHTabs(myData);
         renderPHBody();
       } catch (err) {
-        document.getElementById('ph-body').innerHTML = `
+        const sessErr = document.getElementById('ph-sessions') || (() => {
+          const el = document.createElement('div'); el.id = 'ph-sessions';
+          document.getElementById('ph-body').appendChild(el); return el;
+        })();
+        sessErr.innerHTML = `
           <div class="ph-empty">
             <div class="ph-empty-icon">⚠️</div>
             <div class="ph-empty-text">Không tải được lịch sử</div>
@@ -6175,8 +6445,16 @@
       const body = document.getElementById('ph-body');
       const records = getFilteredRecords();
 
+      // Use a dedicated sessions container so .ph-filters sticky bar is preserved
+      let sessionsEl = document.getElementById('ph-sessions');
+      if (!sessionsEl) {
+        sessionsEl = document.createElement('div');
+        sessionsEl.id = 'ph-sessions';
+        body.appendChild(sessionsEl);
+      }
+
       if (!records.length) {
-        body.innerHTML = `<div class="ph-empty">
+        sessionsEl.innerHTML = `<div class="ph-empty">
           <div class="ph-empty-icon">📭</div>
           <div class="ph-empty-text">Chưa có bài làm nào</div>
           <div class="ph-empty-sub">Hoàn thành một bài thi để xem lịch sử ở đây.</div>
@@ -6185,36 +6463,14 @@
       }
 
       const html = records.map((r, ri) => {
-        let answers = r.answers || [];
-        if (_phFilter === 'correct') answers = answers.filter(a => a.correct);
-        if (_phFilter === 'wrong') answers = answers.filter(a => !a.correct);
-
         const emoji = r.pct >= 80 ? '🏆' : r.pct >= 50 ? '👍' : '💪';
         const scoreColor = r.pct >= 80 ? 'var(--c-success)' : r.pct >= 50 ? 'var(--c-warning)' : 'var(--c-danger)';
-
-        const qHtml = answers.length ? answers.map((ans, qi) => {
-          const qText = Array.isArray(ans.q?.q) ? ans.q.q.join(' ') : (ans.q?.q || '');
-          const isC = ans.correct;
-          return `<div class="ph-q-row ${isC ? 'correct' : 'wrong'}">
-            <div class="ph-q-head">
-              <span class="ph-q-badge ${isC ? 'c' : 'w'}">${isC ? 'Đúng' : 'Sai'}</span>
-              <span class="ph-q-num">Câu ${qi + 1}</span>
-            </div>
-            <div class="ph-q-text">${qText}</div>
-            <div class="ph-q-ans">Bạn trả lời: <strong style="color:${isC ? 'var(--c-success)' : 'var(--c-danger)'};">${ans.userAns || '(Bỏ trống)'}</strong></div>
-            ${!isC ? `<div class="ph-q-ans">Đáp án đúng: <strong style="color:var(--c-success);">${ans.q?.a || ''}</strong></div>` : ''}
-            ${(!isC && ans.q?.lesson) ? `<div class="ph-q-lesson">📚 ${ans.q.lesson}</div>` : ''}
-          </div>`;
-        }).join('') : `<div style="text-align:center;padding:1rem;color:var(--c-muted);font-size:.82rem;">
-            ${_phFilter !== 'all' ? 'Không có câu ' + (_phFilter === 'correct' ? 'đúng' : 'sai') + ' nào trong bài này.' : 'Không có dữ liệu chi tiết.'}
-          </div>`;
-
         const lesson = r.lessonName.length > 45 ? r.lessonName.slice(0, 43) + '…' : r.lessonName;
         const correct = (r.answers || []).filter(a => a.correct).length;
         const wrong = (r.answers || []).length - correct;
 
-        return `<div class="ph-session" id="ph-sess-${ri}">
-          <div class="ph-session-header" onclick="togglePHSession(${ri})">
+        return `<div class="ph-session" id="ph-sess-${ri}" onclick="openPHDetail(${ri})" style="cursor:pointer;">
+          <div class="ph-session-header">
             <div class="ph-session-emoji">${emoji}</div>
             <div class="ph-session-info">
               <div class="ph-session-lesson">${lesson}</div>
@@ -6224,20 +6480,88 @@
               <div class="ph-session-pct" style="color:${scoreColor};">${r.pct}%</div>
               <div class="ph-session-frac">${r.score}/${r.total}</div>
             </div>
-            <span class="ph-session-chevron">▾</span>
+            <span class="ph-session-chevron" style="color:#c7c7cc;">›</span>
           </div>
-          <div class="ph-session-questions">${qHtml}</div>
         </div>`;
       }).join('');
 
-      body.innerHTML = html;
-      if (records.length) togglePHSession(0);
+      sessionsEl.innerHTML = html;
     }
 
     function togglePHSession(idx) {
       const sess = document.getElementById('ph-sess-' + idx);
       if (!sess) return;
       sess.classList.toggle('expanded');
+    }
+
+
+    /* ══ PH-DETAIL LAYER ══ */
+    let _phDetailRecord = null;
+    let _phDetailFilter = 'all';
+
+    function openPHDetail(recordIdx) {
+      const records = getFilteredRecords();
+      _phDetailRecord = records[recordIdx];
+      _phDetailFilter = 'all';
+      // reset filter chips
+      document.querySelectorAll('.ph-detail-chip').forEach(c => c.classList.remove('active'));
+      document.querySelector('.ph-detail-chip:first-child').classList.add('active');
+      renderPHDetail();
+      document.getElementById('ph-detail-overlay').classList.add('open');
+    }
+
+    function closePHDetail() {
+      document.getElementById('ph-detail-overlay').classList.remove('open');
+    }
+
+    function setPHDetailFilter(filter, btn) {
+      _phDetailFilter = filter;
+      document.querySelectorAll('.ph-detail-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      renderPHDetail();
+    }
+
+    function renderPHDetail() {
+      const r = _phDetailRecord;
+      if (!r) return;
+
+      const scoreColor = r.pct >= 80 ? '#34c759' : r.pct >= 50 ? '#ff9500' : '#ff3b30';
+      document.getElementById('ph-detail-title').textContent = r.lessonName;
+      document.getElementById('ph-detail-pct').textContent = r.pct + '%';
+      document.getElementById('ph-detail-pct').style.color = scoreColor;
+      document.getElementById('ph-detail-frac').textContent = r.score + '/' + r.total;
+      const correct = (r.answers || []).filter(a => a.correct).length;
+      const wrong = (r.answers || []).length - correct;
+      document.getElementById('ph-detail-meta').textContent =
+        '🕐 ' + r.date + '  ·  ✅ ' + correct + ' đúng  ·  ❌ ' + wrong + ' sai' + (r.xpEarned ? '  ·  ⭐ +' + r.xpEarned + ' XP' : '');
+
+      let answers = r.answers || [];
+      if (_phDetailFilter === 'correct') answers = answers.filter(a => a.correct);
+      if (_phDetailFilter === 'wrong') answers = answers.filter(a => !a.correct);
+
+      const body = document.getElementById('ph-detail-body');
+      if (!answers.length) {
+        const label = _phDetailFilter === 'correct' ? 'đúng' : _phDetailFilter === 'wrong' ? 'sai' : '';
+        body.innerHTML = `<div style="text-align:center;padding:2.5rem 1rem;color:#86868b;font-size:.85rem;font-weight:600;">
+          ${label ? 'Không có câu ' + label + ' nào trong bài này.' : 'Không có dữ liệu chi tiết.'}
+        </div>`;
+        return;
+      }
+
+      body.innerHTML = answers.map((ans, qi) => {
+        const qText = Array.isArray(ans.q?.q) ? ans.q.q.join(' ') : (ans.q?.q || '');
+        const isC = ans.correct;
+        return `<div class="ph-q-row ${isC ? 'correct' : 'wrong'}">
+          <div class="ph-q-head">
+            <span class="ph-q-badge ${isC ? 'c' : 'w'}">${isC ? 'Đúng' : 'Sai'}</span>
+            <span class="ph-q-num">Câu ${qi + 1}</span>
+          </div>
+          <div class="ph-q-text">${qText}</div>
+          <div class="ph-q-ans">Bạn trả lời: <strong style="color:${isC ? '#34c759' : '#ff3b30'};">${ans.userAns || '(Bỏ trống)'}</strong></div>
+          ${!isC ? `<div class="ph-q-ans">Đáp án đúng: <strong style="color:#34c759;">${ans.q?.a || ''}</strong></div>` : ''}
+          ${(!isC && ans.q?.lesson) ? `<div class="ph-q-lesson">📚 ${ans.q.lesson}</div>` : ''}
+        </div>`;
+      }).join('');
     }
 
     function closePHModal(event) {
