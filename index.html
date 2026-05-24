@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -626,7 +627,7 @@
       z-index: 1;
       display: none;
       overflow: hidden;
-      background: #87ceeb;
+      background: #ffffff;
     }
 
     #page-login.active {
@@ -637,35 +638,58 @@
     .ghibli-scroll {
       position: absolute;
       inset: 0;
-      overflow-y: scroll;
+      overflow-y: hidden;
       overflow-x: hidden;
-      scroll-snap-type: y mandatory;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      background: linear-gradient(to bottom,
-          #fff0f3 0%,
+      background: #ffffff;
           /* Hồng sữa nhạt nhất (Cherry Blossom Mist) */
-          #ffdee5 25%,
           /* Hồng phấn (Cotton Candy) */
-          #fbc2eb 50%,
           /* Hồng tím nhạt (Lavender Pink) */
-          #f1a7bc 75%,
           /* Hồng dâu nhạt (Sweet Berry) */
-          #e8a2af 100%
           /* Hồng tro sang trọng (Dusty Rose) */
-        );
+      background:
+        radial-gradient(ellipse 70% 45% at 50% -15%, rgba(144, 137, 252, .18) 0%, transparent 62%),
+        radial-gradient(ellipse 55% 38% at 12% 12%, rgba(255, 128, 181, .14) 0%, transparent 58%),
+        radial-gradient(ellipse 65% 48% at 86% 92%, rgba(144, 137, 252, .16) 0%, transparent 64%),
+        linear-gradient(180deg, #ffffff 0%, #fbfbff 48%, #ffffff 100%);
     }
 
     .ghibli-scroll::-webkit-scrollbar {
       display: none;
     }
 
+    .ghibli-scroll::before,
+    .ghibli-scroll::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      width: min(72rem, 120vw);
+      aspect-ratio: 1155 / 678;
+      background: linear-gradient(135deg, #ff80b5 0%, #9089fc 100%);
+      opacity: .28;
+      filter: blur(42px);
+      clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%);
+      pointer-events: none;
+    }
+
+    .ghibli-scroll::before {
+      left: max(-18rem, -18vw);
+      top: -22rem;
+      transform: rotate(30deg);
+    }
+
+    .ghibli-scroll::after {
+      right: max(-20rem, -20vw);
+      bottom: -22rem;
+    }
+
     /* Film-grain texture overlay */
     .ghibli-grain {
       position: fixed;
       inset: 0;
-      background-image: url("https://www.transparenttextures.com/patterns/felt.png");
-      opacity: .07;
+      background-image: none;
+      opacity: 0;
       pointer-events: none;
       z-index: 10;
     }
@@ -674,8 +698,6 @@
     .ghibli-section {
       height: 100vh;
       width: 100%;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -688,19 +710,18 @@
       font-size: clamp(2.6rem, 9vw, 5.2rem);
       font-weight: 700;
       text-align: center;
-      color: rgba(255, 255, 255, .72);
-      text-shadow:
-        0 2px 10px rgba(100, 180, 220, .35),
-        0 8px 28px rgba(135, 206, 235, .25);
+      color: transparent;
+      text-shadow: none;
       user-select: none;
       padding: 0 2rem;
-      letter-spacing: -.02em;
+      letter-spacing: 0;
       pointer-events: none;
     }
 
     /* Petals — pure CSS, position set inline by JS one-time on init */
     .ghibli-petal {
       position: fixed;
+      display: none;
       pointer-events: none;
       z-index: 6;
       border-radius: 60% 0 60% 0;
@@ -749,18 +770,17 @@
       pointer-events: all;
       width: 100%;
       max-width: 390px;
-      background: rgba(255, 253, 250, .88);
-      backdrop-filter: blur(22px) saturate(160%);
-      -webkit-backdrop-filter: blur(22px) saturate(160%);
-      border-radius: 44px;
-      padding: 2.4rem 2.2rem 2rem;
-      border: 2px solid rgba(255, 255, 255, .9);
+      background: #ffffff;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border-radius: 18px;
+      padding: 2.35rem 2rem 2rem;
+      border: 1px solid rgba(17, 24, 39, .06);
       box-shadow:
-        0 4px 24px rgba(135, 206, 235, .22),
-        0 16px 56px rgba(100, 180, 220, .16),
-        inset 0 1px 0 rgba(255, 255, 255, .95);
+        0 22px 48px rgba(17, 24, 39, .11),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
       text-align: center;
-      animation: ghibliCardIn .8s cubic-bezier(.16, 1, .3, 1) both;
+      animation: ghibliCardIn .55s cubic-bezier(.22, 1, .36, 1) both;
     }
 
     @keyframes ghibliCardIn {
@@ -776,10 +796,10 @@
     }
 
     .login-logo {
-      font-size: 3rem;
-      margin-bottom: .35rem;
+      font-size: 2.45rem;
+      margin-bottom: .7rem;
       display: inline-block;
-      animation: logoBounce 3.5s ease-in-out infinite;
+      animation: none;
     }
 
     @keyframes logoBounce {
@@ -796,17 +816,17 @@
 
     .login-title {
       font-family: 'Quicksand', 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.75rem;
+      font-size: 1.55rem;
       font-weight: 700;
-      color: #4a5568;
-      margin-bottom: .2rem;
-      letter-spacing: -.02em;
+      color: #111827;
+      margin-bottom: .35rem;
+      letter-spacing: 0;
     }
 
     .login-subtitle {
       font-size: .83rem;
-      color: #8a9ab0;
-      margin-bottom: 1.6rem;
+      color: #6b7280;
+      margin-bottom: 1.7rem;
       font-weight: 500;
     }
 
@@ -818,7 +838,7 @@
     .login-field label {
       font-size: .68rem;
       font-weight: 700;
-      color: #a0aec0;
+      color: #6b7280;
       letter-spacing: .08em;
       text-transform: uppercase;
       margin-left: 18px;
@@ -837,53 +857,53 @@
       transform: translateY(-50%);
       font-size: 1rem;
       pointer-events: none;
+      opacity: .72;
     }
 
     .login-input {
       width: 100%;
       padding: .95rem 1.2rem .95rem 2.8rem;
-      border-radius: 28px;
-      border: 2px solid #e8f0f8;
-      background: #fff;
+      border-radius: 11px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
       font-size: .95rem;
       font-family: 'Quicksand', 'Plus Jakarta Sans', sans-serif;
       outline: none;
-      transition: border-color .25s, box-shadow .25s;
-      color: #4a5568;
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      color: #111827;
     }
 
     .login-input:focus {
-      border-color: #6fc2e9;
-      box-shadow: 0 0 0 4px rgba(111, 194, 233, .14);
+      border-color: #6366f1;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, .18);
     }
 
     .login-input::placeholder {
-      color: #c0cce0;
+      color: #9ca3af;
     }
 
     .btn-login {
       width: 100%;
-      padding: 1rem;
-      border-radius: 40px;
-      background: linear-gradient(135deg, #6fc2e9 0%, #4da8d4 100%);
+      padding: .9rem 1rem;
+      border-radius: 10px;
+      background: #4f46e5;
       color: #fff;
       font-family: 'Quicksand', 'Plus Jakarta Sans', sans-serif;
       font-weight: 700;
       font-size: 1rem;
-      letter-spacing: .05em;
+      letter-spacing: 0;
       border: none;
       cursor: pointer;
       margin-top: 1rem;
-      box-shadow: 0 6px 20px rgba(111, 194, 233, .38);
-      transition: transform .2s cubic-bezier(.34, 1.56, .64, 1),
-        box-shadow .2s ease,
-        letter-spacing .2s ease;
+      box-shadow: 0 10px 20px rgba(79, 70, 229, .22);
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
     }
 
     .btn-login:hover:not(:disabled) {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 10px 28px rgba(111, 194, 233, .48);
-      letter-spacing: .1em;
+      transform: translateY(-1px);
+      background: #6366f1;
+      box-shadow: 0 14px 28px rgba(79, 70, 229, .26);
     }
 
     .btn-login:active {
@@ -899,10 +919,10 @@
       display: none;
       margin-top: .75rem;
       padding: .65rem 1rem;
-      border-radius: 18px;
-      background: rgba(255, 100, 100, .09);
-      border: 1px solid rgba(255, 100, 100, .18);
-      color: #e05a5a;
+      border-radius: 10px;
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: #be123c;
       font-size: .78rem;
       font-weight: 600;
       text-align: center;
@@ -3552,9 +3572,11 @@
           <button class="ph-filter-chip f-wrong" data-filter="wrong" onclick="setPHFilter('wrong', this)">❌ Câu
             sai</button>
         </div>
-        <div class="ph-loading">
-          <div class="ph-spinner"></div>
-          Đang tải lịch sử...
+        <div id="ph-sessions">
+          <div class="ph-loading">
+            <div class="ph-spinner"></div>
+            Đang tải lịch sử...
+          </div>
         </div>
       </div>
     </div>
@@ -3944,27 +3966,27 @@
         theory: `<strong>THÁI NGUYÊN 2026 </strong><br> • Nguyên tắc cốt lõi: <strong>Nhìn từ khóa → xác định dạng → chọn mẫu câu</strong>, không đọc dịch toàn bộ bài.<br><br> <strong>1. PHẦN ĐIỀN TỪ (LEAFLET & ANNOUNCEMENT) </strong><br> • Chiến thuật: xác định loại từ cần điền dựa vào <strong>từ đứng trước và sau chỗ trống</strong>.<br><br> • <strong>at + night</strong><br> → “night” luôn đi với giới từ “at”.<br> → Ý nghĩa: vào ban đêm.<br><br> • <strong>study + effectively</strong><br> → Sau động từ thường cần trạng từ bổ nghĩa (thường có đuôi -ly).<br> → effectively = một cách hiệu quả.<br> → Ý nghĩa: học một cách hiệu quả.<br><br> • <strong>has/have + V3 (Hiện tại hoàn thành)</strong><br> → Dùng khi sự việc vừa xảy ra và còn ảnh hưởng đến hiện tại.<br> → Ví dụ: The storm has destroyed houses.<br> → Ý nghĩa: Cơn bão đã phá hủy các ngôi nhà.<br><br> • <strong>effective + noun</strong><br> → Sau tính từ cần danh từ.<br> → Đuôi danh từ thường gặp: -ment, -tion.<br> → management = sự quản lý.<br><br> <strong>2. PHẦN SẮP XẾP CÂU – CHIẾN THUẬT “ĐẦU & CUỐI”</strong><br> • Chiến thuật: xác định trước <strong>câu mở đầu và câu kết thúc</strong>, sau đó mới sắp câu giữa.<br><br> • <strong>Câu mở đầu</strong><br> → thường là câu giới thiệu, chào hỏi hoặc đặt vấn đề.<br><br> • <strong>Câu phản hồi</strong><br> → thể hiện sự trả lời, đồng ý hoặc phản ứng trực tiếp.<br><br> • <strong>Câu kết thúc</strong><br> → thường là câu chốt, cảm xúc hoặc lời hẹn.<br> → Ví dụ: I know! / See you soon!<br><br> • Email / Letter:<br> → b = mở đầu (giới thiệu lý do viết thư)<br> → d = nội dung chính (giải thích / triển khai)<br> → a = kết thúc (kết luận / liên hệ lại)<br><br> <strong>3. PHẦN ĐIỀN CÂU (TEXT COMPLETION) – CHIẾN THUẬT “TỪ KHÓA BẮC CẦU”</strong><br> • Chiến thuật: tìm <strong>từ khóa lặp lại hoặc cùng chủ đề</strong> trong đoạn văn.<br><br> • Outdoor workers<br> → tìm câu nói về điều kiện làm việc ngoài trời.<br> → keyword: under the sun = làm việc dưới ánh nắng.<br><br> • Air pollution + asthma<br> → liên quan đến sức khỏe và hệ hô hấp.<br> → keyword: respiratory problems = vấn đề hô hấp.<br><br> • Nguyên tắc:<br> → Câu cần điền thường là phần <strong>giải thích, mở rộng hoặc kết quả</strong> của câu trước.<br><br> <strong>4. PHẦN ĐỌC HIỂU – CHIẾN THUẬT “THỢ SĂN TỪ KHÓA”</strong><br> • Không đọc toàn bài từ đầu đến cuối.<br> • Đọc câu hỏi trước → tìm từ giống hoặc gần nghĩa trong bài đọc.<br><br> • Từ quy chiếu (their / they / it)<br> → luôn quay lại câu trước để tìm danh từ gần nhất.<br> → Ví dụ: their friends = many individuals.<br><br> • Main idea / định nghĩa<br> → thường xuất hiện ở đoạn mở đầu bài đọc.<br><br> • Wind turbines / They<br> → “They” luôn thay thế cho danh từ gần nhất: wind turbines.<br><br> • Từ trái nghĩa:<br> → intermittent = không liên tục<br> → constant = liên tục<br><br> <strong>5. CHIẾN THUẬT LÀM BÀI NHANH (GAME MODE)</strong><br> • Bước 1: Xác định keyword trong câu hỏi.<br> • Bước 2: Quét bài đọc để tìm đúng keyword.<br> • Bước 3: Khoanh đáp án gần nhất với vị trí chứa keyword.<br><br> • Ghi nhớ nhanh:<br> → -ly = trạng từ<br> → -tion / -ment = danh từ<br> → ON = ngày cụ thể<br> → AT = thời điểm nhỏ (night)<br><br> <strong>6. TƯ DUY CHỐT ĐIỂM (MINDSET)</strong><br> • Đề dài không quan trọng bằng việc nhận diện đúng dấu hiệu.<br> • Mỗi câu hỏi luôn có 1–2 keyword quyết định đáp án.<br><br> → Nhận diện đúng keyword = nắm khoảng 70% đáp án.<br> → Không cần hiểu toàn bộ bài vẫn có thể chọn đúng nếu đúng chiến thuật.<br><br> <strong>KẾT LUẬN:</strong><br> • Đây là chiến thuật “tối ưu điểm số trong thời gian ngắn”.<br> • Không học lan man, không dịch toàn bài.<br> • Chỉ luyện phản xạ: <strong>keyword → dạng → đáp án</strong>.`,
         levels: {
           easy: [
-            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'...help you stay focused _______ your study sessions.'", options: ["A. at", "B. in", "C. for", "D. during"], a: "D. during", lesson: "Mẹo làm bài: Dùng 'during' cho khoảng thời gian diễn ra từ đầu đến cuối như 'study sessions'. 'at'/'in' đi với mốc cụ thể, 'for' đi với khoảng thời gian có số lượng." },
-            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'Turn off unnecessary phone notifications, _______ they can easily distract you.'", options: ["A. because", "B. so", "C. nor", "D. but"], a: "A. because", lesson: "Mẹo làm bài: Vế sau là lý do cho vế trước nên chọn 'because'. 'so' chỉ kết quả, 'but' chỉ sự đối lập." },
-            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'Organize your table and remove _______ that you don't need for learning.'", options: ["A. distracting items small", "B. items distracting small", "C. distracting small items", "D. small items distracting"], a: "C. distracting small items", lesson: "Mẹo làm bài: Trật tự tính từ đứng trước danh từ ('items'). 'distracting' (tính chất) và 'small' (kích cỡ) bổ nghĩa cho danh từ đứng cuối." },
-            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'...finish one task and then prepare for _______ things on your list.'", options: ["A. another", "B. other", "C. the others", "D. others"], a: "B. other", lesson: "Mẹo làm bài: 'other' + danh từ số nhiều ('things'). 'another' + danh từ số ít. 'others' là đại từ, không đi kèm danh từ phía sau." },
-            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'Use helpful tools to plan your breaks and manage your time more _______.'", options: ["A. luckily", "B. effectively", "C. rarely", "D. suddenly"], a: "B. effectively", lesson: "Mẹo làm bài: Cần trạng từ chỉ cách thức. Trong học tập, quản lý thời gian cần sự hiệu quả ('effectively')." },
-            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'...so you don't end up _______ your wheels without making progress.'", options: ["A. turning", "B. losing", "C. spinning", "D. running"], a: "C. spinning", lesson: "Mẹo làm bài: Thành ngữ 'Spinning your wheels' nghĩa là tốn công vô ích. Thấy 'your wheels' chọn ngay 'spinning'." }, { type: "multiple_choice", script: "Question 7. PROTECT OUR ENVIRONMENT EVERY DAY", q: "Mark the letter A B C or D to indicate the option that best fits blank number 7: In the last few decades, industrial activities... (7) forests and other habitats.", options: ["A. have destroyed", "B. destroyed", "C. has destroyed", "D. destroy"], a: "A. have destroyed", lesson: "Mẹo làm bài: Hãy nhìn vào cụm từ thời gian In the last few decades (Trong vài thập kỷ qua). Đây là dấu hiệu của thì Hiện tại hoàn thành. Chủ ngữ industrial activities là số nhiều nên ta chọn have destroyed. Loại B vì là quá khứ, loại C vì dùng has cho số ít" },
-            { type: "multiple_choice", script: "Question 8. PROTECT OUR ENVIRONMENT EVERY DAY", q: "Mark the letter A B C or D to indicate the option that best fits blank number 8: Additionally, we (8) 500 million plastic bottles every week.", options: ["A. turn down", "B. hand down", "C. throw away", "D. give up"], a: "C. throw away", lesson: "Mẹo làm bài: Dựa vào nghĩa của câu về rác thải nhựa. Chúng ta vứt bỏ (throw away) chai nhựa chứ không phải từ chối (turn down), truyền lại (hand down) hay từ bỏ thói quen (give up). Cụm throw away luôn đi với rác thải (waste/bottles)" },
-            { type: "multiple_choice", script: "Question 9. PROTECT OUR ENVIRONMENT EVERY DAY", q: "Mark the letter A B C or D to indicate the option that best fits blank number 9: This helps decrease the (9) of resources needed for production.", options: ["A. delivery", "B. generation", "C. storage", "D. consumption"], a: "D. consumption", lesson: "Mẹo làm bài: Phía trước có từ water consumption (tiêu thụ nước). Ở đây câu nói về việc giảm bớt sự tiêu thụ tài nguyên thiên nhiên nên ta dùng lại danh từ consumption. Các từ như giao hàng (delivery) hay lưu trữ (storage) không phù hợp ngữ cảnh tiết kiệm môi trường" },
-            { type: "multiple_choice", script: "Question 10. PROTECT OUR ENVIRONMENT EVERY DAY", q: "Mark the letter A B C or D to indicate the option that best fits blank number 10: Avoid products (10) in excess materials.", options: ["A. to package", "B. packaged", "C. package", "D. packaging"], a: "B. packaged", lesson: "Mẹo làm bài: Đây là kiến thức về Rút gọn mệnh đề quan hệ dạng bị động. Sản phẩm được đóng gói (products which are packaged) thì rút gọn còn packaged. Mẹo: Nếu sau chỗ trống có giới từ như in hoặc by, thường ta sẽ chọn V3/ed (bị động)" },
-            { type: "multiple_choice", script: "Question 11. PROTECT OUR ENVIRONMENT EVERY DAY", q: "Mark the letter A B C or D to indicate the option that best fits blank number 11: This helps lower the (11) of waste you generate.", options: ["A. level", "B. number", "C. quality", "D. volume"], a: "D. volume", lesson: "Mẹo làm bài: Khi nói về lượng rác thải (waste) là danh từ không đếm được, người ta thường dùng cụm the volume of waste (khối lượng rác). number chỉ đi với danh từ đếm được số nhiều. level là mức độ, còn quality là chất lượng, đều không hợp bằng volume" },
-            { type: "multiple_choice", script: "Question 12. PROTECT OUR ENVIRONMENT EVERY DAY", q: "Mark the letter A B C or D to indicate the option that best fits blank number 12: Separate food scraps from recyclable items for better waste (12) .", options: ["A. manage", "B. management", "C. manages", "D. manager"], a: "B. management", lesson: "Mẹo làm bài: Sau tính từ better và danh từ waste, chúng ta cần một danh từ để tạo thành cụm danh từ ghép. Waste management nghĩa là việc quản lý rác thải. Loại manager vì đó là danh từ chỉ người (người quản lý), còn manage là động từ" },
+            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'...help you stay focused _______ your study sessions.'", options: ["A. at", "B. in", "C. for", "D. during"], a: "D. during", lesson: "Mẹo làm bài: Dùng 'during' cho khoảng thời gian diễn ra từ đầu đến cuối (như 'study sessions'). 'at'/'in' dùng cho mốc cụ thể, 'for' đi với khoảng thời gian có số đếm (vd: for 2 hours)." },
+            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'Turn off unnecessary phone notifications, _______ they can easily distract you.'", options: ["A. because", "B. so", "C. nor", "D. but"], a: "A. because", lesson: "Mẹo làm bài: Vế sau giải thích nguyên nhân cho vế trước nên chọn 'because'. 'so' chỉ kết quả, 'but' chỉ sự đối lập." },
+            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'Organize your table and remove _______ that you don't need for learning.'", options: ["A. distracting items small", "B. items distracting small", "C. distracting small items", "D. small items distracting"], a: "C. distracting small items", lesson: "Mẹo làm bài: Trật tự tính từ trước danh từ (OSASCOMP). 'distracting' (ý kiến/đánh giá) đứng trước 'small' (kích cỡ). Danh từ 'items' đứng cuối cùng." },
+            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'...finish one task and then prepare for _______ things on your list.'", options: ["A. another", "B. other", "C. the others", "D. others"], a: "B. other", lesson: "Mẹo làm bài: 'other' đi với danh từ số nhiều ('things'). 'another' đi với danh từ số ít. 'others' là đại từ (không đứng trước danh từ)." },
+            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'Use helpful tools to plan your breaks and manage your time more _______.'", options: ["A. luckily", "B. effectively", "C. rarely", "D. suddenly"], a: "B. effectively", lesson: "Mẹo làm bài: Sau động từ 'manage' cần trạng từ chỉ cách thức. Ngữ cảnh quản lý thời gian cần sự hiệu quả ('effectively')." },
+            { type: "multiple_choice", script: "SIMPLE WAYS TO STAY FOCUSED WHILE STUDYING", q: "Choose the best option to fill in the blank:\n'...so you don't end up _______ your wheels without making progress.'", options: ["A. turning", "B. losing", "C. spinning", "D. running"], a: "C. spinning", lesson: "Mẹo làm bài: Thành ngữ 'Spinning one's wheels' nghĩa là tốn công vô ích. Cứ thấy 'your wheels' trong ngữ cảnh không có tiến triển là chọn 'spinning'." },
+            { type: "multiple_choice", script: "Question 8. PROTECT OUR ENVIRONMENT EVERY DAY", q: "Mark the letter A, B, C or D to indicate the option that best fits blank number 8: Additionally, we ________ 500 million plastic bottles every week.", options: ["A. turn down", "B. hand down", "C. throw away", "D. give up"], a: "C. throw away", lesson: "Mẹo làm bài: Dựa vào nghĩa của câu về rác thải nhựa. Chúng ta vứt bỏ (throw away) chai nhựa chứ không phải từ chối (turn down), truyền lại (hand down) hay từ bỏ thói quen (give up). Cụm throw away luôn đi với rác thải (waste/bottles)" },
+            { type: "multiple_choice", script: "Question 9. PROTECT OUR ENVIRONMENT EVERY DAY", q: "Mark the letter A, B, C or D to indicate the option that best fits blank number 9: This helps decrease the ________ of resources needed for production.", options: ["A. delivery", "B. generation", "C. storage", "D. consumption"], a: "D. consumption", lesson: "Mẹo làm bài: Ngữ cảnh nói về việc giảm bớt sự tiêu thụ tài nguyên thiên nhiên cho sản xuất nên chọn danh từ 'consumption' (sự tiêu thụ). Các từ như giao hàng (delivery) hay lưu trữ (storage) không phù hợp nghĩa." },
+            { type: "multiple_choice", script: "Question 10. PROTECT OUR ENVIRONMENT EVERY DAY", q: "Mark the letter A, B, C or D to indicate the option that best fits blank number 10: Avoid products ________ in excess materials.", options: ["A. to package", "B. packaged", "C. package", "D. packaging"], a: "B. packaged", lesson: "Mẹo làm bài: Đây là kiến thức về Rút gọn mệnh đề quan hệ dạng bị động. Sản phẩm được đóng gói (products which are packaged) thì rút gọn còn packaged. Mẹo: Nếu sau chỗ trống có giới từ như in hoặc by, thường ta sẽ chọn V3/ed (bị động)" },
+            { type: "multiple_choice", script: "Question 11. PROTECT OUR ENVIRONMENT EVERY DAY", q: "Mark the letter A, B, C or D to indicate the option that best fits blank number 11: This helps lower the ________ of waste you generate.", options: ["A. level", "B. number", "C. quality", "D. volume"], a: "D. volume", lesson: "Mẹo làm bài: Khi nói về lượng rác thải (waste) là danh từ không đếm được, người ta thường dùng cụm the volume of waste (khối lượng rác). number chỉ đi với danh từ đếm được số nhiều. level là mức độ, còn quality là chất lượng, đều không hợp bằng volume" },
+            { type: "multiple_choice", script: "Question 12. PROTECT OUR ENVIRONMENT EVERY DAY", q: "Mark the letter A, B, C or D to indicate the option that best fits blank number 12: Separate food scraps from recyclable items for better waste ________ .", options: ["A. manage", "B. management", "C. manages", "D. manager"], a: "B. management", lesson: "Mẹo làm bài: Sau tính từ better và danh từ waste, chúng ta cần một danh từ để tạo thành cụm danh từ ghép. Waste management nghĩa là việc quản lý rác thải. Loại manager vì đó là danh từ chỉ người (người quản lý), còn manage là động từ" },
             { type: "multiple_choice", script: "Question 13. Arrangement of utterances to make a meaningful exchange.", q: "Mark the letter A B C or D to indicate the best arrangement of utterances: a. Emma: Yeah, its much better than last week when it rained all the time. b. Liam: The weather has been really nice this week, dont you think? c. Liam: I know! It actually makes me want to go outside more.", options: ["A. b - c - a", "B. c - a - b", "C. a - c - b", "D. b - a - c"], a: "D. b - a - c", lesson: "Mẹo làm bài hội thoại: Bước 1: Tìm câu khơi mào. Câu (b) là câu hỏi đuôi để bắt đầu chủ đề thời tiết. Bước 2: Tìm câu phản hồi trực tiếp. Emma dùng Yeah (a) để trả lời cho câu hỏi ở (b). Bước 3: Liam dùng I know (c) để chốt lại sự đồng tình. Thứ tự logic phải là Hỏi (b) - Trả lời (a) - Đồng tình (c)" },
             { type: "multiple_choice", script: "Question 14. Arrangement of utterances to make a meaningful exchange.", q: "Mark the letter A B C or D to indicate the best arrangement of utterances: a. Ryan: I like football because it teaches teamwork and discipline. b. Ryan: Have you been watching the football matches recently? c. Alex: Yes, especially the international tournaments. The games have been really exciting. d. Ryan: Thats why many schools encourage students to participate in sports activities. e. Alex: I agree. Playing sports can also help students stay healthy and reduce stress.", options: ["A. b - c - a - e - d", "B. a - c - e - b - d", "C. b - e - a - c - d", "D. b - d - e - a - c"], a: "A. b - c - a - e - d", lesson: "Mẹo làm bài: Bước 1: Câu (b) là câu hỏi mở đầu về việc xem bóng đá. Bước 2: Câu (c) trả lời Yes cho câu hỏi đó. Bước 3: Ryan chia sẻ lý do yêu thích ở (a). Bước 4: Alex đồng tình bằng I agree (e). Bước 5: Ryan kết luận bằng Thats why (d). Chỉ có phương án A sắp xếp đúng luồng giao tiếp này" },
             { type: "multiple_choice", script: "Question 15. Arrangement of sentences to make a meaningful text about environmental education.", q: "Mark the letter A B C or D to indicate the best arrangement of sentences: a. Students who learn about pollution, climate change, and the loss of natural resources are more likely to develop a sense of responsibility toward the planet. b. That awareness often influences daily habits, such as saving energy, reducing waste, and choosing more sustainable forms of transport. c. Education plays a crucial role in environmental protection by helping people understand its causes and effects. d. In the long term, it can also inspire younger generations to support green policies and create practical solutions to environmental challenges. e. For that reason, environmental education should be seen as essential for preparing responsible future citizens.", options: ["A. c - a - b - d - e", "B. c - b - d - a - e", "C. a - e - b - c - d", "D. a - c - d - b - e"], a: "A. c - a - b - d - e", lesson: "Mẹo làm bài: Bước 1: Tìm câu chủ đề tổng quát nhất, đó là câu (c) giới thiệu về vai trò của giáo dục. Bước 2: Câu (a) cụ thể hóa việc học sinh học gì. Bước 3: Tìm từ nối liên kết, cụm That awareness ở câu (b) chính là thay cho ý thức trách nhiệm ở câu (a). Bước 4: Câu (e) bắt đầu bằng For that reason (Vì lý do đó) thường là câu kết luận. Vậy thứ tự chuẩn là c-a-b-d-e" },
             { type: "multiple_choice", script: "Question 16. Arrangement of sentences to make a meaningful text about sports.", q: "Mark the letter A B C or D to indicate the best arrangement of sentences: a. Meanwhile, team games such as football and volleyball teach young people how to cooperate, communicate effectively, and take responsibility for their actions in different situations. b. Sports have become an essential part of life for many teenagers nowadays. c. These advantages are especially important at the age of eighteen, when many individuals are learning to become more independent, confident, and socially aware. d. Consequently, regular sports are a meaningful way to promote both fitness and personal growth. e. They improve physical health by building strength, boosting stamina, and aiding concentration, while also helping students relax after school and feel more energetic.", options: ["A. a - e - b - c - d", "B. b - c - e - a - d", "C. e - c - b - a - d", "D. b - e - a - c - d"], a: "D. b - e - a - c - d", lesson: "Mẹo làm bài: Bước 1: Câu mở đầu (b) giới thiệu về thể thao. Bước 2: Đại từ They ở câu (e) dùng để thay thế cho danh từ Sports ở câu (b). Bước 3: Câu (a) dùng Meanwhile (Trong khi đó) để bổ sung thêm lợi ích về kỹ năng nhóm sau khi đã nói về sức khỏe ở câu (e). Bước 4: Cụm These advantages (Những lợi ích này) ở câu (c) tóm gọn lại các ý trên. Bước 5: Kết thúc bằng Consequently (Hậu quả là/Kết quả là) ở câu (d)" },
             { type: "multiple_choice", script: "Question 17. Arrangement of sentences to make a meaningful formal letter.", q: "Mark the letter A B C or D to indicate the best arrangement of sentences: Dear Mr. Brown, a. If there are any changes or additional requirements, please let us know as soon as possible. b. I am writing on behalf of our company to discuss an important business transaction with you. c. We believe that careful preparation and effective communication will contribute greatly to a successful and long term business relationship. d. As both sides are preparing for the next stage of cooperation, we would like to confirm the details related to the order, the payment arrangement, and the delivery schedule. e. Furthermore, it is necessary to ensure all terms in the agreement are clear and acceptable to both parties. Yours sincerely, Hoa Pham", options: ["A. b - d - e - c - a", "B. b - d - e - a - c", "C. e - a - b - d - c", "D. b - e - a - d - c"], a: "A. b - d - e - c - a", lesson: "Mẹo làm thư: Bước 1: Luôn bắt đầu bằng lý do viết thư, cấu trúc I am writing to... ở câu (b) phải đứng đầu. Bước 2: Đi sâu vào nội dung chính là xác nhận đơn hàng ở câu (d). Bước 3: Dùng từ nối Furthermore (Hơn nữa) ở câu (e) để bổ sung thêm ý. Bước 4: Khẳng định niềm tin hợp tác ở câu (c). Bước 5: Câu (a) là lời dặn dò cuối thư trước khi ký tên. Thứ tự đúng là b-d-e-c-a" },
-            { type: "multiple_choice", script: "CLIMATE CHANGE AND ITS IMPACT ON WORKERS", q: "Mark the letter A B C or D to indicate the option that best fits blank number 18: Labour data from the United States (18) . Meanwhile, millions of workers...", options: ["A. that reported dozens of heat-related symptoms diagnosed among workers", "B. which prove that stress caused by heat-related stress is very common", "C. shows that heat stress causes dozens of work-related deaths each year", "D. shown by researchers who suffered from dozens of work-related diseases"], a: "C. shows that heat stress causes dozens of work-related deaths each year", lesson: "Mẹo làm bài: Chủ ngữ là Labour data (dữ liệu lao động) là danh từ số ít, nên ta cần một động từ chia số ít là shows. Các câu A, B, D dùng đại từ quan hệ (that/which) hoặc dạng bị động (shown) sẽ làm câu bị thiếu động từ chính. Chỉ có C giúp câu hoàn chỉnh về cấu trúc" },
-            { type: "multiple_choice", script: "CLIMATE CHANGE AND ITS IMPACT ON WORKERS", q: "Mark the letter A B C or D to indicate the option that best fits blank number 19: Outdoor workers, such as farmers and construction workers, (19) .", options: ["A. often spend long hours under the sun and improve their physical endurance", "B. require long hours of work under the sun and are vulnerable to heat exposure", "C. are particularly vulnerable because their jobs require long hours under the sun", "D. frequently remain under the sun for many hours and gain more practical experience"], a: "C. are particularly vulnerable because their jobs require long hours under the sun", lesson: "Mẹo làm bài: Hãy nhìn vào tiêu đề đoạn này là One of the most serious threats (Một trong những mối đe dọa nghiêm trọng nhất). Vì vậy câu trả lời phải tập trung vào sự nguy hiểm (vulnerable - dễ bị tổn thương). Câu A và D nói về cải thiện thể lực hay kinh nghiệm là sai ngữ cảnh đang nói về rủi ro" },
-            { type: "multiple_choice", script: "CLIMATE CHANGE AND ITS IMPACT ON WORKERS", q: "Mark the letter A B C or D to indicate the option that best fits blank number 20: Rising temperatures also extend pollen seasons, worsening allergies and asthma. (20) .", options: ["A. In contrast, employees inside buildings normally avoid harmful air particles", "B. Similarly, people in enclosed spaces are less affected by air pollution", "C. However, people who work indoors often have no respiratory problems", "D. As a result, outdoor workers may gradually develop respiratory problems"], a: "D. As a result, outdoor workers may gradually develop respiratory problems", lesson: "Mẹo làm bài: Câu trước đang nói về ô nhiễm không khí, bụi, khói và bệnh hen suyễn (asthma). Vì vậy câu tiếp theo phải là kết quả của những nguyên nhân đó. Ta dùng cụm As a result (Kết quả là) và liên kết với các bệnh về hô hấp (respiratory problems). Các câu A, B, C nói về người làm trong nhà là lạc đề" },
-            { type: "multiple_choice", script: "CLIMATE CHANGE AND ITS IMPACT ON WORKERS", q: "Mark the letter A B C or D to indicate the option that best fits blank number 21: (21) . Research suggests that work performance begins to decline when temperatures rise...", options: ["A. Companies are also affected by the negative impacts of low productivity", "B. Climate change may also have negative effects on productivity", "C. Climate change is also predicted to result in greater worker efficiency", "D. It can also have a significant influence on workers performance"], a: "B. Climate change may also have negative effects on productivity", lesson: "Mẹo làm bài: Đây là câu mở đầu cho một đoạn mới. Hãy nhìn từ khóa ở các câu sau đó: work performance (hiệu suất công việc) và productivity (năng suất). Vì vậy câu chủ đề của đoạn này phải chứa từ productivity. Đáp án B là chính xác nhất để giới thiệu nội dung cả đoạn" },
-            { type: "multiple_choice", script: "CLIMATE CHANGE AND ITS IMPACT ON WORKERS", q: "Mark the letter A B C or D to indicate the option that best fits blank number 22: ...damage infrastructure, leading to job losses. (22) , offering workers new paths...", options: ["A. However, workers may have better chances of finding alternative job prospects", "B. Therefore, workers need to adapt quickly so that they can meet the harsh requirements", "C. Nevertheless, the global transition to renewable energy and climate adaptation is expected to create new employment opportunities", "D. Similarly, such natural disasters may discourage workers from adapting"], a: "C. Nevertheless, the global transition to renewable energy and climate adaptation is expected to create new employment opportunities", lesson: "Mẹo làm bài: Câu trước đang nói về ý tiêu cực là job losses (mất việc làm). Nhưng vế sau chỗ trống lại nói về new paths (những con đường mới). Sự đối lập này cần một từ nối như Nevertheless (Tuy nhiên). Câu C nói về cơ hội việc làm mới (new employment opportunities) khớp hoàn toàn với ý new paths ở phía sau" },
+            { type: "multiple_choice", script: "CLIMATE CHANGE AND ITS IMPACT ON WORKERS", q: "Mark the letter A, B, C or D to indicate the option that best fits blank number 18: Labour data from the United States ________ . Meanwhile, millions of workers...", options: ["A. that reported dozens of heat-related symptoms diagnosed among workers", "B. which prove that stress caused by heat-related stress is very common", "C. shows that heat stress causes dozens of work-related deaths each year", "D. shown by researchers who suffered from dozens of work-related diseases"], a: "C. shows that heat stress causes dozens of work-related deaths each year", lesson: "Mẹo làm bài: Chủ ngữ là Labour data (dữ liệu lao động) là danh từ số ít, nên ta cần một động từ chia số ít là shows. Các câu A, B, D dùng đại từ quan hệ (that/which) hoặc dạng bị động (shown) sẽ làm câu bị thiếu động từ chính. Chỉ có C giúp câu hoàn chỉnh về cấu trúc" },
+            { type: "multiple_choice", script: "CLIMATE CHANGE AND ITS IMPACT ON WORKERS", q: "Mark the letter A, B, C or D to indicate the option that best fits blank number 19: Outdoor workers, such as farmers and construction workers, ________ .", options: ["A. often spend long hours under the sun and improve their physical endurance", "B. require long hours of work under the sun and are vulnerable to heat exposure", "C. are particularly vulnerable because their jobs require long hours under the sun", "D. frequently remain under the sun for many hours and gain more practical experience"], a: "C. are particularly vulnerable because their jobs require long hours under the sun", lesson: "Mẹo làm bài: Hãy nhìn vào tiêu đề đoạn này là One of the most serious threats (Một trong những mối đe dọa nghiêm trọng nhất). Vì vậy câu trả lời phải tập trung vào sự nguy hiểm (vulnerable - dễ bị tổn thương). Câu A và D nói về cải thiện thể lực hay kinh nghiệm là sai ngữ cảnh đang nói về rủi ro" },
+            { type: "multiple_choice", script: "CLIMATE CHANGE AND ITS IMPACT ON WORKERS", q: "Mark the letter A, B, C or D to indicate the option that best fits blank number 20: Rising temperatures also extend pollen seasons, worsening allergies and asthma. ________ .", options: ["A. In contrast, employees inside buildings normally avoid harmful air particles", "B. Similarly, people in enclosed spaces are less affected by air pollution", "C. However, people who work indoors often have no respiratory problems", "D. As a result, outdoor workers may gradually develop respiratory problems"], a: "D. As a result, outdoor workers may gradually develop respiratory problems", lesson: "Mẹo làm bài: Câu trước đang nói về ô nhiễm không khí, bụi, khói và bệnh hen suyễn (asthma). Vì vậy câu tiếp theo phải là kết quả của những nguyên nhân đó. Ta dùng cụm As a result (Kết quả là) và liên kết với các bệnh về hô hấp (respiratory problems). Các câu A, B, C nói về người làm trong nhà là lạc đề" },
+            { type: "multiple_choice", script: "CLIMATE CHANGE AND ITS IMPACT ON WORKERS", q: "Mark the letter A, B, C or D to indicate the option that best fits blank number 21: ________ . Research suggests that work performance begins to decline when temperatures rise...", options: ["A. Companies are also affected by the negative impacts of low productivity", "B. Climate change may also have negative effects on productivity", "C. Climate change is also predicted to result in greater worker efficiency", "D. It can also have a significant influence on workers performance"], a: "B. Climate change may also have negative effects on productivity", lesson: "Mẹo làm bài: Đây là câu mở đầu cho một đoạn mới. Hãy nhìn từ khóa ở các câu sau đó: work performance (hiệu suất công việc) và productivity (năng suất). Vì vậy câu chủ đề của đoạn này phải chứa từ productivity. Đáp án B là chính xác nhất để giới thiệu nội dung cả đoạn" },
+            { type: "multiple_choice", script: "CLIMATE CHANGE AND ITS IMPACT ON WORKERS", q: "Mark the letter A, B, C or D to indicate the option that best fits blank number 22: ...damage infrastructure, leading to job losses. ________ , offering workers new paths...", options: ["A. However, workers may have better chances of finding alternative job prospects", "B. Therefore, workers need to adapt quickly so that they can meet the harsh requirements", "C. Nevertheless, the global transition to renewable energy and climate adaptation is expected to create new employment opportunities", "D. Similarly, such natural disasters may discourage workers from adapting"], a: "C. Nevertheless, the global transition to renewable energy and climate adaptation is expected to create new employment opportunities", lesson: "Mẹo làm bài: Câu trước đang nói về ý tiêu cực là job losses (mất việc làm). Nhưng vế sau chỗ trống lại nói về new paths (những con đường mới). Sự đối lập này cần một từ nối như Nevertheless (Tuy nhiên). Câu C nói về cơ hội việc làm mới (new employment opportunities) khớp hoàn toàn với ý new paths ở phía sau" },
             { type: "multiple_choice", q: "While we ___ dinner, a stranger suddenly knocked on the door.", options: ["have", "had", "were having", "have had"], a: "were having", lesson: "Cấu trúc quen thuộc: While + quá khứ tiếp diễn + quá khứ đơn. Hành động ăn tối đang diễn ra thì hành động khác chen vào ('knocked'). Dấu hiệu mạnh nhất là từ 'while'." },
             { type: "multiple_choice", q: "Cai Rang Floating Market ___ thousands of tourists every year.", options: ["attracts", "attract", "attracted", "is attracting"], a: "attracts", lesson: "'Every year' là trạng từ chỉ tần suất → dùng hiện tại đơn. Chủ ngữ 'Cai Rang Floating Market' là số ít nên động từ thêm s → attracts. Mẹo: thấy every day/year/week thường nghĩ tới hiện tại đơn." },
             { type: "multiple_choice", q: "Phong ___ a member of the school football team for two years.", options: ["has been", "have been", "is", "will be"], a: "has been", lesson: "'For two years' diễn tả khoảng thời gian kéo dài đến hiện tại → dùng hiện tại hoàn thành. Chủ ngữ Phong là số ít nên dùng has been." },
@@ -3991,7 +4013,7 @@
             { type: "multiple_choice", q: "Also, they should have them drink ___ water or other fluid with no added sugar after the activity is completed.", options: ["many", "much", "few", "little"], a: "much", lesson: "'Water' là danh từ không đếm được nên dùng much/little. Trong câu khẳng định mang nghĩa tích cực nên dùng much." },
             { type: "multiple_choice", q: "Parents should encourage healthy habits by replacing sedentary activities with activities ___ require more movement in the family.", options: ["which", "where", "when", "who"], a: "which", lesson: "'Activities' là vật nên dùng đại từ quan hệ which. Mẹo: who cho người, which cho vật, where cho nơi chốn, when cho thời gian." },
           ],
-        }
+        },
       },
       HaNoi: {
         title: "Hà Nội", icon: "🎧",
@@ -4489,7 +4511,6 @@
       },
       Wordform: {
         title: "Dạng Từ", icon: "🎧",
-        theory: `<strong>PHÁT ÂM ĐUÔI -ED – MẸO NHẬN DIỆN SIÊU NHANH</strong><br><br> <strong>🎯 NGUYÊN TẮC QUAN TRỌNG NHẤT:</strong><br> • Đừng nhìn CHỮ cuối.<br> • Phải nhìn ÂM cuối của động từ.<br><br> <strong>Ví dụ:</strong><br> • liked → cuối là âm /k/ → đọc /t/<br> • played → cuối là âm /ɪ/ → đọc /d/<br> • wanted → cuối là âm /t/ → đọc /ɪd/<br><br> <strong>⚠ ĐUÔI -ED CÓ 3 CÁCH ĐỌC:</strong><br> • /ɪd/ hoặc /əd/<br> • /t/<br> • /d/<br><br> ====================================<br><br> <strong>I. ĐỌC /ɪd/ hoặc /əd/ → THÊM 1 ÂM TIẾT</strong><br><br> <strong>📌 Gặp âm cuối /t/ hoặc /d/ → đọc /ɪd/</strong><br><br> <strong>🎯 MẸO NHỚ:</strong><br> • Chỉ cần cuối nghe “tờ” hoặc “đờ” → chắc chắn đọc /ɪd/.<br><br> <strong>📚 Ví dụ cực hay gặp:</strong><br> • want → wanted /ˈwɒntɪd/<br> • need → needed /ˈniːdɪd/<br> • wait → waited /ˈweɪtɪd/<br> • decide → decided /dɪˈsaɪdɪd/<br> • start → started /ˈstɑːtɪd/<br> • visit → visited /ˈvɪzɪtɪd/<br> • collect → collected /kəˈlektɪd/<br> • count → counted /ˈkaʊntɪd/<br><br> <strong>⚠ ĐÂY LÀ TRƯỜNG HỢP DUY NHẤT THÊM ÂM TIẾT.</strong><br><br> <strong>Ví dụ:</strong><br> • wait = 1 âm tiết<br> • waited = 2 âm tiết<br><br> ====================================<br><br> <strong>II. ĐỌC /t/ → ÂM GIÓ MẠNH</strong><br><br> <strong>📌 Gặp âm vô thanh → đọc /t/</strong><br><br> <strong>🎯 MẸO NHỚ SIÊU NHANH:</strong><br> • p k f s sh ch → /t/<br><br> <strong>📌 Các âm vô thanh hay gặp:</strong><br> • /p/ → stop<br> • /k/ → look<br> • /f/ → laugh<br> • /s/ → miss<br> • /ʃ/ (sh) → wash<br> • /tʃ/ (ch) → watch<br><br> <strong>📚 Ví dụ:</strong><br> • look → looked /lʊkt/<br> • walk → walked /wɔːkt/<br> • stop → stopped /stɒpt/<br> • help → helped /helpt/<br> • watch → watched /wɒtʃt/<br> • wash → washed /wɒʃt/<br> • laugh → laughed /læft/<br> • dance → danced /dɑːnst/<br> • kiss → kissed /kɪst/<br> • like → liked /laɪkt/<br><br> <strong>⚠ KHÔNG thêm âm tiết.</strong><br><br> <strong>Ví dụ:</strong><br> • walk = 1 âm tiết<br> • walked = vẫn 1 âm tiết<br><br> ====================================<br><br> <strong>III. ĐỌC /d/ → CÒN LẠI ĐỀU /d/</strong><br><br> <strong>📌 Gặp âm hữu thanh hoặc nguyên âm → đọc /d/</strong><br><br> <strong>🎯 MẸO NHỚ:</strong><br> • Không phải /t/ hoặc /ɪd/ → thường là /d/.<br><br> <strong>📚 Ví dụ:</strong><br> • play → played /pleɪd/<br> • clean → cleaned /kliːnd/<br> • live → lived /lɪvd/<br> • smile → smiled /smaɪld/<br> • rain → rained /reɪnd/<br> • call → called /kɔːld/<br> • open → opened /ˈəʊpənd/<br> • answer → answered /ˈɑːnsəd/<br> • enjoy → enjoyed /ɪnˈdʒɔɪd/<br> • explain → explained /ɪkˈspleɪnd/<br><br> <strong>⚠ KHÔNG thêm âm tiết.</strong><br><br> ====================================<br><br> <strong>IV. MẸO NHẬN DIỆN NHANH TRONG PHÒNG THI</strong><br><br> <strong>✅ Bước 1:</strong> Nhìn âm cuối của động từ gốc.<br><br> <strong>✅ Bước 2:</strong><br> • /t/ hoặc /d/ → /ɪd/<br> • p k f s sh ch → /t/<br> • còn lại → /d/<br><br> <strong>🎯 CÂU THẦN CHÚ:</strong><br> <strong>t d → /ɪd/</strong><br> <strong>p k f s sh ch → /t/</strong><br> <strong>còn lại → /d/</strong><br><br> ====================================<br><br> <strong>V. CÁC CÂU HAY RA ĐỀ THI</strong><br><br> <strong>🔹 /ɪd/</strong><br> • wanted<br> • needed<br> • started<br> • visited<br> • collected<br><br> <strong>🔹 /t/</strong><br> • looked<br> • watched<br> • laughed<br> • stopped<br> • washed<br><br> <strong>🔹 /d/</strong><br> • played<br> • cleaned<br> • opened<br> • enjoyed<br> • lived<br><br> ====================================<br><br> <strong>VI. LỖI HỌC SINH HAY SAI</strong><br><br> ❌ play-ed /pleɪɪd/<br> ✔ played /pleɪd/<br><br> ❌ watch-ed /wɒtʃɪd/<br> ✔ watched /wɒtʃt/<br><br> ❌ need-ed /niːdd/<br> ✔ needed /ˈniːdɪd/<br><br> ❌ look-ed /lʊkɪd/<br> ✔ looked /lʊkt/<br><br> ====================================<br><br> <strong>VII. MẸO SIÊU DỄ NHỚ CHO HỌC SINH</strong><br><br> <strong>🔹 /ɪd/ = thêm tiếng mới</strong><br> → wanted, needed<br><br> <strong>🔹 /t/ = âm gió mạnh</strong><br> → looked, watched<br><br> <strong>🔹 /d/ = đọc nhẹ</strong><br> → played, cleaned<br><br> <strong>🎯 CÔNG THỨC CUỐI CÙNG:</strong><br> <strong>t/d → /ɪd/</strong><br> <strong>p k f s sh ch → /t/</strong><br> <strong>CÒN LẠI → /d/</strong>.`,
         levels: {
           easy: [
             { type: "fill_blank", q: "Protecting the ________ environment is important because many species live in it. (NATURE)", a: "natural", lesson: "MẸO: Thấy từ trong ngoặc (NATURE) và thấy danh từ 'environment' đứng ngay sau chỗ trống, ta chọn tính từ 'natural' (quy tắc: Tính từ + Danh từ)." },
@@ -4523,7 +4544,8 @@
             { type: "fill_blank", q: "With some practice and ________ from your friends, you'll have a great performance. (COURAGE)", a: "encouragement", lesson: "MẸO: Thấy từ trong ngoặc (COURAGE) và đứng sau 'and' (trong cấu trúc danh từ), ta cần điền danh từ chỉ sự khích lệ là 'encouragement'." },
             { type: "fill_blank", q: "Traffic jams are a daily ________ for commuters in big cities. (ANNOY)", a: "annoyance", lesson: "MẸO: Thấy từ trong ngoặc (ANNOY) và đứng sau tính từ 'daily' (hàng ngày), ta cần điền một danh từ chỉ sự khó chịu là 'annoyance'." }
           ],
-        }
+        },
+        theory: `<strong>DẠNG TỪ - NHÌN VỊ TRÍ ĐỂ ĐIỀN ĐÚNG</strong><br><br> <strong>1. CÁCH LÀM NHANH:</strong><br> • Đừng vội dịch cả câu. Hãy nhìn từ đứng trước và sau chỗ trống.<br> • Hỏi nhanh: chỗ trống cần <strong>danh từ, động từ, tính từ hay trạng từ</strong>?<br> • Sau khi chọn loại từ, mới xét nghĩa: khẳng định/phủ định, số ít/số nhiều, thì của động từ.<br><br> <strong>2. CẦN TÍNH TỪ KHI PHÍA SAU LÀ DANH TỪ:</strong><br> • Công thức thường gặp: <strong>adjective + noun</strong>.<br> • Ví dụ trong bài:<br> - natural environment / natural resources<br> - global warming<br> - accessible island<br> - indescribable joy<br> - inexpensive souvenirs<br><br> • Mẹo: nếu sau chỗ trống là một danh từ như environment, resources, warming, joy, souvenirs thì ưu tiên đổi từ gốc sang tính từ.<br><br> <strong>3. CẦN DANH TỪ SAU THE / MANY / DAILY / AND:</strong><br> • <strong>the ... of</strong> thường cần danh từ: preservation of the craft village.<br> • <strong>too many + plural noun</strong>: too many distractions.<br> • <strong>one of the most + adjective + plural noun</strong>: one of the most important inventions.<br> • Sau <strong>and</strong> nếu song song với một danh từ thì cũng cần danh từ: practice and encouragement.<br> • Sau tính từ như daily cũng thường cần danh từ: daily annoyance.<br><br> <strong>4. CẦN TRẠNG TỪ KHI BỔ NGHĨA CHO ĐỘNG TỪ, TÍNH TỪ HOẶC CẢ CÂU:</strong><br> • Động từ + adverb: moved beautifully.<br> • Adverb + adjective: readily available.<br> • Đứng đầu câu và có dấu phẩy: Obviously, ... / Suddenly, ...<br> • Mẹo nhanh: nhiều trạng từ có đuôi <strong>-ly</strong>, nhưng phải xem nó bổ nghĩa cho cái gì.<br><br> <strong>5. CẦN ĐỘNG TỪ KHI CHỖ TRỐNG LÀ HÀNH ĐỘNG CHÍNH:</strong><br> • Sau trạng từ tần suất như often cần động từ chính: often participate.<br> • Sau modal verb như must / should cần V nguyên mẫu: must fasten, should adopt.<br> • Chủ ngữ số nhiều dùng động từ nguyên mẫu hiện tại: These programs encourage...<br> • Chủ ngữ ngôi 3 số ít ở hiện tại đơn thêm s/es: My father jogs every morning.<br><br> <strong>6. CÁC CẤU TRÚC V-ING / V NGUYÊN MẪU HAY RA:</strong><br> • <strong>enjoy + V-ing</strong>: enjoy playing soccer.<br> • <strong>suggest + V-ing</strong>: suggests studying more.<br> • <strong>suggest that + S + V nguyên mẫu</strong>: suggested that we collect... / suggested that he visit...<br><br> <strong>7. KHI CÂU HỎI TRỘN WORD FORM VỚI NGỮ PHÁP:</strong><br> • When + một hành động quá khứ đơn chen ngang → hành động đang diễn ra dùng quá khứ tiếp diễn: They were cooking when the light went out.<br> • Câu điều kiện loại 2 có would + V ở mệnh đề chính → mệnh đề giả định dùng quá khứ đơn: If I had a calculator, I would lend it to you.<br><br> <strong>8. BẪY NGHĨA PHỦ ĐỊNH:</strong><br> • Không chỉ đổi loại từ, còn phải chọn đúng nghĩa theo ngữ cảnh.<br> • Smoking in public places → unhealthy, không phải healthy.<br> • couldn't find any lodging → unpleasant experience.<br> • small bargains → inexpensive souvenirs.<br> • not sure which one to choose → undecided.<br><br> <strong>9. ĐUÔI TỪ CẦN NHỚ:</strong><br> • Danh từ: -tion, -sion, -ment, -ance, -ence, -ness, -ity.<br> • Tính từ: -al, -able, -ible, -ive, -ful, -less, -ous, -ed, -ing.<br> • Trạng từ: thường là adjective + -ly.<br> • Động từ: en-, -en, -ate, -ize hoặc dạng gốc như participate, encourage, fasten, visit.<br><br> <strong>10. CÂU THẦN CHÚ:</strong><br> • Sau chỗ trống là danh từ → nghĩ tính từ.<br> • Sau the / many / of → nghĩ danh từ.<br> • Bổ nghĩa cho động từ/tính từ/cả câu → nghĩ trạng từ.<br> • Sau modal / suggest that → V nguyên mẫu.<br> • Gặp enjoy / suggest trực tiếp → V-ing.<br><br> <strong>KẾT LUẬN:</strong><br> Dạng từ không phải học thuộc từng câu. Làm đúng bằng quy trình: <strong>vị trí trong câu → loại từ → nghĩa phù hợp → chia số/thì nếu cần</strong>.`
       },
       Unlessif: {
         title: "Unless - If", icon: "🎧",
@@ -6427,6 +6449,10 @@
     function renderPHBody() {
       const body = document.getElementById('ph-body');
       const records = getFilteredRecords();
+
+      Array.from(body.children).forEach(el => {
+        if (el.classList.contains('ph-loading')) el.remove();
+      });
 
       // Use a dedicated sessions container so .ph-filters sticky bar is preserved
       let sessionsEl = document.getElementById('ph-sessions');
